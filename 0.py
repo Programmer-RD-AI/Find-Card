@@ -1,3 +1,4 @@
+import numpy as np
 import os, cv2, torch, torchvision
 import detectron2
 from detectron2.evaluation import COCOEvaluator, inference_context, inference_on_dataset
@@ -10,14 +11,22 @@ from detectron2.utils.visualizer import Visualizer, BoxMode
 import pandas as pd
 from tqdm import tqdm
 import matplotlib.pyplot as plt
+import wandb
 
-print(torch.__version__)
+print(torch.__version__, torchvision.__version__)
 data = pd.read_csv("./Data.csv")
+idx = 0
 
 
 def load_data(data=data, test=False):
     if test is True:
+        if "test_data.npy" in os.listdir("./"):
+            data = np.load("./test_data.npy", allow_pickle=True)
+            return data
         data = data[:1250]
+    if "data.npy" in os.listdir("./"):
+        data = np.load("./data.npy", allow_pickle=True)
+        return data
     new_data = []
     for idx in tqdm(range(len(data))):
         record = {}
@@ -45,6 +54,10 @@ def load_data(data=data, test=False):
         record["xmax"] = xmax
         record["ymax"] = ymax
         new_data.append(record)
+    if test is True:
+        np.save("test_data.npy", new_data)
+    else:
+        np.save("data.npy", new_data)
     return new_data
 
 
@@ -56,7 +69,7 @@ metadata = MetadataCatalog.get("data")
 DatasetCatalog.register("test", lambda: load_data(test=True))
 MetadataCatalog.get("test").set(thing_classes=labels)
 metadata_test = MetadataCatalog.get("test")
-
+wandb.init(sync_tensorboard=True, name="baseline")
 torch.cuda.empty_cache()
 model = "COCO-Detection/faster_rcnn_R_101_DC5_3x.yaml"
 cfg = get_cfg()
@@ -64,7 +77,7 @@ cfg.merge_from_file(get_config_file(model))
 cfg.DATASETS.TRAIN = ("data",)
 cfg.DATASETS.TEST = ("test",)
 cfg.MODEL.WEIGHTS = get_checkpoint_url(model)
-cfg.SOLVER.MAX_ITER = 2500 + 1250
+cfg.SOLVER.MAX_ITER = 500
 # cfg.TEST.EVAL_PERIOD = 50
 cfg.SOLVER.BASE_LR = 0.00025
 cfg.SOLVER.STEPS = []
@@ -77,20 +90,23 @@ trainer.train()
 # cfg.MODEL.ROI_HEADS.SCORE_THRESH_TEST = 0.475
 cfg.MODEL.WEIGHTS = os.path.join(cfg.OUTPUT_DIR, "model_final.pth")
 img = cv2.imread("./Img/1.png")
-predictor = DefaultPredictor(cfg)
-preds = predictor(img)["instances"].to("cpu")
-v = Visualizer(img[:, :, ::-1], metadata=metadata, scale=1)
-v = v.draw_instance_predictions(preds)
-v = v.get_image()[:, :, ::-1]
-plt.figure(figsize=(12, 6))
-plt.imshow(v)
-plt.savefig("./img-0.png")
-plt.close()
-predictor = DefaultPredictor(cfg)
-img = cv2.imread(f"./Img/1.png")
-v = Visualizer(img[:, :, ::-1], metadata=metadata)
-v = v.draw_instance_predictions(predictor(img)["instances"].to("cpu"))
-plt.figure(figsize=(10, 7))
-plt.imshow(v.get_image()[:, :, ::-1])
-plt.savefig("./img-1.png")
-plt.close()
+# predictor = DefaultPredictor(cfg)
+# preds = predictor(img)["instances"].to("cpu")
+# v = Visualizer(img[:, :, ::-1], metadata=metadata, scale=1)
+# v = v.draw_instance_predictions(preds)
+# v = v.get_image()[:, :, ::-1]
+# plt.figure(figsize=(12, 6))
+# plt.imshow(v)
+# plt.savefig("./img-0.png")
+# plt.close()
+for img in os.listdir("./test_imgs/"):
+    predictor = DefaultPredictor(cfg)
+    img = cv2.imread(f"./test_imgs/{img}")
+    v = Visualizer(img[:, :, ::-1], metadata=metadata)
+    v = v.draw_instance_predictions(predictor(img)["instances"].to("cpu"))
+    plt.figure(figsize=(10, 7))
+    plt.imshow(v.get_image()[:, :, ::-1])
+    plt.savefig(f"./preds/{img}")
+    plt.close()
+    # wandb.log({f"preds/{img}": wandb.Image(cv2.imread(f"./preds/{img}"))})
+wandb.finish()
