@@ -2,3 +2,12 @@
 Open-Image-Detectron2
 
 https://storage.googleapis.com/openimages/web/download.html#attributes
+
+"Debit card",
+"Credit card",
+"Business card",
+"Collectible card game",
+"Penalty card",
+"Telephone card",
+"Payment card",
+
