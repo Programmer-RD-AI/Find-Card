@@ -27,6 +27,9 @@ from tqdm import tqdm
 from detectron2.utils.visualizer import Visualizer
 from detectron2.data import MetadataCatalog, DatasetCatalog
 
+np.random.seed(42)
+random.seed(42)
+torch.manual_seed(42)
 # Version
 data = pd.read_csv("./download/Data.csv").sample(frac=1)
 idx = 0
@@ -35,7 +38,7 @@ def load_data(data=data, test=False):
     if test is True:
         if "data.npy" in os.listdir("./"):
             data = np.load("./data.npy", allow_pickle=True)
-            data = data[:250]
+            data = data[:125]
             print(len(data))
             return data
     if "data.npy" in os.listdir("./"):
@@ -80,12 +83,29 @@ metadata = MetadataCatalog.get("data")
 DatasetCatalog.register("test", lambda: load_data(test=True))
 MetadataCatalog.get("test").set(thing_classes=labels)
 metadata_test = MetadataCatalog.get("test")
+# models = [
+# "fast_rcnn_R_50_FPN_1x.yaml",
+# "faster_rcnn_R_50_C4_1x.yaml",
+# "faster_rcnn_R_50_C4_3x.yaml",
+# "faster_rcnn_R_50_DC5_1x.yaml",
+# "faster_rcnn_R_50_DC5_3x.yaml",
+# "retinanet_R_50_FPN_1x.py",
+# "retinanet_R_50_FPN_1x.yaml",
+# "retinanet_R_50_FPN_3x.yaml",
+# "rpn_R_50_C4_1x.yaml",
+# "rpn_R_50_FPN_1x.yaml",
+# "faster_rcnn_R_50_FPN_1x.yaml",
+# "faster_rcnn_R_50_FPN_3x.yaml",
+# "faster_rcnn_R_101_DC5_3x.yaml",
+# "faster_rcnn_R_101_FPN_3x.yaml",
+# "faster_rcnn_X_101_32x8d_FPN_3x.yaml",
+# ]
 from detectron2.utils.logger import setup_logger
 
 setup_logger()
 model = f"COCO-Detection/faster_rcnn_X_101_32x8d_FPN_3x.yaml"
 torch.cuda.empty_cache()
-wandb.init(project="Find-Card", name="baseline")
+wandb.init(project="Find-Card", name="Final")
 torch.cuda.empty_cache()
 cfg = get_cfg()
 torch.cuda.empty_cache()
@@ -97,18 +117,18 @@ cfg.DATASETS.TEST = ()
 torch.cuda.empty_cache()
 cfg.MODEL.WEIGHTS = model_zoo.get_checkpoint_url(model)
 torch.cuda.empty_cache()
-cfg.SOLVER.MAX_ITER = 500
+cfg.SOLVER.MAX_ITER = 3250
 torch.cuda.empty_cache()
 cfg.TEST.EVAL_PERIOD = 500
-cfg.SOLVER.BASE_LR = 0.00025
+cfg.SOLVER.BASE_LR = 0.0001
 torch.cuda.empty_cache()
 cfg.SOLVER.STEPS = []
 torch.cuda.empty_cache()
-cfg.SOLVER.IMS_PER_BATCH = 2
+cfg.SOLVER.IMS_PER_BATCH = 1
 torch.cuda.empty_cache()
 cfg.MODEL.ROI_HEADS.NUM_CLASSES = len(labels)
 torch.cuda.empty_cache()
-cfg.MODEL.ROI_HEADS.BATCH_SIZE_PER_IMAGE = 128
+cfg.MODEL.ROI_HEADS.BATCH_SIZE_PER_IMAGE = 32
 torch.cuda.empty_cache()
 trainer = DefaultTrainer(cfg)
 torch.cuda.empty_cache()
@@ -116,14 +136,14 @@ trainer.resume_or_load(resume=False)
 torch.cuda.empty_cache()
 trainer.train()
 torch.cuda.empty_cache()
-# cfg.MODEL.ROI_HEADS.SCORE_THRESH_TEST = 0.25
+cfg.MODEL.ROI_HEADS.SCORE_THRESH_TEST = 0.75
 torch.cuda.empty_cache()
 cfg.MODEL.WEIGHTS = os.path.join(cfg.OUTPUT_DIR, "model_final.pth")
 torch.cuda.empty_cache()
 predictor = DefaultPredictor(cfg)
 torch.cuda.empty_cache()
 cfg.MODEL.WEIGHTS = "./output/model_final.pth"
-cfg.SOLVER.SCORE_THRESH_TEST = 0.25
+cfg.SOLVER.SCORE_THRESH_TEST = 0.75
 predictor = DefaultPredictor(cfg)
 evaluator = COCOEvaluator("test", output_dir="./output/")
 val_loader = build_detection_test_loader(cfg, "test")
@@ -151,7 +171,7 @@ for img in os.listdir("./test_imgs/"):
     torch.cuda.empty_cache()
     v = v.get_image()[:, :, ::-1]
     torch.cuda.empty_cache()
-    plt.figure(figsize=(12, 6))
+    plt.figure(figsize=(24, 12))
     torch.cuda.empty_cache()
     plt.imshow(v)
     torch.cuda.empty_cache()
@@ -159,4 +179,11 @@ for img in os.listdir("./test_imgs/"):
     torch.cuda.empty_cache()
     plt.close()
     torch.cuda.empty_cache()
+    wandb.log({f"Img/{img}": wandb.Image(cv2.imread(f"./preds/{img}"))})
 wandb.finish()
+
+
+# Model = COCO-Detection/faster_rcnn_X_101_32x8d_FPN_3x.yaml (Currently Using) | COCO-Detection/retinanet_R_50_FPN_1x.py (Is also good)
+# 5 = 1
+# 16 = 1
+# 32 = 2 # best
