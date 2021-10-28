@@ -142,3 +142,8 @@ V2/download/data/validation-annotations-bbox.csv
 V2/download/data/validation-annotations-human-imagelabels-boxable.csv
 V2/download/data/validation-annotations-machine-imagelabels.csv
 V2/download/data/validation-images-with-rotation.csv
+V2/Img/
+V2/output/events.out.tfevents.1635428817.programmer-rd-ai.455389.0
+*.patch
+V2/wandb/run-20211028_185450-3ubj5u6q/run-3ubj5u6q.wandb
+*.wandb

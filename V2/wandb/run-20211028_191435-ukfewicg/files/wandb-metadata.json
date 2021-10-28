@@ -1,0 +1,26 @@
+{
+    "os": "Linux-5.11.0-38-generic-x86_64-with-glibc2.17",
+    "python": "3.8.12",
+    "heartbeatAt": "2021-10-28T13:44:47.282538",
+    "startedAt": "2021-10-28T13:44:35.485820",
+    "docker": null,
+    "gpu": "GeForce RTX 3060",
+    "gpu_count": 1,
+    "cpu_count": 6,
+    "cuda": null,
+    "args": [
+        "-f",
+        "/home/indika/.local/share/jupyter/runtime/kernel-7c593341-f857-4a61-a7b0-a853ec806f51.json"
+    ],
+    "state": "running",
+    "program": "param-tunning-b235c517-7731-4802-b389-d8ea8b3081aa.ipynb",
+    "root": "/media/indika/Sync/Programming/Projects/Python/Rest-Api/Car-Object-Detection-REST-API/Find-Card",
+    "git": {
+        "remote": "https://github.com/Programmer-RD-AI/Find-Card.git",
+        "commit": "42a2bee580eadd1b1d7d3f4c2b3ec314a65b7d82"
+    },
+    "email": "aigithub@gmail.com",
+    "host": "programmer-rd-ai",
+    "username": "indika",
+    "executable": "/media/indika/Sync/anaconda3/envs/detectron2/bin/python"
+}
