@@ -392,6 +392,7 @@ typing-extensions==3.10.0.0
 tzlocal==3.0
 ujson @ file:///tmp/build/80754af9/ujson_1611259522456/work
 unicodecsv==0.14.1
+jupyterlab>=3.0.17
 universal-analytics-python3==1.1.1
 urllib3==1.26.6
 validators==0.18.2
