@@ -1,2 +1,0 @@
-Looking in indexes: https://pypi.org/simple, https://pypi.ngc.nvidia.com
-Requirement already satisfied: torchvision in /media/indika/Sync/anaconda3/envs/detectron2/lib/python3.8/site-packages (0.10.0+cu111)
