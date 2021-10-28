@@ -169,7 +169,7 @@ jupyter-core @ file:///tmp/build/80754af9/jupyter_core_1612213311222/work
 jupyter-kite==1.2.0
 jupyter-packaging @ file:///tmp/build/80754af9/jupyter-packaging_1613502826984/work
 jupyter-server==1.8.0
-jupyterlab==3.0.16
+jupyterlab>=3.0.17
 jupyterlab-kite==2.0.2
 jupyterlab-pygments @ file:///tmp/build/80754af9/jupyterlab_pygments_1601490720602/work
 jupyterlab-server==2.6.0
