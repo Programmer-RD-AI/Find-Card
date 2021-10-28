@@ -148,3 +148,4 @@ V2/output/events.out.tfevents.1635428817.programmer-rd-ai.455389.0
 V2/wandb/run-20211028_185450-3ubj5u6q/run-3ubj5u6q.wandb
 *.wandb
 V2/output/model_final.pth
+V2/output/events.out.tfevents.1635417045.programmer-rd-ai.143886.0
