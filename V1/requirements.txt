@@ -298,7 +298,7 @@ pytorch-lightning==1.4.9
 pytz==2021.1
 PyWavelets==1.1.1
 pyxdg @ file:///tmp/build/80754af9/pyxdg_1603822279816/work
-PyYAML==5.1
+PyYAML>=5.4
 pyzmq==20.0.0
 QDarkStyle==2.8.1
 QtAwesome @ file:///tmp/build/80754af9/qtawesome_1615991616277/work
