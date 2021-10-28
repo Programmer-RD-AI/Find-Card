@@ -128,3 +128,17 @@ dmypy.json
 # Pyre type checker
 .pyre/
 V2/detectron2/
+V2/download/data/oidv6-train-annotations-bbox.csv
+V2/download/data/oidv6-train-annotations-human-imagelabels.csv
+V2/download/data/oidv6-train-images-with-labels-with-rotation.csv
+V2/download/data/test-annotations-bbox.csv
+V2/download/data/test-annotations-human-imagelabels-boxable.csv
+V2/download/data/test-annotations-machine-imagelabels.csv
+V2/download/data/test-images-with-rotation.csv
+V2/download/data/train-annotations-human-imagelabels-boxable.csv
+V2/download/data/train-annotations-machine-imagelabels.csv
+V2/download/data/train-images-boxable-with-rotation.csv
+V2/download/data/validation-annotations-bbox.csv
+V2/download/data/validation-annotations-human-imagelabels-boxable.csv
+V2/download/data/validation-annotations-machine-imagelabels.csv
+V2/download/data/validation-images-with-rotation.csv
