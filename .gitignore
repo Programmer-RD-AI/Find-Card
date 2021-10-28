@@ -165,3 +165,6 @@ V2/output/instances_predictions.pth
 V2/output/test_coco_format.json
 *.0
 >>>>>>> Stashed changes
+V2/box.jpg
+V2/crop.jpg
+V2/output.png
