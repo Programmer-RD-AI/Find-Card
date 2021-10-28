@@ -1,4 +1,0 @@
-Looking in indexes: https://pypi.org/simple, https://pypi.ngc.nvidia.com
-Requirement already satisfied: protobuf in /home/indika/anaconda3/envs/myenv/lib/python3.8/site-packages (3.6.0)
-Requirement already satisfied: six>=1.9 in /home/indika/.local/lib/python3.8/site-packages (from protobuf) (1.15.0)
-Requirement already satisfied: setuptools in /home/indika/anaconda3/envs/myenv/lib/python3.8/site-packages (from protobuf) (58.2.0)
