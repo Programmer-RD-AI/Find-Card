@@ -300,6 +300,7 @@ class Model:
                 lowest_mse = mean_squared_error(pred.to("cpu"), target)
         return lowest_mse
 
+    @staticmethod
     def create_x_y_w_h(xmin, ymin, xmax, ymax):
         x = xmin
         y = ymin
@@ -307,6 +308,7 @@ class Model:
         h = ymax - ymin
         return x, y, w, h
 
+    @staticmethod
     def crop_img(x, y, w, h, img):
         crop = img[y : y + h, x : x + w]
         return crop
@@ -319,14 +321,14 @@ class Model:
         )
         for pred_i in range(len(preds)):
             pred = preds_new[pred_i]
+            print(target)
+            print(pred)
             info = self.data[self.create_target_and_preds_iter]
             img = cv2.imread(info["file_name"])
-            crop_img_target = torch.from_numpy(
-                self.crop_img(self.create_x_y_w_h(target), img)
-            )
-            crop_img_pred = torch.from_numpy(
-                np.array(self.crop_img(self.create_x_y_w_h(pred), img))
-            )
+            x, y, w, h = self.create_x_y_w_h(target[0], target[1], target[2], target[3])
+            crop_img_target = torch.from_numpy(self.crop_img(x, y, w, h, img))
+            x, y, w, h = self.create_x_y_w_h(pred[0], pred[1], pred[2], pred[3])
+            crop_img_pred = torch.from_numpy(np.array(self.crop_img(x, y, w, h, img)))
             print(crop_img_pred.shape)
             print(crop_img_target.shape)
             if ssim(crop_img_pred, crop_img_target) > lowest_ssim:
@@ -481,3 +483,5 @@ class Model:
 # TODO - Create a OOP Class which Tests all possible params
 # TODO - Add Comments and What is the output of the function and description,etc..
 # TODO - Add Param to load the data saved
+# TODO - Add @classmethod do give update of the project
+# TODO - Add A Progress Bar
