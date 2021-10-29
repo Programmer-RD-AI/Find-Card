@@ -95,16 +95,19 @@ class Model:
             "ims_per_batchs": [1, 2, 3, 4, 5, 6, 7, 8, 9, 10],
             "batch_size_per_images": [8, 16, 32, 64, 128, 256, 512],
         }  # Tests for Param Tunning
-        DatasetCatalog.register(
-            "data", lambda: self.load_data()
-        )  # Registering the training data
-        MetadataCatalog.get("data").set(thing_classes=self.labels)  # Adding the labels
-        self.metadata = MetadataCatalog.get("data")  # Getting the metadata
-        DatasetCatalog.register(
-            "test", lambda: self.load_data(test=True)
-        )  # Registering the test data
-        MetadataCatalog.get("test").set(thing_classes=self.labels)  # Adding the labels
-        self.metadata_test = MetadataCatalog.get("test")  # Getting the metadata
+        try:
+            DatasetCatalog.register(
+                "data", lambda: self.load_data()
+            )  # Registering the training data
+            MetadataCatalog.get("data").set(thing_classes=self.labels)  # Adding the labels
+            self.metadata = MetadataCatalog.get("data")  # Getting the metadata
+            DatasetCatalog.register(
+                "test", lambda: self.load_data(test=True)
+            )  # Registering the test data
+            MetadataCatalog.get("test").set(thing_classes=self.labels)  # Adding the labels
+            self.metadata_test = MetadataCatalog.get("test")  # Getting the metadata
+        except:
+            pass
         self.BASE_LR = base_lr
         self.MAX_ITER = max_iter
         self.EVAL_PERIOD = eval_period
