@@ -1,0 +1,22 @@
+diff --git a/V2/run.py b/V2/run.py
+index 554e264..6a21847 100644
+--- a/V2/run.py
++++ b/V2/run.py
+@@ -32,7 +32,7 @@ params = {
+ }
+ model = Model()
+ model.train()
+-pt = Param_Tunning()
++pt = Param_Tunning(params)
+ pt.tune()
+ # torch.save(model.train(),'./model.pt')
+ # torch.save(model.train(),'./model.pth')
+diff --git a/V2/wandb/latest-run b/V2/wandb/latest-run
+index c119a33..4aef3cb 120000
+--- a/V2/wandb/latest-run
++++ b/V2/wandb/latest-run
+@@ -1 +1 @@
+-run-20211029_171625-8mr9e89d
+\ No newline at end of file
++run-20211029_172059-1rtkmx8s
+\ No newline at end of file
