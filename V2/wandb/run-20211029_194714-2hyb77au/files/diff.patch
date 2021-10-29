@@ -1,0 +1,48 @@
+diff --git a/V2/run.py b/V2/run.py
+index dcab645..f94b6a6 100644
+--- a/V2/run.py
++++ b/V2/run.py
+@@ -4,7 +4,7 @@ from Model import *
+ # model.train()
+ params = {
+     "MODEL": [
+-        "fast_rcnn_R_50_FPN_1x.yaml",
++        # "fast_rcnn_R_50_FPN_1x.yaml",
+         "faster_rcnn_R_50_C4_1x.yaml",
+         "faster_rcnn_R_50_C4_3x.yaml",
+         "faster_rcnn_R_50_DC5_1x.yaml",
+diff --git a/V2/wandb/latest-run b/V2/wandb/latest-run
+index 1d69b0b..252530c 120000
+--- a/V2/wandb/latest-run
++++ b/V2/wandb/latest-run
+@@ -1 +1 @@
+-run-20211029_194637-2qe0kh9c
+\ No newline at end of file
++run-20211029_194714-2hyb77au
+\ No newline at end of file
+diff --git a/V2/wandb/run-20211029_194637-2qe0kh9c/files/config.yaml b/V2/wandb/run-20211029_194637-2qe0kh9c/files/config.yaml
+index 505dd0e..b74027c 100644
+--- a/V2/wandb/run-20211029_194637-2qe0kh9c/files/config.yaml
++++ b/V2/wandb/run-20211029_194637-2qe0kh9c/files/config.yaml
+@@ -40,6 +40,9 @@ _wandb:
+       1:
+       - 1
+       - 5
++      2:
++      - 1
++      - 5
+       3:
+       - 13
+       - 16
+diff --git a/V2/wandb/run-20211029_194637-2qe0kh9c/files/wandb-summary.json b/V2/wandb/run-20211029_194637-2qe0kh9c/files/wandb-summary.json
+index 9e26dfe..e32ca1c 100644
+--- a/V2/wandb/run-20211029_194637-2qe0kh9c/files/wandb-summary.json
++++ b/V2/wandb/run-20211029_194637-2qe0kh9c/files/wandb-summary.json
+@@ -1 +1 @@
+-{}
+\ No newline at end of file
++{"_wandb": {"runtime": 13}}
+\ No newline at end of file
+diff --git a/V2/wandb/run-20211029_194637-2qe0kh9c/run-2qe0kh9c.wandb b/V2/wandb/run-20211029_194637-2qe0kh9c/run-2qe0kh9c.wandb
+index 11914e6..9641b4c 100644
+Binary files a/V2/wandb/run-20211029_194637-2qe0kh9c/run-2qe0kh9c.wandb and b/V2/wandb/run-20211029_194637-2qe0kh9c/run-2qe0kh9c.wandb differ
