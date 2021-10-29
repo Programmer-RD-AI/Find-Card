@@ -18,7 +18,7 @@ data = {
 labels = [
     "Debit card",
     "Credit card",
-    # "Business card",
+    "Business card",
     # "Collectible card game",
     # "Penalty card",
     # "Telephone card",
@@ -39,7 +39,7 @@ labels_and_imageed = (
     .append(pd.read_csv("./data/train-annotations-human-imagelabels-boxable.csv"))
     .append(pd.read_csv("./data/test-annotations-human-imagelabels-boxable.csv"))
     .append(pd.read_csv("./data/oidv6-train-annotations-human-imagelabels.csv"))
-    # pd.read_csv("./data/train-annotations-machine-imagelabels.csv")
+    .append(pd.read_csv("./data/train-annotations-machine-imagelabels.csv"))
     .append(pd.read_csv("./data/test-annotations-machine-imagelabels.csv"))
     .append(pd.read_csv("./data/validation-annotations-machine-imagelabels.csv"))
 )

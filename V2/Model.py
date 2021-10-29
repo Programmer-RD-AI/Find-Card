@@ -45,7 +45,7 @@ class Model:
         max_iter: int = 1000,
         eval_period: int = 5,
         ims_per_batch: int = 5,
-        batch_size_per_image: int = 512,
+        batch_size_per_image: int = 256,
         score_thresh_test: float = 0.625,
         model: str = "COCO-Detection/faster_rcnn_X_101_32x8d_FPN_3x.yaml",
         name: str = "baseline",
