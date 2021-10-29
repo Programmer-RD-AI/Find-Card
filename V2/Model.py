@@ -498,87 +498,83 @@ class Model:
         """
         - train - trains the model
         """
+        self.remove_files_in_output()
+        torch.cuda.empty_cache()
+        wandb.init(
+            project=PROJECT_NAME,
+            name=self.NAME,
+            config={
+                "BASE_LR": self.BASE_LR,
+                "MAX_ITER": self.MAX_ITER,
+                "EVAL_PERIOD": self.EVAL_PERIOD,
+                "IMS_PER_BATCH": self.IMS_PER_BATCH,
+                "BATCH_SIZE_PER_IMAGE": self.BATCH_SIZE_PER_IMAGE,
+                "SCORE_THRESH_TEST": self.SCORE_THRESH_TEST,
+                "MODEL": self.model,
+                "NAME": self.NAME,
+            },
+        )
+        trainer = self.__train()
+        predictor = self.create_predictor()
+        metrics_coco = self.create_coco_eval(predictor)
+        metrics_file = self.metrics_file_to_dict()
+        test_images = self.predict_test_images(predictor)
+        (
+            preds,
+            target,
+            x,
+            y,
+            w,
+            h,
+            xmin,
+            ymin,
+            xmax,
+            ymax,
+            height,
+            width,
+        ) = self.create_target_and_preds(predictor)
+        rmse = self.create_rmse(preds, target)
+        mse = self.create_mse(preds, target)
+        # ssim = self.create_ssim(preds, target, height, width)
+        psnr = self.create_psnr(preds, target)
+        wandb.log(metrics_coco)
+        for metric_file in metrics_file:
+            wandb.log(metric_file)
+        for test_img in test_images:
+            wandb.log({test_img[0]: wandb.Image(test_img[1])})
+        wandb.log({"RMSE": rmse})
+        wandb.log({"MSE": mse})
+        wandb.log({"PSNR": psnr})
         try:
-            self.remove_files_in_output()
-            torch.cuda.empty_cache()
-            wandb.init(
-                project=PROJECT_NAME,
-                name=self.NAME,
-                config={
-                    "BASE_LR": self.BASE_LR,
-                    "MAX_ITER": self.MAX_ITER,
-                    "EVAL_PERIOD": self.EVAL_PERIOD,
-                    "IMS_PER_BATCH": self.IMS_PER_BATCH,
-                    "BATCH_SIZE_PER_IMAGE": self.BATCH_SIZE_PER_IMAGE,
-                    "SCORE_THRESH_TEST": self.SCORE_THRESH_TEST,
-                    "MODEL": self.model,
-                    "NAME": self.NAME,
-                },
+            self.save(
+                trainer=trainer,
+                predictor=predictor,
+                metrics_coco=metrics_coco,
+                metrics_file=metrics_file,
+                test_images=test_images,
+                preds=preds,
+                target=target,
+                rmse=rmse,
+                mse=mse,
+                psnr=psnr,
             )
-            trainer = self.__train()
-            predictor = self.create_predictor()
-            metrics_coco = self.create_coco_eval(predictor)
-            metrics_file = self.metrics_file_to_dict()
-            test_images = self.predict_test_images(predictor)
-            (
-                preds,
-                target,
-                x,
-                y,
-                w,
-                h,
-                xmin,
-                ymin,
-                xmax,
-                ymax,
-                height,
-                width,
-            ) = self.create_target_and_preds(predictor)
-            rmse = self.create_rmse(preds, target)
-            mse = self.create_mse(preds, target)
-            # ssim = self.create_ssim(preds, target, height, width)
-            psnr = self.create_psnr(preds, target)
-            wandb.log(metrics_coco)
-            for metric_file in metrics_file:
-                wandb.log(metric_file)
-            for test_img in test_images:
-                wandb.log({test_img[0]: wandb.Image(test_img[1])})
-            wandb.log({"RMSE": rmse})
-            wandb.log({"MSE": mse})
-            wandb.log({"PSNR": psnr})
-            try:
-                self.save(
-                    trainer=trainer,
-                    predictor=predictor,
-                    metrics_coco=metrics_coco,
-                    metrics_file=metrics_file,
-                    test_images=test_images,
-                    preds=preds,
-                    target=target,
-                    rmse=rmse,
-                    mse=mse,
-                    psnr=psnr,
-                )
-            except:
-                pass
-            wandb.finish()
-            return {
-                "trainer": trainer,
-                "predictor": predictor,
-                "metrics_coco": metrics_coco,
-                "metrics_file": metrics_file,
-                "test_images": test_images,
-                "preds": preds,
-                "target": target,
-                "rmse": rmse,
-                "mse": mse,
-                "psnr": psnr,
-            }
-            torch.cuda.empty_cache()
-            self.remove_files_in_output()
         except:
-            torch.cuda.empty_cache()
             pass
+        wandb.finish()
+        return {
+            "trainer": trainer,
+            "predictor": predictor,
+            "metrics_coco": metrics_coco,
+            "metrics_file": metrics_file,
+            "test_images": test_images,
+            "preds": preds,
+            "target": target,
+            "rmse": rmse,
+            "mse": mse,
+            "psnr": psnr,
+        }
+        torch.cuda.empty_cache()
+        self.remove_files_in_output()
 
     def __str__(self) -> str:
         return f"""

@@ -30,8 +30,8 @@ params = {
     ],
     "BATCH_SIZE_PER_IMAGE": [8, 16, 32, 64, 128],
 }
-# model = Model()
-# model.train()
+model = Model()
+model.train()
 pt = Param_Tunning(params)
 pt.tune()
 # torch.save(model.train(),'./model.pt')
