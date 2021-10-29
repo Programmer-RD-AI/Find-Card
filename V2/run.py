@@ -20,7 +20,7 @@ params = {
         "faster_rcnn_R_101_FPN_3x.yaml",
         "faster_rcnn_X_101_32x8d_FPN_3x.yaml",
     ],
-    "BASE_LR": [0.1, 0.01, 0.001, 0.0001, 0.00001, 0.000001],
+    "BASE_LR": [0.01, 0.001, 0.0001, 0.00001, 0.000001],
     "IMS_PER_BATCH": [1, 2, 3, 4, 5, 6, 7, 8, 9, 10],
     "BATCH_SIZE_PER_IMAGE": [8, 16, 32, 64, 128, 256, 512],
 }
@@ -33,7 +33,7 @@ for param in params_iter:
         ims_per_batch=param["IMS_PER_BATCH"],
         batch_size_per_image=param["BATCH_SIZE_PER_IMAGE"],
         model="COCO-Detection/" + param["MODEL"],
-        base_lr=param['BASE_LR'],
+        base_lr=param["BASE_LR"],
         name=str(param),
     )
     metrics = model.train()
