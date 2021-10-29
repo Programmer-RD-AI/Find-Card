@@ -32,7 +32,7 @@ params = {
 }
 model = Model()
 model.train()
-pt = Param_Tunning()
+pt = Param_Tunning(params)
 pt.tune()
 # torch.save(model.train(),'./model.pt')
 # torch.save(model.train(),'./model.pth')
