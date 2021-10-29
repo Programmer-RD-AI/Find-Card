@@ -50,7 +50,7 @@ class Model:
         model: str = "COCO-Detection/faster_rcnn_X_101_32x8d_FPN_3x.yaml",
         name: str = "baseline",
         create_target_and_preds: int = 29,
-        test_sample_size=32
+        test_sample_size=32,
     ) -> None:
         """
         - __init__ = initialize and get all of the params need
@@ -68,8 +68,9 @@ class Model:
         - name = name of the wandb log
         - create_target_and_preds = testing image
         """
-        self.remove_files_in_output()
+        # self.remove_files_in_output()
         self.data = data
+        self.data_other = data
         self.labels = labels  # ["Card"]
         self.tests = {
             "models": [
@@ -115,7 +116,7 @@ class Model:
         self.cfg = self.create_cfg()  # Creating the model config
         self.create_target_and_preds_iter = create_target_and_preds
         self.test_sample_size = test_sample_size
-        self.remove_files_in_output()
+        # self.remove_files_in_output()
 
     @staticmethod
     def remove_files_in_output() -> None:
@@ -123,7 +124,7 @@ class Model:
         - remove_files_in_output - remove all of the file in ./output/
         """
         files_to_remove = os.listdir("./output/")  # Get the files in the directory
-        print("Remove files in output directory")
+        # print("Remove files in output directory")
         for file_to_remove in tqdm(
             files_to_remove
         ):  # Iter over the files in the directory
@@ -135,7 +136,7 @@ class Model:
         -----------------------------------------------------
         - data_idx - the data index which is needed to be visualized
         """
-        info = self.data.iloc[data_idx]  # getting the info of the index
+        info = self.data_other.iloc[data_idx]  # getting the info of the index
         img = cv2.imread(f'./Img/{info["Path"]}')  # reading the img
         height, width = cv2.imread("./Img/" + info["Path"]).shape[
             :2
@@ -174,13 +175,13 @@ class Model:
                 self.data = np.load(
                     "./data.npy", allow_pickle=True
                 )  # Loading already saved detectron2 format file
-                self.data = self.data[:self.test_sample_size] # TODO
+                self.data = self.data[: self.test_sample_size]  # TODO
                 return self.data
         if "data.npy" in os.listdir("./"):
             self.data = np.load("./data.npy", allow_pickle=True)
             return self.data
         new_data = []
-        print("Loading Data")
+        # print("Loading Data")
         for idx in tqdm(range(len(self.data))):  # iter over the data
             record = {}
             info = self.data.iloc[idx]
@@ -220,7 +221,7 @@ class Model:
         """
         torch.cuda.empty_cache()
         files_and_object = kwargs
-        print("Save")
+        # print("Save")
         for files_and_object_key, files_and_object_val in tqdm(
             zip(files_and_object.keys(), files_and_object.values())
         ):  # iterate over the file and object
@@ -307,17 +308,20 @@ class Model:
         - metrics_file_to_dict - in ./output/metrics.json it logs the metrics of the model
         """
         new_logs = []
-        logs = open("./output/metrics.json", "r").read().split("\n")
-        print("Metrics file to dict")
-        for log in tqdm(range(len(logs))):  # uterate over the logs
-            try:
-                res = ast.literal_eval(
-                    logs[log]
-                )  # convert str ("{'test':'test'}") to dict ({"test":"test"})
-                new_logs.append(res)
-            except:
-                pass
-        return new_logs
+        try:
+            logs = open("./output/metrics.json", "r").read().split("\n")
+            # print("Metrics file to dict")
+            for log in tqdm(range(len(logs))):  # uterate over the logs
+                try:
+                    res = ast.literal_eval(
+                        logs[log]
+                    )  # convert str ("{'test':'test'}") to dict ({"test":"test"})
+                    new_logs.append(res)
+                except:
+                    pass
+            return new_logs
+        except:
+            return new_logs
 
     def predict_test_images(self, predictor: DefaultPredictor) -> list:
         """
@@ -325,7 +329,7 @@ class Model:
         """
         imgs = []
         torch.cuda.empty_cache()
-        print("Predict")
+        # print("Predict")
         for img in tqdm(os.listdir("./test_imgs/")):  # iterate over the test images
             v = Visualizer(
                 cv2.imread(f"./test_imgs/{img}")[:, :, ::-1], metadata=self.metadata
@@ -347,7 +351,6 @@ class Model:
         - create_target_and_preds - create the target and predictions
         """
         info = self.data[self.create_target_and_preds_iter]
-        print(info)
         img = cv2.imread(info["file_name"])
         height, width = cv2.imread(info["file_name"]).shape[:2]
         xmin, ymin, xmax, ymax = (
@@ -365,7 +368,6 @@ class Model:
         w = xmax - xmin
         h = ymax - ymin
         preds = predictor(img)
-        print(preds)
         if (
             len(preds["instances"].__dict__["_fields"]["pred_boxes"].__dict__["tensor"])
             <= 0
@@ -373,7 +375,6 @@ class Model:
             preds["instances"].__dict__["_fields"]["pred_boxes"].__dict__[
                 "tensor"
             ] = torch.tensor([[1, 1, 1, 1]])
-        print(preds)
         target = torch.tensor([xmin, ymin, xmax, ymax])
 
         return (preds, target, x, y, w, h, xmin, ymin, xmax, ymax, height, width)
@@ -387,12 +388,12 @@ class Model:
         preds_new = (
             preds["instances"].__dict__["_fields"]["pred_boxes"].__dict__["tensor"]
         )
-        print("Creating RMSE")
+        # print("Creating RMSE")
         for pred_i in tqdm(range(len(preds))):
             pred = preds_new[pred_i]
             if r_mean_squared_error(pred.to("cpu"), target) > lowest_rmse:
                 lowest_rmse = r_mean_squared_error(pred.to("cpu"), target)
-        return lowest_rmse
+        return float(lowest_rmse)
 
     def create_mse(self, preds: torch.tensor, target: torch.tensor) -> float:
         """
@@ -403,12 +404,12 @@ class Model:
         preds_new = (
             preds["instances"].__dict__["_fields"]["pred_boxes"].__dict__["tensor"]
         )
-        print("Creating MSE")
+        # print("Creating MSE")
         for pred_i in tqdm(range(len(preds))):
             pred = preds_new[pred_i]
             if mean_squared_error(pred.to("cpu"), target) > lowest_mse:
                 lowest_mse = mean_squared_error(pred.to("cpu"), target)
-        return lowest_mse
+        return float(lowest_mse)
 
     @staticmethod
     def create_x_y_w_h(xmin: int, ymin: int, xmax: int, ymax: int) -> list:
@@ -441,19 +442,15 @@ class Model:
         preds_new = (
             preds["instances"].__dict__["_fields"]["pred_boxes"].__dict__["tensor"]
         )
-        print("Creating SSIM")
+        # print("Creating SSIM")
         for pred_i in tqdm(range(len(preds))):
             pred = preds_new[pred_i]
-            print(target)
-            print(pred)
             info = self.data[self.create_target_and_preds_iter]
             img = cv2.imread(info["file_name"])
             x, y, w, h = self.create_x_y_w_h(target[0], target[1], target[2], target[3])
             crop_img_target = torch.from_numpy(self.crop_img(x, y, w, h, img))
             x, y, w, h = self.create_x_y_w_h(pred[0], pred[1], pred[2], pred[3])
             crop_img_pred = torch.from_numpy(np.array(self.crop_img(x, y, w, h, img)))
-            print(crop_img_pred.shape)
-            print(crop_img_target.shape)
             if ssim(crop_img_pred, crop_img_target) > lowest_ssim:
                 lowest_ssim = ssim(pred.to("cpu"), target)
         return lowest_ssim
@@ -467,7 +464,7 @@ class Model:
         preds_new = (
             preds["instances"].__dict__["_fields"]["pred_boxes"].__dict__["tensor"]
         )
-        print("Creating PSNR")
+        # print("Creating PSNR")
         for pred_i in tqdm(range(len(preds))):
             pred = preds_new[pred_i]
             if psnr(pred.to("cpu"), target) > lowest_psnr:
@@ -483,7 +480,7 @@ class Model:
         preds_new = (
             preds["instances"].__dict__["_fields"]["pred_boxes"].__dict__["tensor"]
         )
-        print("Creating MAE")
+        # print("Creating MAE")
         for pred_i in tqdm(range(len(preds))):
             pred = preds_new[pred_i]
             if mae(pred.to("cpu"), target) > lowest_mae:
@@ -612,7 +609,11 @@ class Model:
 
 
 class Param_Tunning:
-    def __init__(self, params: dict):
+    def __init__(self, params: dict) -> None:
+        f"""
+        initialize the Class
+        params - dict like {Model().test}
+        """
         required_labels = [
             "BASE_LR",
             "LABELS",
@@ -634,6 +635,9 @@ class Param_Tunning:
         self.params = ParameterGrid(params)
 
     def tune(self) -> dict:
+        """
+        Tune all of the parameters
+        """
         models = {"Model": [], "Metrics_COCO": [], "Metrics_File": []}
         for param in tqdm(self.params):
             try:
