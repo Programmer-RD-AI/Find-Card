@@ -114,7 +114,7 @@ jupyter-server==1.8.0
 jupyter==1.0.0
 jupyterlab-server==2.6.0
 jupyterlab-widgets==1.0.2
-jupyterlab==3.0.16
+jupyterlab==3.0.17
 kaleido==0.2.1
 keras-preprocessing==1.1.2
 keras==2.4.3
