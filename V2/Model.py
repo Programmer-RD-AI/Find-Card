@@ -1,4 +1,6 @@
 # Imports
+from detectron2.config.config import CfgNode
+from torch._C import Def
 from tqdm import tqdm
 from sklearn.model_selection import ParameterGrid
 import random
@@ -39,27 +41,7 @@ PROJECT_NAME = "Find-Card"
 # Model
 class Model:
     """
-    # Function
-    - __init__ = initialize and get all of the params need
-    - remove_files_in_output - remove all of the file in ./output/
-    - test - croping and creating a box around the img xmin,ymin, xmax, ymax
-    - load_data - loading the data in the detectron2 data format
-    - save - it save the object with the {name}-{wandb-name}.pt and .pth
-    - create_cfg - create the config
-    - __train - trains the cfg
-    - create_predictor - create the predictor to predict images
-    - create_coco_eval - create COCO Evalutor and tests it
-    - metrics_file_to_dict - in ./output/metrics.json it logs the metrics of the model and
-    - predict_test_images - predict test images
-    - create_target_and_preds - create the target and predictions
-    - create_rmse - Create Root-mean-square deviation
-    - create_mse - Create Mean-square deviation
-    - create_x_y_w_h - Conver xmin,ymin, xmax, ymax to x,y,w,h
-    - crop_img - cropping the image using x,y,w,h
-    - create_ssim - create SSIM # TODO it is not done yet
-    - create_psnr - Peak signal-to-noise ratio (how similar is a image)
-    - create_mae - Mean absolute error
-    - train - trains the model
+    This class helps anyone to train a detectron2 model for this project easily so anyone can train this model.
     """
 
     def __init__(
@@ -142,6 +124,9 @@ class Model:
 
     @staticmethod
     def remove_files_in_output() -> None:
+        """
+        - remove_files_in_output - remove all of the file in ./output/
+        """
         files_to_remove = os.listdir("./output/")  # Get the files in the directory
         print("Remove files in output directory")
         for file_to_remove in tqdm(
@@ -150,27 +135,50 @@ class Model:
             os.remove(f"./output/{file_to_remove}")  # Delete the iter file
 
     def test(self, data_idx: int) -> list:
-        info = self.data.iloc[data_idx]
-        img = cv2.imread(f'./Img/{info["Path"]}')
-        height, width = cv2.imread("./Img/" + info["Path"]).shape[:2]
-        xmin, ymin, xmax, ymax = info["XMin"], info["YMin"], info["XMax"], info["YMax"]
-        xmin = round(xmin * width)
-        xmax = round(xmax * width)
-        ymin = round(ymin * height)
-        ymax = round(ymax * height)
+        """
+        - test - croping and creating a box around the img xmin,ymin, xmax, ymax
+        -----------------------------------------------------
+        - data_idx - the data index which is needed to be visualized
+        """
+        info = self.data.iloc[data_idx]  # getting the info of the index
+        img = cv2.imread(f'./Img/{info["Path"]}')  # reading the img
+        height, width = cv2.imread("./Img/" + info["Path"]).shape[
+            :2
+        ]  # getting the height and width of the image
+        xmin, ymin, xmax, ymax = (
+            info["XMin"],
+            info["YMin"],
+            info["XMax"],
+            info["YMax"],
+        )  # getting the xmin,ymin, xmax, ymax
+        xmin = round(xmin * width)  # converting it to real xmin
+        xmax = round(xmax * width)  # converting it to real xmax
+        ymin = round(ymin * height)  # converting it to real ymin
+        ymax = round(ymax * height)  # converting it to real ymax
+        # The above is needed becuase open images gives their datasets xmin,ymin,xmax,ymax in a different way
         x = xmin
         y = ymin
         w = xmax - xmin
         h = ymax - ymin
         x, y, w, h = round(x), round(y), round(w), round(h)
-        roi = img[y : y + h, x : x + w]
-        cv2.rectangle(img, (x, y), (x + w, y + h), (200, 0, 0), 10)
+        roi = img[y : y + h, x : x + w]  # crop the image
+        cv2.rectangle(
+            img, (x, y), (x + w, y + h), (200, 0, 0), 10
+        )  # draw box around the bbox
         return [img, roi]
 
-    def load_data(self, test=False):
+    def load_data(self, test: bool = False) -> list:
+        """
+        - load_data - loading the data in the detectron2 data format
+        -------------------------------------
+        - test - if the return is supposed to be a test sample or not
+            - Defalt = False and type = bool
+        """
         if test is True:
             if "data.npy" in os.listdir("./"):
-                self.data = np.load("./data.npy", allow_pickle=True)
+                self.data = np.load(
+                    "./data.npy", allow_pickle=True
+                )  # Loading already saved detectron2 format file
                 self.data = self.data[:62]
                 return self.data
         if "data.npy" in os.listdir("./"):
@@ -178,7 +186,7 @@ class Model:
             return self.data
         new_data = []
         print("Loading Data")
-        for idx in tqdm(range(len(self.data))):
+        for idx in tqdm(range(len(self.data))):  # iter over the data
             record = {}
             info = self.data.iloc[idx]
             height, width = cv2.imread("./Img/" + info["Path"]).shape[:2]
@@ -205,103 +213,144 @@ class Model:
             record["image_id"] = idx
             record["annotations"] = objs
             new_data.append(record)
-        np.random.shuffle(new_data)
-        np.save("data.npy", new_data)
+        np.random.shuffle(new_data)  # Shuffling the data
+        np.save("data.npy", new_data)  # Saving the data
         return new_data
 
-    def save(self, **kwargs):
+    def save(self, **kwargs: dict) -> None:
+        """
+        - save - it save the object with the {name}-{wandb-name}.pt and .pth
+        ----------------------------------------------------
+        - **kwargs - like Model().save(a="b")
+        """
         torch.cuda.empty_cache()
         files_and_object = kwargs
         print("Save")
-        for files_and_object_key, files_and_object_key in tqdm(
+        for files_and_object_key, files_and_object_val in tqdm(
             zip(files_and_object.keys(), files_and_object.values())
-        ):
+        ):  # iterate over the file and object
             torch.save(
-                files_and_object_key, f"./models/{files_and_object_key}-{self.NAME}.pt"
-            )
+                files_and_object_val, f"./models/{files_and_object_key}-{self.NAME}.pt"
+            )  # Save the file in .pt
             torch.save(
-                files_and_object_key, f"./models/{files_and_object_key}-{self.NAME}.pth"
-            )
+                files_and_object_val, f"./models/{files_and_object_key}-{self.NAME}.pth"
+            )  # Save the file in .pth
         torch.cuda.empty_cache()
 
-    def create_cfg(self):
+    def create_cfg(self) -> CfgNode:
+        """
+        - create_cfg - create the config of the model
+        """
         torch.cuda.empty_cache()
-        cfg = get_cfg()
-        cfg.merge_from_file(model_zoo.get_config_file(self.model))
-        cfg.DATASETS.TRAIN = ("data",)
+        cfg = get_cfg()  # Creating a new cfg
+        cfg.merge_from_file(model_zoo.get_config_file(self.model))  # Add the model
+        cfg.DATASETS.TRAIN = ("data",)  # adding train DataSet
         cfg.DATASETS.TEST = ()
-        cfg.MODEL.WEIGHTS = model_zoo.get_checkpoint_url(self.model)
-        cfg.SOLVER.MAX_ITER = self.MAX_ITER
-        cfg.TEST.EVAL_PERIOD = self.EVAL_PERIOD
-        cfg.SOLVER.BASE_LR = self.BASE_LR
-        cfg.SOLVER.STEPS = []
-        cfg.SOLVER.IMS_PER_BATCH = self.IMS_PER_BATCH
-        cfg.MODEL.ROI_HEADS.NUM_CLASSES = len(self.labels)
-        cfg.MODEL.ROI_HEADS.BATCH_SIZE_PER_IMAGE = self.BATCH_SIZE_PER_IMAGE
+        cfg.MODEL.WEIGHTS = model_zoo.get_checkpoint_url(
+            self.model
+        )  # Adding the weights
+        cfg.SOLVER.MAX_ITER = self.MAX_ITER  # Set Max iter
+        cfg.TEST.EVAL_PERIOD = self.EVAL_PERIOD  # Set Eval Period
+        cfg.SOLVER.BASE_LR = self.BASE_LR  # Set Base LR
+        cfg.SOLVER.STEPS = []  # Set Steps
+        cfg.SOLVER.IMS_PER_BATCH = self.IMS_PER_BATCH  # Set IMS_PER_BATCH
+        cfg.MODEL.ROI_HEADS.NUM_CLASSES = len(self.labels)  # Set len(self.labels)
+        cfg.MODEL.ROI_HEADS.BATCH_SIZE_PER_IMAGE = (
+            self.BATCH_SIZE_PER_IMAGE
+        )  # Set Batch_Size_Per_Image
         torch.cuda.empty_cache()
         return cfg
 
     def __train(
         self,
-    ):
+    ) -> DefaultTrainer:
+        """
+        - __train - trains the cfg
+            this is used by Model.train() this is kind of the under function
+        """
         torch.cuda.empty_cache()
-        trainer = DefaultTrainer(self.cfg)
+        trainer = DefaultTrainer(self.cfg)  # Train the cfg  (Config)
         torch.cuda.empty_cache()
-        trainer.resume_or_load(resume=False)
+        trainer.resume_or_load(resume=False)  # Resume the model or load a new model
         torch.cuda.empty_cache()
-        trainer.train()
+        trainer.train()  # training the model
         torch.cuda.empty_cache()
         return trainer
 
-    def create_predictor(self):
+    def create_predictor(self) -> DefaultPredictor:
+        """
+        - create_predictor - create the predictor to predict images
+        """
         torch.cuda.empty_cache()
-        self.cfg.MODEL.ROI_HEADS.SCORE_THRESH_TEST = self.SCORE_THRESH_TEST
-        self.cfg.MODEL.WEIGHTS = "./output/model_final.pth"
-        predictor = DefaultPredictor(self.cfg)
+        self.cfg.MODEL.ROI_HEADS.SCORE_THRESH_TEST = (
+            self.SCORE_THRESH_TEST
+        )  # Setting SCORE_THRESH_TEST
+        self.cfg.MODEL.WEIGHTS = (
+            "./output/model_final.pth"  # The saved weights of the model
+        )
+        predictor = DefaultPredictor(self.cfg)  # Creating predictor
         torch.cuda.empty_cache()
         return predictor
 
-    def create_coco_eval(self, predictor):
+    def create_coco_eval(self, predictor: DefaultPredictor) -> dict:
+        """
+        - create_coco_eval - create COCO Evaluator and tests it
+        -------------------------------
+        - predictor - to create the evaluator
+        """
         torch.cuda.empty_cache()
-        evaluator = COCOEvaluator("test", output_dir="./output/")
-        val_loader = build_detection_test_loader(self.cfg, "test")
-        metrics = inference_on_dataset(predictor.model, val_loader, evaluator)
+        evaluator = COCOEvaluator("test", output_dir="./output/")  # Create evaluator
+        val_loader = build_detection_test_loader(self.cfg, "test")  # Create data loader
+        metrics = inference_on_dataset(
+            predictor.model, val_loader, evaluator
+        )  # Test the data with the evaluator
         torch.cuda.empty_cache()
         return metrics
 
-    def metrics_file_to_dict(self):
+    def metrics_file_to_dict(self) -> list:
+        """
+        - metrics_file_to_dict - in ./output/metrics.json it logs the metrics of the model
+        """
         new_logs = []
         logs = open("./output/metrics.json", "r").read().split("\n")
         print("Metrics file to dict")
-        for log in tqdm(range(len(logs))):
+        for log in tqdm(range(len(logs))):  # uterate over the logs
             try:
-                res = ast.literal_eval(logs[log])
+                res = ast.literal_eval(
+                    logs[log]
+                )  # convert str ("{'test':'test'}") to dict ({"test":"test"})
                 new_logs.append(res)
             except:
                 pass
         return new_logs
 
-    def predict_test_images(self, predictor):
+    def predict_test_images(self, predictor: DefaultPredictor) -> list:
+        """
+        - predict_test_images - predict test images
+        """
         imgs = []
         torch.cuda.empty_cache()
         print("Predict")
-        for img in tqdm(os.listdir("./test_imgs/")):
+        for img in tqdm(os.listdir("./test_imgs/")):  # iterate over the test images
             v = Visualizer(
                 cv2.imread(f"./test_imgs/{img}")[:, :, ::-1], metadata=self.metadata
             )
             v = v.draw_instance_predictions(
                 predictor(cv2.imread(f"./test_imgs/{img}"))["instances"].to("cpu")
-            )
+            )  # Draw pred boxes
             v = v.get_image()[:, :, ::-1]
             plt.figure(figsize=(24, 12))
-            plt.imshow(v)
+            plt.imshow(v)  # plot the image
             plt.savefig(f"./preds/{img}")
             plt.close()
             imgs.append([f"./test_imgs/{img}", v])
         torch.cuda.empty_cache()
         return imgs
 
-    def create_target_and_preds(self, predictor):
+    def create_target_and_preds(self, predictor: DefaultPredictor) -> tuple:
+        """
+        - create_target_and_preds - create the target and predictions
+        """
         info = self.data[self.create_target_and_preds_iter]
         print(info)
         img = cv2.imread(info["file_name"])
@@ -334,7 +383,10 @@ class Model:
 
         return (preds, target, x, y, w, h, xmin, ymin, xmax, ymax, height, width)
 
-    def create_rmse(self, preds, target):
+    def create_rmse(self, preds: torch.tensor, target: torch.tensor) -> float:
+        """
+        - create_rmse - Create Root-mean-square deviation
+        """
         lowest_rmse = 0
         r_mean_squared_error = MeanSquaredError(squared=False)
         preds_new = (
@@ -347,7 +399,10 @@ class Model:
                 lowest_rmse = r_mean_squared_error(pred.to("cpu"), target)
         return lowest_rmse
 
-    def create_mse(self, preds, target):
+    def create_mse(self, preds: torch.tensor, target: torch.tensor) -> float:
+        """
+        - create_mse - Create Mean-square deviation
+        """
         lowest_mse = 0
         mean_squared_error = MeanSquaredError(squared=True)
         preds_new = (
@@ -361,20 +416,31 @@ class Model:
         return lowest_mse
 
     @staticmethod
-    def create_x_y_w_h(xmin, ymin, xmax, ymax):
+    def create_x_y_w_h(xmin: int, ymin: int, xmax: int, ymax: int) -> list:
+        """
+        - create_x_y_w_h - Conver xmin,ymin, xmax, ymax to x,y,w,h
+        """
         x = xmin
         y = ymin
         w = xmax - xmin
         h = ymax - ymin
-        return x, y, w, h
+        return [x, y, w, h]
 
     @staticmethod
-    def crop_img(x, y, w, h, img):
+    def crop_img(x: int, y: int, w: int, h: int, img: np.array) -> np.array:
+        """
+        - crop_img - cropping the image using x,y,w,h
+        """
         crop = img[y : y + h, x : x + w]
         cv2.imwrite("./test.png", crop)
         return crop
 
-    def create_ssim(self, preds, target, height, width):
+    def create_ssim(
+        self, preds: torch.tensor, target: torch.tensor, height: int, width: int
+    ) -> float:
+        """
+        - create_ssim - create SSIM # TODO it is not done yet
+        """
         lowest_ssim = 0
         ssim = SSIM()
         preds_new = (
@@ -397,7 +463,10 @@ class Model:
                 lowest_ssim = ssim(pred.to("cpu"), target)
         return lowest_ssim
 
-    def create_psnr(self, preds, target):
+    def create_psnr(self, preds: torch.tensor, target: torch.tensor) -> float:
+        """
+        - create_psnr - Peak signal-to-noise ratio (how similar is a image)
+        """
         lowest_psnr = 0
         psnr = PSNR()
         preds_new = (
@@ -410,7 +479,10 @@ class Model:
                 lowest_psnr = psnr(pred.to("cpu"), target)
         return lowest_psnr
 
-    def create_mae(self, preds, target):
+    def create_mae(self, preds: torch.tensor, target: torch.tensor) -> float:
+        """
+        - create_mae - Mean absolute error
+        """
         lowest_mae = 0
         mae = MeanAbsoluteError()
         preds_new = (
@@ -423,7 +495,10 @@ class Model:
                 lowest_mae = mae(pred.to("cpu"), target)
         return lowest_mae
 
-    def train(self):
+    def train(self) -> dict:
+        """
+        - train - trains the model
+        """
         wandb.init(
             entity=ENTITY,
             project=PROJECT_NAME,
@@ -498,7 +573,7 @@ class Model:
             "psnr": psnr,
         }
 
-    def __str__(self):
+    def __str__(self) -> str:
         return f"""
             BASE_LR={self.BASE_LR}
             \n
@@ -519,7 +594,7 @@ class Model:
             Detectron2 Model
             """
 
-    def __repr__(self):
+    def __repr__(self) -> str:
         return f"""
             BASE_LR={self.BASE_LR}
             \n
@@ -587,13 +662,3 @@ class Param_Tunning:
         models = pd.DataFrame(models)
         models.to_csv("./tune.csv")
         return models
-
-
-# TODO - Add Comments and What is the output of the function and description,etc..
-# TODO - Add Param to load the data saved
-# TODO - Add @classmethod do give update of the project
-# TODO - Add A Progress Bar
-# TODO - Define What metric does what
-# TODO - Do Unit tests
-# TODO - Add Funtion what will load the models and others and predict easily
-# TODO - Add Raise
