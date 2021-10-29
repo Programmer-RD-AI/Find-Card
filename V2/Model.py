@@ -225,6 +225,7 @@ class Model:
         for files_and_object_key, files_and_object_val in tqdm(
             zip(files_and_object.keys(), files_and_object.values())
         ):  # iterate over the file and object
+            print(files_and_object_key)
             torch.save(
                 files_and_object_val, f"./models/{files_and_object_key}-{self.NAME}.pt"
             )  # Save the file in .pt
