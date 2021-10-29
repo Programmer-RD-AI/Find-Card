@@ -225,7 +225,6 @@ class Model:
         for files_and_object_key, files_and_object_val in tqdm(
             zip(files_and_object.keys(), files_and_object.values())
         ):  # iterate over the file and object
-            print(files_and_object_key)
             torch.save(
                 files_and_object_val, f"./models/{files_and_object_key}-{self.NAME}.pt"
             )  # Save the file in .pt
@@ -538,18 +537,21 @@ class Model:
         wandb.log({"RMSE": rmse})
         wandb.log({"MSE": mse})
         wandb.log({"PSNR": psnr})
-        self.save(
-            trainer=trainer,
-            predictor=predictor,
-            metrics_coco=metrics_coco,
-            metrics_file=metrics_file,
-            test_images=test_images,
-            preds=preds,
-            target=target,
-            rmse=rmse,
-            mse=mse,
-            psnr=psnr,
-        )
+        try:
+            self.save(
+                trainer=trainer,
+                predictor=predictor,
+                metrics_coco=metrics_coco,
+                metrics_file=metrics_file,
+                test_images=test_images,
+                preds=preds,
+                target=target,
+                rmse=rmse,
+                mse=mse,
+                psnr=psnr,
+            )
+        except:
+            pass
         wandb.finish()
         return {
             "trainer": trainer,
