@@ -68,7 +68,7 @@ class Model:
         - name = name of the wandb log
         - create_target_and_preds = testing image
         """
-        self.remove_files_in_output()
+        # self.remove_files_in_output()
         self.data = data
         self.data_other = data
         self.labels = labels  # ["Card"]
@@ -111,7 +111,8 @@ class Model:
             )  # Adding the labels
             self.metadata_test = MetadataCatalog.get("test")  # Getting the metadata
         except:
-            pass
+            self.metadata = MetadataCatalog.get("data")  # Getting the metadata
+            self.metadata_test = MetadataCatalog.get("test")  # Getting the metadata
         self.BASE_LR = base_lr
         self.MAX_ITER = max_iter
         self.EVAL_PERIOD = eval_period
@@ -123,7 +124,7 @@ class Model:
         self.cfg = self.create_cfg()  # Creating the model config
         self.create_target_and_preds_iter = create_target_and_preds
         self.test_sample_size = test_sample_size
-        self.remove_files_in_output()
+        # self.remove_files_in_output()
 
     @staticmethod
     def remove_files_in_output() -> None:
@@ -358,9 +359,8 @@ class Model:
         - create_target_and_preds - create the target and predictions
         """
         info = self.data.iloc[self.create_target_and_preds_iter]
-        print(info)
-        img = cv2.imread(info["Path"])
-        height, width = cv2.imread(info["Path"]).shape[:2]
+        img = cv2.imread("./Img/" + info["Path"])
+        height, width = cv2.imread("./Img/" + info["Path"]).shape[:2]
         xmin, ymin, xmax, ymax = (
             info["XMin"],
             info["YMin"],
@@ -499,7 +499,7 @@ class Model:
         """
         - train - trains the model
         """
-        self.remove_files_in_output()
+        # self.remove_files_in_output()
         torch.cuda.empty_cache()
         wandb.init(
             project=PROJECT_NAME,
@@ -574,8 +574,8 @@ class Model:
             "mse": mse,
             "psnr": psnr,
         }
-        torch.cuda.empty_cache()
-        self.remove_files_in_output()
+        # torch.cuda.empty_cache()
+        # self.remove_files_in_output()
 
     def __str__(self) -> str:
         return f"""

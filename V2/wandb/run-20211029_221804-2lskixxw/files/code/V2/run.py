@@ -1,7 +1,7 @@
 from Model import *
 
 model = Model()
-# model.train()
+model.train()
 params = {
     "MODEL": [
         # "fast_rcnn_R_50_FPN_1x.yaml",
@@ -21,8 +21,8 @@ params = {
         "faster_rcnn_X_101_32x8d_FPN_3x.yaml",
     ],
     "BASE_LR": [0.0001, 0.00001, 0.000001],
-    "IMS_PER_BATCH": [1, 2, 3, 4, 5],
-    "BATCH_SIZE_PER_IMAGE": [8, 16, 32, 64, 128],
+    "IMS_PER_BATCH": [1, 2, 3, 4, 5, 6, 7, 8, 9, 10],
+    "BATCH_SIZE_PER_IMAGE": [8, 16, 32, 64, 128, 256, 512],
 }
 params = ParameterGrid(params)
 params_iter = tqdm(params)
