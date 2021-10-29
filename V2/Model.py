@@ -37,7 +37,7 @@ class Model:
         base_lr=0.00025,
         data=pd.read_csv("./Data.csv").sample(frac=1),
         labels=["Card"],
-        max_iter=50,
+        max_iter=500,
         eval_period=5,
         ims_per_batch=2,
         batch_size_per_image=128,
@@ -486,3 +486,5 @@ class Model:
 # TODO - Add @classmethod do give update of the project
 # TODO - Add A Progress Bar
 # TODO - Define What metric does what
+# TODO - Do Unit tests
+# TODO - Add Funtion what will load the models and others and predict easily
