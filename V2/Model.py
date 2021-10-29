@@ -538,18 +538,16 @@ class Model:
         wandb.log({"MSE": mse})
         wandb.log({"PSNR": psnr})
         self.save(
-            {
-                "trainer": trainer,
-                "predictor": predictor,
-                "metrics_coco": metrics_coco,
-                "metrics_file": metrics_file,
-                "test_images": test_images,
-                "preds": preds,
-                "target": target,
-                "rmse": rmse,
-                "mse": mse,
-                "psnr": psnr,
-            }
+            trainer=trainer,
+            predictor=predictor,
+            metrics_coco=metrics_coco,
+            metrics_file=metrics_file,
+            test_images=test_images,
+            preds=preds,
+            target=target,
+            rmse=rmse,
+            mse=mse,
+            psnr=psnr,
         )
         wandb.finish()
         return {
