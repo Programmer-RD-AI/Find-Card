@@ -1,4 +1,6 @@
 from Model import *
+model = Model()
+model.train()
 models = [
         # "fast_rcnn_R_50_FPN_1x.yaml",
         "faster_rcnn_R_50_C4_1x.yaml",
