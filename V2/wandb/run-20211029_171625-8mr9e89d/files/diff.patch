@@ -1,0 +1,144 @@
+diff --git a/V2/Model.py b/V2/Model.py
+index be46cd7..ec1a334 100644
+--- a/V2/Model.py
++++ b/V2/Model.py
+@@ -210,7 +210,7 @@ class Model:
+             record["annotations"] = objs
+             new_data.append(record)
+         np.random.shuffle(new_data)  # Shuffling the data
+-        np.save("data.npy", new_data)  # Saving the data
++        # np.save("data.npy", new_data)  # Saving the data
+         return new_data
+ 
+     def save(self, **kwargs: dict) -> None:
+@@ -488,11 +488,12 @@ class Model:
+         return lowest_mae
+ 
+     def train(self) -> dict:
++        """
++        - train - trains the model
++        """
+         try:
++            self.remove_files_in_output()
+             torch.cuda.empty_cache()
+-            """
+-            - train - trains the model
+-            """
+             wandb.init(
+                 project=PROJECT_NAME,
+                 name=self.NAME,
+@@ -567,9 +568,11 @@ class Model:
+                 "psnr": psnr,
+             }
+             torch.cuda.empty_cache()
++            self.remove_files_in_output()
+         except:
+             torch.cuda.empty_cache()
+             pass
++
+     def __str__(self) -> str:
+         return f"""
+             BASE_LR={self.BASE_LR}
+diff --git a/V2/data.npy b/V2/data.npy
+deleted file mode 100644
+index c196f72..0000000
+Binary files a/V2/data.npy and /dev/null differ
+diff --git a/V2/output/events.out.tfevents.1635506275.programmer-rd-ai.168167.0 b/V2/output/events.out.tfevents.1635506275.programmer-rd-ai.168167.0
+deleted file mode 100644
+index 40796dd..0000000
+Binary files a/V2/output/events.out.tfevents.1635506275.programmer-rd-ai.168167.0 and /dev/null differ
+diff --git a/V2/output/last_checkpoint b/V2/output/last_checkpoint
+deleted file mode 100644
+index da0e9f9..0000000
+--- a/V2/output/last_checkpoint
++++ /dev/null
+@@ -1 +0,0 @@
+-model_final.pth
+\ No newline at end of file
+diff --git a/V2/output/metrics.json b/V2/output/metrics.json
+deleted file mode 100644
+index 0657055..0000000
+--- a/V2/output/metrics.json
++++ /dev/null
+@@ -1,13 +0,0 @@
+-{"data_time": 0.0029326314997888403, "eta_seconds": 247.2754116649685, "fast_rcnn/cls_accuracy": 0.455078125, "fast_rcnn/false_negative": 0.5192307692307692, "fast_rcnn/fg_cls_accuracy": 0.4807692307692308, "iteration": 19, "loss_box_reg": 0.38278721272945404, "loss_cls": 0.7135840058326721, "loss_rpn_cls": 0.025103600695729256, "loss_rpn_loc": 0.007102154428139329, "lr": 1.9231e-05, "roi_head/num_bg_samples": 115.25, "roi_head/num_fg_samples": 12.75, "rpn/num_neg_anchors": 251.5, "rpn/num_pos_anchors": 4.5, "time": 1.075110485499863, "total_loss": 1.1593326313886791}
+-{"data_time": 0.0027416295006332803, "eta_seconds": 230.08021270492463, "fast_rcnn/cls_accuracy": 0.876953125, "fast_rcnn/false_negative": 0.948849104859335, "fast_rcnn/fg_cls_accuracy": 0.05115089514066496, "iteration": 39, "loss_box_reg": 0.3717539757490158, "loss_cls": 0.519263356924057, "loss_rpn_cls": 0.014098016545176506, "loss_rpn_loc": 0.00599434575997293, "lr": 3.9211e-05, "roi_head/num_bg_samples": 116.0, "roi_head/num_fg_samples": 12.0, "rpn/num_neg_anchors": 250.75, "rpn/num_pos_anchors": 5.25, "time": 1.1025470374997894, "total_loss": 0.9553545392118394}
+-{"data_time": 0.0026686985002015717, "eta_seconds": 204.2226875950928, "fast_rcnn/cls_accuracy": 0.931640625, "fast_rcnn/false_negative": 1.0, "fast_rcnn/fg_cls_accuracy": 0.0, "iteration": 59, "loss_box_reg": 0.23854200541973114, "loss_cls": 0.3251109719276428, "loss_rpn_cls": 0.04429761320352554, "loss_rpn_loc": 0.006213726941496134, "lr": 5.9190999999999996e-05, "roi_head/num_bg_samples": 119.25, "roi_head/num_fg_samples": 8.75, "rpn/num_neg_anchors": 252.0, "rpn/num_pos_anchors": 4.0, "time": 1.0396489500008101, "total_loss": 0.598988639889285}
+-{"data_time": 0.002406480999525229, "eta_seconds": 177.83399533496777, "fast_rcnn/cls_accuracy": 0.900390625, "fast_rcnn/false_negative": 1.0, "fast_rcnn/fg_cls_accuracy": 0.0, "iteration": 79, "loss_box_reg": 0.3836764097213745, "loss_cls": 0.2670423537492752, "loss_rpn_cls": 0.019259078428149223, "loss_rpn_loc": 0.005906195612624288, "lr": 7.9171e-05, "roi_head/num_bg_samples": 115.25, "roi_head/num_fg_samples": 12.75, "rpn/num_neg_anchors": 252.0, "rpn/num_pos_anchors": 4.0, "time": 1.0108668550001312, "total_loss": 0.6889644517505076}
+-{"data_time": 0.002445170999635593, "eta_seconds": 156.91234882497156, "fast_rcnn/cls_accuracy": 0.927734375, "fast_rcnn/false_negative": 1.0, "fast_rcnn/fg_cls_accuracy": 0.0, "iteration": 99, "loss_box_reg": 0.2779299020767212, "loss_cls": 0.24988505244255066, "loss_rpn_cls": 0.030559596605598927, "loss_rpn_loc": 0.011005888693034649, "lr": 9.9151e-05, "roi_head/num_bg_samples": 118.75, "roi_head/num_fg_samples": 9.25, "rpn/num_neg_anchors": 250.5, "rpn/num_pos_anchors": 5.5, "time": 1.0154235114996482, "total_loss": 0.6107169247698039}
+-{"data_time": 0.0025155619987344835, "eta_seconds": 135.99070231497535, "fast_rcnn/cls_accuracy": 0.921875, "fast_rcnn/false_negative": 1.0, "fast_rcnn/fg_cls_accuracy": 0.0, "iteration": 119, "loss_box_reg": 0.297267347574234, "loss_cls": 0.21748466789722443, "loss_rpn_cls": 0.03730966988950968, "loss_rpn_loc": 0.008038449799641967, "lr": 0.00011913100000000001, "roi_head/num_bg_samples": 118.0, "roi_head/num_fg_samples": 10.0, "rpn/num_neg_anchors": 251.75, "rpn/num_pos_anchors": 4.25, "time": 1.0903453069995521, "total_loss": 0.5597097600111738}
+-{"data_time": 0.0023727560001134407, "eta_seconds": 115.75732816992968, "fast_rcnn/cls_accuracy": 0.9140625, "fast_rcnn/false_negative": 1.0, "fast_rcnn/fg_cls_accuracy": 0.0, "iteration": 139, "loss_box_reg": 0.28759145736694336, "loss_cls": 0.23291581869125366, "loss_rpn_cls": 0.04303049296140671, "loss_rpn_loc": 0.006526777986437082, "lr": 0.000139111, "roi_head/num_bg_samples": 117.0, "roi_head/num_fg_samples": 11.0, "rpn/num_neg_anchors": 252.5, "rpn/num_pos_anchors": 3.5, "time": 1.1226588145000278, "total_loss": 0.5472184841055423}
+-{"data_time": 0.0029706974992222968, "eta_seconds": 94.71054122994246, "fast_rcnn/cls_accuracy": 0.896484375, "fast_rcnn/false_negative": 1.0, "fast_rcnn/fg_cls_accuracy": 0.0, "iteration": 159, "loss_box_reg": 0.3743348568677902, "loss_cls": 0.21691206097602844, "loss_rpn_cls": 0.013970143627375364, "loss_rpn_loc": 0.005688143894076347, "lr": 0.000159091, "roi_head/num_bg_samples": 114.75, "roi_head/num_fg_samples": 13.25, "rpn/num_neg_anchors": 252.0, "rpn/num_pos_anchors": 4.0, "time": 1.0672718000005261, "total_loss": 0.6371131346095353}
+-{"data_time": 0.0033340165000481647, "eta_seconds": 73.47597421502542, "fast_rcnn/cls_accuracy": 0.912109375, "fast_rcnn/false_negative": 1.0, "fast_rcnn/fg_cls_accuracy": 0.0, "iteration": 179, "loss_box_reg": 0.3226809799671173, "loss_cls": 0.21195271611213684, "loss_rpn_cls": 0.019801415037363768, "loss_rpn_loc": 0.007004605373367667, "lr": 0.000179071, "roi_head/num_bg_samples": 116.75, "roi_head/num_fg_samples": 11.25, "rpn/num_neg_anchors": 251.5, "rpn/num_pos_anchors": 4.5, "time": 0.9653045325003404, "total_loss": 0.5888779277447611}
+-{"data_time": 0.00240158149972558, "eta_seconds": 52.73383824996927, "fast_rcnn/cls_accuracy": 0.908203125, "fast_rcnn/false_negative": 1.0, "fast_rcnn/fg_cls_accuracy": 0.0, "iteration": 199, "loss_box_reg": 0.3487507700920105, "loss_cls": 0.22453594952821732, "loss_rpn_cls": 0.023481085896492004, "loss_rpn_loc": 0.006588207557797432, "lr": 0.000199051, "roi_head/num_bg_samples": 116.25, "roi_head/num_fg_samples": 11.75, "rpn/num_neg_anchors": 251.75, "rpn/num_pos_anchors": 4.25, "time": 1.0986498355005097, "total_loss": 0.6022149862255901}
+-{"data_time": 0.0030873890000293613, "eta_seconds": 31.73597074501231, "fast_rcnn/cls_accuracy": 0.9140625, "fast_rcnn/false_negative": 1.0, "fast_rcnn/fg_cls_accuracy": 0.0, "iteration": 219, "loss_box_reg": 0.2983464449644089, "loss_cls": 0.2158822864294052, "loss_rpn_cls": 0.019531140103936195, "loss_rpn_loc": 0.006404667627066374, "lr": 0.000219031, "roi_head/num_bg_samples": 117.0, "roi_head/num_fg_samples": 11.0, "rpn/num_neg_anchors": 250.75, "rpn/num_pos_anchors": 5.25, "time": 1.089266250000037, "total_loss": 0.5454549079295248}
+-{"data_time": 0.0035283890001664986, "eta_seconds": 10.60981743501543, "fast_rcnn/cls_accuracy": 0.90234375, "fast_rcnn/false_negative": 0.984375, "fast_rcnn/fg_cls_accuracy": 0.015625, "iteration": 239, "loss_box_reg": 0.35261373221874237, "loss_cls": 0.20339103043079376, "loss_rpn_cls": 0.013575154822319746, "loss_rpn_loc": 0.006672508316114545, "lr": 0.00023901100000000002, "roi_head/num_bg_samples": 114.5, "roi_head/num_fg_samples": 13.5, "rpn/num_neg_anchors": 252.0, "rpn/num_pos_anchors": 4.0, "time": 1.0853799904998596, "total_loss": 0.5788989288266748}
+-{"data_time": 0.003394316999219882, "eta_seconds": 0.0, "fast_rcnn/cls_accuracy": 0.908203125, "fast_rcnn/false_negative": 0.9529346622369879, "fast_rcnn/fg_cls_accuracy": 0.04706533776301218, "iteration": 249, "loss_box_reg": 0.3433019518852234, "loss_cls": 0.22309742122888565, "loss_rpn_cls": 0.012747911270707846, "loss_rpn_loc": 0.006171122193336487, "lr": 0.000249001, "roi_head/num_bg_samples": 115.75, "roi_head/num_fg_samples": 12.25, "rpn/num_neg_anchors": 252.0, "rpn/num_pos_anchors": 4.0, "time": 1.15333392499997, "total_loss": 0.5747752066381508}
+diff --git a/V2/output/test_coco_format.json.lock b/V2/output/test_coco_format.json.lock
+deleted file mode 100644
+index e69de29..0000000
+diff --git a/V2/run.py b/V2/run.py
+index 7c90c17..554e264 100644
+--- a/V2/run.py
++++ b/V2/run.py
+@@ -3,29 +3,32 @@ from Model import *
+ params = {
+     "MODEL": [
+         "fast_rcnn_R_50_FPN_1x.yaml",
+-        "faster_rcnn_R_50_C4_1x.yaml",
+-        "faster_rcnn_R_50_C4_3x.yaml",
+-        "faster_rcnn_R_50_DC5_1x.yaml",
+-        "faster_rcnn_R_50_DC5_3x.yaml",
+-        "retinanet_R_50_FPN_1x.py",
+-        "retinanet_R_50_FPN_1x.yaml",
+-        "retinanet_R_50_FPN_3x.yaml",
+-        "rpn_R_50_C4_1x.yaml",
+-        "rpn_R_50_FPN_1x.yaml",
+-        "faster_rcnn_R_50_FPN_1x.yaml",
+-        "faster_rcnn_R_50_FPN_3x.yaml",
+-        "faster_rcnn_R_101_DC5_3x.yaml",
+-        "faster_rcnn_R_101_FPN_3x.yaml",
+-        "faster_rcnn_X_101_32x8d_FPN_3x.yaml",
++        # "faster_rcnn_R_50_C4_1x.yaml",
++        # "faster_rcnn_R_50_C4_3x.yaml",
++        # "faster_rcnn_R_50_DC5_1x.yaml",
++        # "faster_rcnn_R_50_DC5_3x.yaml",
++        # "retinanet_R_50_FPN_1x.py",
++        # "retinanet_R_50_FPN_1x.yaml",
++        # "retinanet_R_50_FPN_3x.yaml",
++        # "rpn_R_50_C4_1x.yaml",
++        # "rpn_R_50_FPN_1x.yaml",
++        # "faster_rcnn_R_50_FPN_1x.yaml",
++        # "faster_rcnn_R_50_FPN_3x.yaml",
++        # "faster_rcnn_R_101_DC5_3x.yaml",
++        # "faster_rcnn_R_101_FPN_3x.yaml",
++        # "faster_rcnn_X_101_32x8d_FPN_3x.yaml",
+     ],
+-    "MAX_ITER": [500],
++    "MAX_ITER": [125],
+     "LABELS": [["Card"]],
+     "CREATE_TARGET_AND_PREDS": [55],
+-    "EVAL_PERIOD": [500],
++    "EVAL_PERIOD": [125],
+     "SCORE_THRESH_TEST": [0.625],
+-    "BASE_LR": [0.1, 0.01, 0.001, 0.0001, 0.00001, 0.000001],
+-    "IMS_PER_BATCH": [1, 2, 3, 4, 5, 6, 7, 8, 9, 10],
+-    "BATCH_SIZE_PER_IMAGE": [8, 16, 32, 64, 128, 256, 512],
++    "BASE_LR": [0.1, 0.01, 0.001, 0.0001],
++    "IMS_PER_BATCH": [
++        1,
++        2,
++    ],
++    "BATCH_SIZE_PER_IMAGE": [8, 16, 32, 64, 128],
+ }
+ model = Model()
+ model.train()
+diff --git a/V2/wandb/latest-run b/V2/wandb/latest-run
+index 30818ae..c119a33 120000
+--- a/V2/wandb/latest-run
++++ b/V2/wandb/latest-run
+@@ -1 +1 @@
+-run-20211029_164744-1r8rvtkh
+\ No newline at end of file
++run-20211029_171625-8mr9e89d
+\ No newline at end of file
