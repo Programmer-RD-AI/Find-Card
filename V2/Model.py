@@ -625,24 +625,24 @@ class Param_Tunning:
         initialize the Class
         params - dict like {Model().test}
         """
-        required_labels = [
-            "BASE_LR",
-            "LABELS",
-            "MAX_ITER",
-            "EVAL_PERIOD",
-            "IMS_PER_BATCH",
-            "BATCH_SIZE_PER_IMAGE",
-            "SCORE_THRESH_TEST",
-            "MODEL",
-            "CREATE_TARGET_AND_PREDS",
-        ]
-        params_not_in_required_labels = []
+        # required_labels = [
+        #     "BASE_LR",
+        #     "LABELS",
+        #     "MAX_ITER",
+        #     "EVAL_PERIOD",
+        #     "IMS_PER_BATCH",
+        #     "BATCH_SIZE_PER_IMAGE",
+        #     "SCORE_THRESH_TEST",
+        #     "MODEL",
+        #     "CREATE_TARGET_AND_PREDS",
+        # ]
+        # params_not_in_required_labels = []
 
-        for required_label in tqdm(list(required_labels)):
-            if required_label not in list(params.keys()):
-                params_not_in_required_labels.append(required_label)
-        if params_not_in_required_labels != []:
-            raise ValueError(f"{params_not_in_required_labels} are required in params")
+        # for required_label in tqdm(list(required_labels)):
+        #     if required_label not in list(params.keys()):
+        #         params_not_in_required_labels.append(required_label)
+        # if params_not_in_required_labels != []:
+        #     raise ValueError(f"{params_not_in_required_labels} are required in params")
         self.params = ParameterGrid(params)
 
     def tune(self) -> dict:

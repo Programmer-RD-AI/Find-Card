@@ -1,5 +1,7 @@
 from Model import *
-models = [
+
+params = {
+    "MODEL": [
         # "fast_rcnn_R_50_FPN_1x.yaml",
         "faster_rcnn_R_50_C4_1x.yaml",
         # "faster_rcnn_R_50_C4_3x.yaml",
@@ -15,19 +17,22 @@ models = [
         # "faster_rcnn_R_101_DC5_3x.yaml",
         # "faster_rcnn_R_101_FPN_3x.yaml",
         # "faster_rcnn_X_101_32x8d_FPN_3x.yaml",
-    ]
-max_iters = 125
-labels = ['Card']
-create_target_and_preds = 55
-eval_period = 125
-score_thresh_test = 0.625
-base_lrs = [0.1,0.01, 0.001, 0.0001]
-ims_per_batchs = [1,2,3]
-batch_size_per_images = []
-for model in models:
-    model = Model(model=f"COCO-Detection/{model}",name=model)
-    model.train()
-# pt = Param_Tunning(params)
-# pt.tune()
+    ],
+    "MAX_ITER": [125],
+    "LABELS": [["Card"]],
+    "CREATE_TARGET_AND_PREDS": [55],
+    "EVAL_PERIOD": [125],
+    "SCORE_THRESH_TEST": [0.625],
+    "BASE_LR": [0.1, 0.01, 0.001, 0.0001],
+    "IMS_PER_BATCH": [
+        1,
+        2,
+    ],
+    "BATCH_SIZE_PER_IMAGE": [8, 16, 32, 64, 128],
+}
+model = Model()
+model.train()
+pt = Param_Tunning(params)
+pt.tune()
 # torch.save(model.train(),'./model.pt')
 # torch.save(model.train(),'./model.pth')
