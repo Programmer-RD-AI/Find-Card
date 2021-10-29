@@ -42,14 +42,15 @@ class Model:
         base_lr: float = 0.00025,
         data: pd.DataFrame = pd.read_csv("./Data.csv").sample(frac=1),
         labels: list = ["Card"],
-        max_iter: int = 500,
+        max_iter: int = 1000,
         eval_period: int = 5,
-        ims_per_batch: int = 2,
-        batch_size_per_image: int = 128,
+        ims_per_batch: int = 5,
+        batch_size_per_image: int = 512,
         score_thresh_test: float = 0.625,
         model: str = "COCO-Detection/faster_rcnn_X_101_32x8d_FPN_3x.yaml",
         name: str = "baseline",
         create_target_and_preds: int = 29,
+        test_sample_size=32
     ) -> None:
         """
         - __init__ = initialize and get all of the params need
@@ -113,6 +114,7 @@ class Model:
         self.NAME = name
         self.cfg = self.create_cfg()  # Creating the model config
         self.create_target_and_preds_iter = create_target_and_preds
+        self.test_sample_size = test_sample_size
         self.remove_files_in_output()
 
     @staticmethod
@@ -172,7 +174,7 @@ class Model:
                 self.data = np.load(
                     "./data.npy", allow_pickle=True
                 )  # Loading already saved detectron2 format file
-                self.data = self.data[:62]
+                self.data = self.data[:self.test_sample_size] # TODO
                 return self.data
         if "data.npy" in os.listdir("./"):
             self.data = np.load("./data.npy", allow_pickle=True)
