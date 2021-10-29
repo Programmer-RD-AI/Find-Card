@@ -99,12 +99,16 @@ class Model:
             DatasetCatalog.register(
                 "data", lambda: self.load_data()
             )  # Registering the training data
-            MetadataCatalog.get("data").set(thing_classes=self.labels)  # Adding the labels
+            MetadataCatalog.get("data").set(
+                thing_classes=self.labels
+            )  # Adding the labels
             self.metadata = MetadataCatalog.get("data")  # Getting the metadata
             DatasetCatalog.register(
                 "test", lambda: self.load_data(test=True)
             )  # Registering the test data
-            MetadataCatalog.get("test").set(thing_classes=self.labels)  # Adding the labels
+            MetadataCatalog.get("test").set(
+                thing_classes=self.labels
+            )  # Adding the labels
             self.metadata_test = MetadataCatalog.get("test")  # Getting the metadata
         except:
             pass
@@ -638,7 +642,7 @@ class Param_Tunning:
         ]
         params_not_in_required_labels = []
 
-        for required_label in tqdm(list(required_labels.keys())):
+        for required_label in tqdm(list(required_labels)):
             if required_label not in list(params.keys()):
                 params_not_in_required_labels.append(required_label)
         if params_not_in_required_labels != []:
@@ -660,7 +664,7 @@ class Param_Tunning:
                     ims_per_batch=param["IMS_PER_BATCH"],
                     batch_size_per_image=param["BATCH_SIZE_PER_IMAGE"],
                     score_thresh_test=param["SCORE_THRESH_TEST"],
-                    model=param["MODEL"],
+                    model="COCO-Detection/" + param["MODEL"],
                     name=str(param),
                     create_target_and_preds=param["CREATE_TARGET_AND_PREDS"],
                 )
@@ -670,8 +674,8 @@ class Param_Tunning:
                 models["Model"].append(param["MODEL"])
                 models["Metrics_COCO"].append(metrics_coco)
                 models["Metrics_File"].append(metrics_file)
-            except:
-                pass
+            except Exception as e:
+                print(e)
         models = pd.DataFrame(models)
         models.to_csv("./tune.csv")
         return models
