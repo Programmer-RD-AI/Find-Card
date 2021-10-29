@@ -1,13 +1,10 @@
 # Imports
 from detectron2.config.config import CfgNode
-from torch._C import Def
 from tqdm import tqdm
 from sklearn.model_selection import ParameterGrid
-import random
 import cv2
 from detectron2.data import MetadataCatalog, DatasetCatalog
 from detectron2.utils.visualizer import Visualizer
-from numpy.lib.npyio import save
 from tqdm import tqdm
 from detectron2.structures import BoxMode
 from detectron2.config import get_cfg
@@ -22,11 +19,7 @@ import matplotlib.pyplot as plt
 from detectron2.evaluation import COCOEvaluator, inference_on_dataset
 from detectron2.data import build_detection_test_loader
 import torch
-import torchvision
-import detectron2
-import json
 import ast
-import tensorboard
 import os
 from detectron2.utils.logger import setup_logger
 
@@ -617,7 +610,7 @@ class Model:
 
 
 class Param_Tunning:
-    def __init__(self, params):
+    def __init__(self, params: dict):
         required_labels = [
             "BASE_LR",
             "LABELS",
@@ -638,27 +631,30 @@ class Param_Tunning:
             raise ValueError(f"{params_not_in_required_labels} are required in params")
         self.params = ParameterGrid(params)
 
-    def tune(self):
+    def tune(self) -> dict:
         models = {"Model": [], "Metrics_COCO": [], "Metrics_File": []}
         for param in tqdm(self.params):
-            model = Model(
-                base_lr=param["BASE_LR"],
-                labels=param["LABELS"],
-                max_iter=param["MAX_ITER"],
-                eval_period=param["EVAL_PERIOD"],
-                ims_per_batch=param["IMS_PER_BATCH"],
-                batch_size_per_image=param["BATCH_SIZE_PER_IMAGE"],
-                score_thresh_test=param["SCORE_THRESH_TEST"],
-                model=param["MODEL"],
-                name=str(param),
-                create_target_and_preds=param["CREATE_TARGET_AND_PREDS"],
-            )
-            metrics = model.train()
-            metrics_coco = metrics["metrics_coco"]
-            metrics_file = metrics["metrics_file"]
-            models["Model"].append(param["MODEL"])
-            models["Metrics_COCO"].append(metrics_coco)
-            models["Metrics_File"].append(metrics_file)
+            try:
+                model = Model(
+                    base_lr=param["BASE_LR"],
+                    labels=param["LABELS"],
+                    max_iter=param["MAX_ITER"],
+                    eval_period=param["EVAL_PERIOD"],
+                    ims_per_batch=param["IMS_PER_BATCH"],
+                    batch_size_per_image=param["BATCH_SIZE_PER_IMAGE"],
+                    score_thresh_test=param["SCORE_THRESH_TEST"],
+                    model=param["MODEL"],
+                    name=str(param),
+                    create_target_and_preds=param["CREATE_TARGET_AND_PREDS"],
+                )
+                metrics = model.train()
+                metrics_coco = metrics["metrics_coco"]
+                metrics_file = metrics["metrics_file"]
+                models["Model"].append(param["MODEL"])
+                models["Metrics_COCO"].append(metrics_coco)
+                models["Metrics_File"].append(metrics_file)
+            except:
+                pass
         models = pd.DataFrame(models)
         models.to_csv("./tune.csv")
         return models
