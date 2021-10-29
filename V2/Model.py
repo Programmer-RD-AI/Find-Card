@@ -358,6 +358,7 @@ class Model:
         - create_target_and_preds - create the target and predictions
         """
         info = self.data.iloc[self.create_target_and_preds_iter]
+        print(info)
         img = cv2.imread(info["Path"])
         height, width = cv2.imread(info["Path"]).shape[:2]
         xmin, ymin, xmax, ymax = (
