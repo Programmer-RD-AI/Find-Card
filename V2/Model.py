@@ -28,7 +28,7 @@ setup_logger()
 
 # Params
 
-ENTITY = "find-card"
+# ENTITY = "find-card"
 PROJECT_NAME = "Find-Card"
 
 # Model
@@ -492,7 +492,6 @@ class Model:
         - train - trains the model
         """
         wandb.init(
-            entity=ENTITY,
             project=PROJECT_NAME,
             name=self.NAME,
             config={

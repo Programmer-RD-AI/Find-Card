@@ -1,0 +1,68 @@
+diff --git a/V2/output/events.out.tfevents.1635505823.programmer-rd-ai.162935.0 b/V2/output/events.out.tfevents.1635505823.programmer-rd-ai.162935.0
+deleted file mode 100644
+index 46d477b..0000000
+Binary files a/V2/output/events.out.tfevents.1635505823.programmer-rd-ai.162935.0 and /dev/null differ
+diff --git a/V2/output/metrics.json b/V2/output/metrics.json
+deleted file mode 100644
+index e6d8710..0000000
+--- a/V2/output/metrics.json
++++ /dev/null
+@@ -1,7 +0,0 @@
+-{"data_time": 0.0025901164999595494, "eta_seconds": 232.1774005701718, "fast_rcnn/cls_accuracy": 0.65234375, "fast_rcnn/false_negative": 0.5214285714285714, "fast_rcnn/fg_cls_accuracy": 0.47857142857142854, "iteration": 19, "loss_box_reg": 0.3679515868425369, "loss_cls": 0.6515864431858063, "loss_rpn_cls": 0.019395350478589535, "loss_rpn_loc": 0.008278119144961238, "lr": 1.9231e-05, "roi_head/num_bg_samples": 115.75, "roi_head/num_fg_samples": 12.25, "rpn/num_neg_anchors": 250.5, "rpn/num_pos_anchors": 5.5, "time": 1.009466959000747, "total_loss": 1.0395865477621555}
+-{"data_time": 0.0023563989998365287, "eta_seconds": 214.766287365037, "fast_rcnn/cls_accuracy": 0.89453125, "fast_rcnn/false_negative": 1.0, "fast_rcnn/fg_cls_accuracy": 0.0, "iteration": 39, "loss_box_reg": 0.34731900691986084, "loss_cls": 0.4879234880208969, "loss_rpn_cls": 0.015302910003811121, "loss_rpn_loc": 0.0056199932005256414, "lr": 3.9211e-05, "roi_head/num_bg_samples": 116.5, "roi_head/num_fg_samples": 11.5, "rpn/num_neg_anchors": 252.5, "rpn/num_pos_anchors": 3.5, "time": 1.0648500799998146, "total_loss": 0.8804604686083621}
+-{"data_time": 0.0024789105000309064, "eta_seconds": 201.10129197504648, "fast_rcnn/cls_accuracy": 0.916015625, "fast_rcnn/false_negative": 1.0, "fast_rcnn/fg_cls_accuracy": 0.0, "iteration": 59, "loss_box_reg": 0.30058179795742035, "loss_cls": 0.328376829624176, "loss_rpn_cls": 0.008709286339581013, "loss_rpn_loc": 0.008577053900808096, "lr": 5.9190999999999996e-05, "roi_head/num_bg_samples": 117.25, "roi_head/num_fg_samples": 10.75, "rpn/num_neg_anchors": 251.0, "rpn/num_pos_anchors": 5.0, "time": 1.1100435645003017, "total_loss": 0.6624700124375522}
+-{"data_time": 0.002392204501120432, "eta_seconds": 185.32628973495775, "fast_rcnn/cls_accuracy": 0.900390625, "fast_rcnn/false_negative": 1.0, "fast_rcnn/fg_cls_accuracy": 0.0, "iteration": 79, "loss_box_reg": 0.40605297684669495, "loss_cls": 0.30146512389183044, "loss_rpn_cls": 0.013731800951063633, "loss_rpn_loc": 0.00633513368666172, "lr": 7.9171e-05, "roi_head/num_bg_samples": 115.25, "roi_head/num_fg_samples": 12.75, "rpn/num_neg_anchors": 252.0, "rpn/num_pos_anchors": 4.0, "time": 1.1482102909994865, "total_loss": 0.7455923687666655}
+-{"data_time": 0.002692097500585078, "eta_seconds": 163.52319682496272, "fast_rcnn/cls_accuracy": 0.89453125, "fast_rcnn/false_negative": 1.0, "fast_rcnn/fg_cls_accuracy": 0.0, "iteration": 99, "loss_box_reg": 0.4088977575302124, "loss_cls": 0.27357909083366394, "loss_rpn_cls": 0.019417744129896164, "loss_rpn_loc": 0.00930164149031043, "lr": 9.9151e-05, "roi_head/num_bg_samples": 114.5, "roi_head/num_fg_samples": 13.5, "rpn/num_neg_anchors": 251.5, "rpn/num_pos_anchors": 4.5, "time": 1.0993081574997632, "total_loss": 0.7367801736108959}
+-{"data_time": 0.002395894999608572, "eta_seconds": 141.7201039149677, "fast_rcnn/cls_accuracy": 0.904296875, "fast_rcnn/false_negative": 1.0, "fast_rcnn/fg_cls_accuracy": 0.0, "iteration": 119, "loss_box_reg": 0.33540838956832886, "loss_cls": 0.2604624330997467, "loss_rpn_cls": 0.027119770646095276, "loss_rpn_loc": 0.006120450794696808, "lr": 0.00011913100000000001, "roi_head/num_bg_samples": 115.75, "roi_head/num_fg_samples": 12.25, "rpn/num_neg_anchors": 252.0, "rpn/num_pos_anchors": 4.0, "time": 1.076243020500442, "total_loss": 0.6982100792083656}
+-{"data_time": 0.0022791585006416426, "eta_seconds": 119.48278633498376, "fast_rcnn/cls_accuracy": 0.904296875, "fast_rcnn/false_negative": 1.0, "fast_rcnn/fg_cls_accuracy": 0.0, "iteration": 139, "loss_box_reg": 0.35804860293865204, "loss_cls": 0.24599572271108627, "loss_rpn_cls": 0.033122588880360126, "loss_rpn_loc": 0.0060861248057335615, "lr": 0.000139111, "roi_head/num_bg_samples": 115.75, "roi_head/num_fg_samples": 12.25, "rpn/num_neg_anchors": 251.0, "rpn/num_pos_anchors": 5.0, "time": 1.0424067644999013, "total_loss": 0.6614525599870831}
+diff --git a/V2/run.py b/V2/run.py
+index b6981ea..d8874bd 100644
+--- a/V2/run.py
++++ b/V2/run.py
+@@ -1,5 +1,6 @@
+ from Model import *
+ 
+ model = Model()
+-torch.save(model.train(),'./model.pt')
+-torch.save(model.train(),'./model.pth')
++model.train()
++# torch.save(model.train(),'./model.pt')
++# torch.save(model.train(),'./model.pth')
+diff --git a/V2/wandb/latest-run b/V2/wandb/latest-run
+index 351ade4..30818ae 120000
+--- a/V2/wandb/latest-run
++++ b/V2/wandb/latest-run
+@@ -1 +1 @@
+-run-20211029_164011-2lo73m4v
+\ No newline at end of file
++run-20211029_164744-1r8rvtkh
+\ No newline at end of file
+diff --git a/V2/wandb/run-20211029_164011-2lo73m4v/files/config.yaml b/V2/wandb/run-20211029_164011-2lo73m4v/files/config.yaml
+index 43083ca..ca0e763 100644
+--- a/V2/wandb/run-20211029_164011-2lo73m4v/files/config.yaml
++++ b/V2/wandb/run-20211029_164011-2lo73m4v/files/config.yaml
+@@ -38,7 +38,12 @@ _wandb:
+       1:
+       - 1
+       - 5
++      2:
++      - 1
++      - 3
++      - 5
+       3:
++      - 2
+       - 13
+       - 16
+       4: 3.8.12
+diff --git a/V2/wandb/run-20211029_164011-2lo73m4v/files/wandb-summary.json b/V2/wandb/run-20211029_164011-2lo73m4v/files/wandb-summary.json
+index 9e26dfe..c637abc 100644
+--- a/V2/wandb/run-20211029_164011-2lo73m4v/files/wandb-summary.json
++++ b/V2/wandb/run-20211029_164011-2lo73m4v/files/wandb-summary.json
+@@ -1 +1 @@
+-{}
+\ No newline at end of file
++{"bbox": {"AP": 5.742574257425743, "AP50": 5.9405940594059405, "AP75": 5.9405940594059405, "APs": NaN, "APm": 0.0, "APl": 6.336633663366335}, "_runtime": 324, "_timestamp": 1635506135, "_step": 24, "data_time": 0.002336139998988074, "eta_seconds": 0.0, "fast_rcnn/cls_accuracy": 0.921875, "fast_rcnn/false_negative": 1.0, "fast_rcnn/fg_cls_accuracy": 0.0, "iteration": 249, "loss_box_reg": 0.30058126151561737, "loss_cls": 0.20781665295362473, "loss_rpn_cls": 0.0225112522020936, "loss_rpn_loc": 0.013801542110741138, "lr": 0.000249001, "roi_head/num_bg_samples": 117.0, "roi_head/num_fg_samples": 11.0, "rpn/num_neg_anchors": 250.5, "rpn/num_pos_anchors": 5.5, "time": 1.0003408339998714, "total_loss": 0.575678474502638, "./test_imgs/WhatsApp Image 2021-10-19 at 21.27.06.jpeg": {"_type": "image-file", "path": "media/images/test_imgs/WhatsApp Image 2021-10-19 at 21.27.06.jpeg_14_f966cd2afffd91708300.png", "sha256": "f966cd2afffd91708300a08a1c8c23f03f5cb0f19841ac69a05d11b096ce6366", "size": 1550047, "format": "png", "width": 1600, "height": 1200}, "./test_imgs/WhatsApp Image 2021-10-19 at 21.27.07 (1).jpeg": {"_type": "image-file", "path": "media/images/test_imgs/WhatsApp Image 2021-10-19 at 21.27.07 (1).jpeg_15_2a13f0671b106968cfaa.png", "sha256": "2a13f0671b106968cfaad02afa1ee6397197785b39d366f990d3220908cea1ad", "size": 825394, "format": "png", "width": 1600, "height": 1200}, "./test_imgs/WhatsApp Image 2021-10-19 at 21.27.09 (1).jpeg": {"_type": "image-file", "path": "media/images/test_imgs/WhatsApp Image 2021-10-19 at 21.27.09 (1).jpeg_16_37de63ec79cabd7298f5.png", "sha256": "37de63ec79cabd7298f5a6f6bfec752946722be2eeb2f430c0a62219231d20f3", "size": 1345183, "format": "png", "width": 1200, "height": 1600}, "./test_imgs/WhatsApp Image 2021-10-19 at 21.27.07.jpeg": {"_type": "image-file", "path": "media/images/test_imgs/WhatsApp Image 2021-10-19 at 21.27.07.jpeg_17_ce7b2c02f60de752e9c8.png", "sha256": "ce7b2c02f60de752e9c87b5e121611ad822b3b3d1e920da0bf30b53c1e9afa40", "size": 2291369, "format": "png", "width": 1600, "height": 1200}, "./test_imgs/WhatsApp Image 2021-10-19 at 21.27.09 (2).jpeg": {"_type": "image-file", "path": "media/images/test_imgs/WhatsApp Image 2021-10-19 at 21.27.09 (2).jpeg_18_695d7c9e69953c15b52c.png", "sha256": "695d7c9e69953c15b52ce9108c81c535544730a0d36bcd99b3920bbb36016b2b", "size": 2053321, "format": "png", "width": 1200, "height": 1600}, "./test_imgs/WhatsApp Image 2021-10-19 at 21.27.08.jpeg": {"_type": "image-file", "path": "media/images/test_imgs/WhatsApp Image 2021-10-19 at 21.27.08.jpeg_19_da45647c645f27d0a0a6.png", "sha256": "da45647c645f27d0a0a6ca1393d111bc9edbc3fcef2cce0a38c28d4a40c0743f", "size": 1810337, "format": "png", "width": 1200, "height": 1600}, "./test_imgs/WhatsApp Image 2021-10-19 at 21.27.08 (1).jpeg": {"_type": "image-file", "path": "media/images/test_imgs/WhatsApp Image 2021-10-19 at 21.27.08 (1).jpeg_20_c8a2ce009bfc22ad3af0.png", "sha256": "c8a2ce009bfc22ad3af0f225d1b299973b2de24728af1e88a50c31ca3de34791", "size": 2180062, "format": "png", "width": 1200, "height": 1600}, "./test_imgs/WhatsApp Image 2021-10-19 at 21.27.09.jpeg": {"_type": "image-file", "path": "media/images/test_imgs/WhatsApp Image 2021-10-19 at 21.27.09.jpeg_21_045796f5b7ef7214e768.png", "sha256": "045796f5b7ef7214e76850a3ad84ea9b54b449dcdf269d1128f9fef58c972c58", "size": 877377, "format": "png", "width": 1200, "height": 1600}, "RMSE": 208853.6875, "MSE": 43619860480.0, "PSNR": 5.217094898223877, "_wandb": {"runtime": 324}}
+\ No newline at end of file
+diff --git a/V2/wandb/run-20211029_164011-2lo73m4v/run-2lo73m4v.wandb b/V2/wandb/run-20211029_164011-2lo73m4v/run-2lo73m4v.wandb
+index c03dd03..4c19dbc 100644
+Binary files a/V2/wandb/run-20211029_164011-2lo73m4v/run-2lo73m4v.wandb and b/V2/wandb/run-20211029_164011-2lo73m4v/run-2lo73m4v.wandb differ
