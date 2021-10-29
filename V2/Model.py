@@ -357,7 +357,7 @@ class Model:
         """
         - create_target_and_preds - create the target and predictions
         """
-        info = self.data[self.create_target_and_preds_iter]
+        info = self.data.iloc[self.create_target_and_preds_iter]
         img = cv2.imread(info["file_name"])
         height, width = cv2.imread(info["file_name"]).shape[:2]
         xmin, ymin, xmax, ymax = (

@@ -1,0 +1,93 @@
+diff --git a/V2/Model.py b/V2/Model.py
+index 619114a..4a4e00d 100644
+--- a/V2/Model.py
++++ b/V2/Model.py
+@@ -357,7 +357,7 @@ class Model:
+         """
+         - create_target_and_preds - create the target and predictions
+         """
+-        info = self.data[self.create_target_and_preds_iter]
++        info = self.data.iloc[self.create_target_and_preds_iter]
+         img = cv2.imread(info["file_name"])
+         height, width = cv2.imread(info["file_name"]).shape[:2]
+         xmin, ymin, xmax, ymax = (
+diff --git a/V2/output/events.out.tfevents.1635517814.programmer-rd-ai.159503.0 b/V2/output/events.out.tfevents.1635517814.programmer-rd-ai.159503.0
+deleted file mode 100644
+index 356a2bc..0000000
+Binary files a/V2/output/events.out.tfevents.1635517814.programmer-rd-ai.159503.0 and /dev/null differ
+diff --git a/V2/output/metrics.json b/V2/output/metrics.json
+deleted file mode 100644
+index 6786003..0000000
+--- a/V2/output/metrics.json
++++ /dev/null
+@@ -1,21 +0,0 @@
+-{"data_time": 0.0008489374999953725, "eta_seconds": 58.45624223991763, "fast_rcnn/cls_accuracy": 0.75, "fast_rcnn/false_negative": 1.0, "fast_rcnn/fg_cls_accuracy": 0.0, "iteration": 19, "loss_box_reg": 0.8962979316711426, "loss_cls": 0.6102456748485565, "loss_rpn_cls": 0.2956657111644745, "loss_rpn_loc": 0.05397982709109783, "lr": 0.00038961999999999997, "roi_head/num_bg_samples": 6.0, "roi_head/num_fg_samples": 2.0, "rpn/num_neg_anchors": 227.5, "rpn/num_pos_anchors": 28.5, "time": 0.12178383799982839, "total_loss": 1.9340153993107378}
+-{"data_time": 0.0011888009994436288, "eta_seconds": 54.90131072992881, "fast_rcnn/cls_accuracy": 0.75, "fast_rcnn/false_negative": 1.0, "fast_rcnn/fg_cls_accuracy": 0.0, "iteration": 39, "loss_box_reg": 1.0401278734207153, "loss_cls": 0.47539222240448, "loss_rpn_cls": 0.19402973353862762, "loss_rpn_loc": 0.02731515560299158, "lr": 0.0007892200000000001, "roi_head/num_bg_samples": 6.0, "roi_head/num_fg_samples": 2.0, "rpn/num_neg_anchors": 245.5, "rpn/num_pos_anchors": 10.5, "time": 0.11703239000053145, "total_loss": 1.7260386608541012}
+-{"data_time": 0.0014248080001380004, "eta_seconds": 52.84295367990126, "fast_rcnn/cls_accuracy": 0.875, "fast_rcnn/false_negative": 0.5, "fast_rcnn/fg_cls_accuracy": 0.5, "iteration": 59, "loss_box_reg": 0.7406018376350403, "loss_cls": 0.43856847286224365, "loss_rpn_cls": 0.154055155813694, "loss_rpn_loc": 0.006432987749576569, "lr": 0.00118882, "roi_head/num_bg_samples": 6.0, "roi_head/num_fg_samples": 2.0, "rpn/num_neg_anchors": 252.0, "rpn/num_pos_anchors": 4.0, "time": 0.12009762199977558, "total_loss": 1.3088230139110237}
+-{"data_time": 0.0013681574996553536, "eta_seconds": 50.5228109399377, "fast_rcnn/cls_accuracy": 0.75, "fast_rcnn/false_negative": 1.0, "fast_rcnn/fg_cls_accuracy": 0.0, "iteration": 79, "loss_box_reg": 0.8831199705600739, "loss_cls": 0.4918159991502762, "loss_rpn_cls": 0.15444165468215942, "loss_rpn_loc": 0.03946959972381592, "lr": 0.0015884200000000001, "roi_head/num_bg_samples": 6.0, "roi_head/num_fg_samples": 2.0, "rpn/num_neg_anchors": 241.0, "rpn/num_pos_anchors": 15.0, "time": 0.12648486550006055, "total_loss": 1.542152525507845}
+-{"data_time": 0.0012935864997416502, "eta_seconds": 48.116962799940666, "fast_rcnn/cls_accuracy": 0.75, "fast_rcnn/false_negative": 1.0, "fast_rcnn/fg_cls_accuracy": 0.0, "iteration": 99, "loss_box_reg": 0.96161088347435, "loss_cls": 0.5014094859361649, "loss_rpn_cls": 0.14460550248622894, "loss_rpn_loc": 0.018434125930070877, "lr": 0.00198802, "roi_head/num_bg_samples": 6.0, "roi_head/num_fg_samples": 2.0, "rpn/num_neg_anchors": 246.0, "rpn/num_pos_anchors": 10.0, "time": 0.12170360749951215, "total_loss": 1.7588409534655511}
+-{"data_time": 0.0007772320000185573, "eta_seconds": 45.7806130499921, "fast_rcnn/cls_accuracy": 0.75, "fast_rcnn/false_negative": 1.0, "fast_rcnn/fg_cls_accuracy": 0.0, "iteration": 119, "loss_box_reg": 0.8944086134433746, "loss_cls": 0.42978623509407043, "loss_rpn_cls": 0.15117685496807098, "loss_rpn_loc": 0.008172471076250076, "lr": 0.00238762, "roi_head/num_bg_samples": 6.0, "roi_head/num_fg_samples": 2.0, "rpn/num_neg_anchors": 249.0, "rpn/num_pos_anchors": 7.0, "time": 0.12783720500010531, "total_loss": 1.602216129656881}
+-{"data_time": 0.0012004964996776835, "eta_seconds": 43.23514391991921, "fast_rcnn/cls_accuracy": 0.75, "fast_rcnn/false_negative": 1.0, "fast_rcnn/fg_cls_accuracy": 0.0, "iteration": 139, "loss_box_reg": 0.7249436676502228, "loss_cls": 0.4391075074672699, "loss_rpn_cls": 0.10041998699307442, "loss_rpn_loc": 0.015491392463445663, "lr": 0.0027872200000000004, "roi_head/num_bg_samples": 6.0, "roi_head/num_fg_samples": 2.0, "rpn/num_neg_anchors": 247.5, "rpn/num_pos_anchors": 8.5, "time": 0.11323870100022759, "total_loss": 1.337795466184616}
+-{"data_time": 0.0012237210003149812, "eta_seconds": 40.8331914799237, "fast_rcnn/cls_accuracy": 0.875, "fast_rcnn/false_negative": 0.75, "fast_rcnn/fg_cls_accuracy": 0.25, "iteration": 159, "loss_box_reg": 0.897691398859024, "loss_cls": 0.3293695002794266, "loss_rpn_cls": 0.2123522087931633, "loss_rpn_loc": 0.04748127423226833, "lr": 0.0031868200000000004, "roi_head/num_bg_samples": 6.0, "roi_head/num_fg_samples": 2.0, "rpn/num_neg_anchors": 219.0, "rpn/num_pos_anchors": 37.0, "time": 0.11957331650000924, "total_loss": 1.5364410001784563}
+-{"data_time": 0.001224451499638235, "eta_seconds": 38.61005280006793, "fast_rcnn/cls_accuracy": 0.75, "fast_rcnn/false_negative": 1.0, "fast_rcnn/fg_cls_accuracy": 0.0, "iteration": 179, "loss_box_reg": 0.9249253273010254, "loss_cls": 0.5653544366359711, "loss_rpn_cls": 0.12213080003857613, "loss_rpn_loc": 0.011890711262822151, "lr": 0.00358642, "roi_head/num_bg_samples": 6.0, "roi_head/num_fg_samples": 2.0, "rpn/num_neg_anchors": 248.0, "rpn/num_pos_anchors": 8.0, "time": 0.12577354649965855, "total_loss": 1.6403310734312981}
+-{"data_time": 0.0013844479999534087, "eta_seconds": 36.029286599932675, "fast_rcnn/cls_accuracy": 0.75, "fast_rcnn/false_negative": 1.0, "fast_rcnn/fg_cls_accuracy": 0.0, "iteration": 199, "loss_box_reg": 0.812961608171463, "loss_cls": 0.5681087672710419, "loss_rpn_cls": 0.19069086760282516, "loss_rpn_loc": 0.011644803918898106, "lr": 0.00398602, "roi_head/num_bg_samples": 6.0, "roi_head/num_fg_samples": 2.0, "rpn/num_neg_anchors": 247.0, "rpn/num_pos_anchors": 9.0, "time": 0.10749614049973388, "total_loss": 1.8216179027222097}
+-{"data_time": 0.0015009594999355613, "eta_seconds": 33.49492901987105, "fast_rcnn/cls_accuracy": 0.75, "fast_rcnn/false_negative": 1.0, "fast_rcnn/fg_cls_accuracy": 0.0, "iteration": 219, "loss_box_reg": 0.8114109039306641, "loss_cls": 0.5309057533740997, "loss_rpn_cls": 0.2090320810675621, "loss_rpn_loc": 0.01741563156247139, "lr": 0.00438562, "roi_head/num_bg_samples": 6.0, "roi_head/num_fg_samples": 2.0, "rpn/num_neg_anchors": 245.0, "rpn/num_pos_anchors": 11.0, "time": 0.11443906000022253, "total_loss": 1.6235474951099604}
+-{"data_time": 0.0006802414995945583, "eta_seconds": 31.19099515990456, "fast_rcnn/cls_accuracy": 0.75, "fast_rcnn/false_negative": 1.0, "fast_rcnn/fg_cls_accuracy": 0.0, "iteration": 239, "loss_box_reg": 0.7276586294174194, "loss_cls": 0.4826214909553528, "loss_rpn_cls": 0.1706179901957512, "loss_rpn_loc": 0.0129384221509099, "lr": 0.00478522, "roi_head/num_bg_samples": 6.0, "roi_head/num_fg_samples": 2.0, "rpn/num_neg_anchors": 249.0, "rpn/num_pos_anchors": 7.0, "time": 0.12470398049981668, "total_loss": 1.6083695709239691}
+-{"data_time": 0.001267976999770326, "eta_seconds": 28.7916878399119, "fast_rcnn/cls_accuracy": 0.75, "fast_rcnn/false_negative": 1.0, "fast_rcnn/fg_cls_accuracy": 0.0, "iteration": 259, "loss_box_reg": 0.9244803488254547, "loss_cls": 0.5304815471172333, "loss_rpn_cls": 0.20299401879310608, "loss_rpn_loc": 0.014029300771653652, "lr": 0.00518482, "roi_head/num_bg_samples": 6.0, "roi_head/num_fg_samples": 2.0, "rpn/num_neg_anchors": 243.5, "rpn/num_pos_anchors": 12.5, "time": 0.11788623499978712, "total_loss": 1.7111142110661604}
+-{"data_time": 0.0013511679999282933, "eta_seconds": 26.433598840012564, "fast_rcnn/cls_accuracy": 0.75, "fast_rcnn/false_negative": 1.0, "fast_rcnn/fg_cls_accuracy": 0.0, "iteration": 279, "loss_box_reg": 1.0470128655433655, "loss_cls": 0.5416660308837891, "loss_rpn_cls": 0.22112467139959335, "loss_rpn_loc": 0.014637355227023363, "lr": 0.005584420000000001, "roi_head/num_bg_samples": 6.0, "roi_head/num_fg_samples": 2.0, "rpn/num_neg_anchors": 246.0, "rpn/num_pos_anchors": 10.0, "time": 0.1234447325000474, "total_loss": 1.7829659641720355}
+-{"data_time": 0.0009284939997087349, "eta_seconds": 23.993073199926584, "fast_rcnn/cls_accuracy": 0.75, "fast_rcnn/false_negative": 1.0, "fast_rcnn/fg_cls_accuracy": 0.0, "iteration": 299, "loss_box_reg": 0.8100399076938629, "loss_cls": 0.4694620966911316, "loss_rpn_cls": 0.15575850009918213, "loss_rpn_loc": 0.015135216526687145, "lr": 0.00598402, "roi_head/num_bg_samples": 6.0, "roi_head/num_fg_samples": 2.0, "rpn/num_neg_anchors": 250.0, "rpn/num_pos_anchors": 6.0, "time": 0.11639702799993756, "total_loss": 1.5812171981669962}
+-{"data_time": 0.001306932500028779, "eta_seconds": 21.537170189976678, "fast_rcnn/cls_accuracy": 0.75, "fast_rcnn/false_negative": 1.0, "fast_rcnn/fg_cls_accuracy": 0.0, "iteration": 319, "loss_box_reg": 0.6549598276615143, "loss_cls": 0.4910966157913208, "loss_rpn_cls": 0.19590649008750916, "loss_rpn_loc": 0.024539513513445854, "lr": 0.00638362, "roi_head/num_bg_samples": 6.0, "roi_head/num_fg_samples": 2.0, "rpn/num_neg_anchors": 244.0, "rpn/num_pos_anchors": 12.0, "time": 0.11470141500012687, "total_loss": 1.5704709012061357}
+-{"data_time": 0.0008332830002473202, "eta_seconds": 19.194458559941268, "fast_rcnn/cls_accuracy": 0.75, "fast_rcnn/false_negative": 1.0, "fast_rcnn/fg_cls_accuracy": 0.0, "iteration": 339, "loss_box_reg": 0.5907335877418518, "loss_cls": 0.49960657954216003, "loss_rpn_cls": 0.21084509789943695, "loss_rpn_loc": 0.016694391146302223, "lr": 0.006783220000000001, "roi_head/num_bg_samples": 6.0, "roi_head/num_fg_samples": 2.0, "rpn/num_neg_anchors": 244.0, "rpn/num_pos_anchors": 12.0, "time": 0.12089150100018742, "total_loss": 1.415513182990253}
+-{"data_time": 0.00042162400040979264, "eta_seconds": 16.756505989942525, "fast_rcnn/cls_accuracy": 0.75, "fast_rcnn/false_negative": 1.0, "fast_rcnn/fg_cls_accuracy": 0.0, "iteration": 359, "loss_box_reg": 0.6210159957408905, "loss_cls": 0.5140192806720734, "loss_rpn_cls": 0.22035598009824753, "loss_rpn_loc": 0.028808671049773693, "lr": 0.0071828199999999995, "roi_head/num_bg_samples": 6.0, "roi_head/num_fg_samples": 2.0, "rpn/num_neg_anchors": 246.0, "rpn/num_pos_anchors": 10.0, "time": 0.11502573950019723, "total_loss": 1.4448692188598216}
+-{"data_time": 0.0008498884999426082, "eta_seconds": 14.33160096001302, "fast_rcnn/cls_accuracy": 0.75, "fast_rcnn/false_negative": 1.0, "fast_rcnn/fg_cls_accuracy": 0.0, "iteration": 379, "loss_box_reg": 0.743391752243042, "loss_cls": 0.5079294890165329, "loss_rpn_cls": 0.2558159977197647, "loss_rpn_loc": 0.04990426078438759, "lr": 0.00758242, "roi_head/num_bg_samples": 6.0, "roi_head/num_fg_samples": 2.0, "rpn/num_neg_anchors": 222.0, "rpn/num_pos_anchors": 34.0, "time": 0.11810300949946395, "total_loss": 1.7043962222523987}
+-{"eta_seconds": 12.64995806197112, "iteration": 393, "rpn/num_neg_anchors": 227.5, "rpn/num_pos_anchors": 28.5}
+-{"data_time": 0.0013251535001472803, "fast_rcnn/cls_accuracy": 0.75, "fast_rcnn/false_negative": 1.0, "fast_rcnn/fg_cls_accuracy": 0.0, "iteration": 392, "loss_box_reg": 0.7583291530609131, "loss_cls": 0.5758730471134186, "loss_rpn_cls": 0.26100173592567444, "loss_rpn_loc": 0.046375975012779236, "lr": 0.00784216, "roi_head/num_bg_samples": 6.0, "roi_head/num_fg_samples": 2.0, "time": 0.11966754300055982, "total_loss": 1.7646682492922992}
+diff --git a/V2/run.py b/V2/run.py
+index c92aa78..0c49283 100644
+--- a/V2/run.py
++++ b/V2/run.py
+@@ -20,7 +20,7 @@ params = {
+         "faster_rcnn_R_101_FPN_3x.yaml",
+         "faster_rcnn_X_101_32x8d_FPN_3x.yaml",
+     ],
+-    "BASE_LR": [0.01, 0.001, 0.0001, 0.00001, 0.000001],
++    "BASE_LR": [0.0001, 0.00001, 0.000001],
+     "IMS_PER_BATCH": [1, 2, 3, 4, 5, 6, 7, 8, 9, 10],
+     "BATCH_SIZE_PER_IMAGE": [8, 16, 32, 64, 128, 256, 512],
+ }
+diff --git a/V2/wandb/latest-run b/V2/wandb/latest-run
+index 833514a..b726b8b 120000
+--- a/V2/wandb/latest-run
++++ b/V2/wandb/latest-run
+@@ -1 +1 @@
+-run-20211029_195812-3u99i9lm
+\ No newline at end of file
++run-20211029_201428-3hkgljl5
+\ No newline at end of file
+diff --git a/V2/wandb/run-20211029_195812-3u99i9lm/files/config.yaml b/V2/wandb/run-20211029_195812-3u99i9lm/files/config.yaml
+index 842db62..77ab917 100644
+--- a/V2/wandb/run-20211029_195812-3u99i9lm/files/config.yaml
++++ b/V2/wandb/run-20211029_195812-3u99i9lm/files/config.yaml
+@@ -39,6 +39,10 @@ _wandb:
+       1:
+       - 1
+       - 5
++      2:
++      - 1
++      - 3
++      - 5
+       3:
+       - 13
+       - 16
+diff --git a/V2/wandb/run-20211029_195812-3u99i9lm/files/wandb-summary.json b/V2/wandb/run-20211029_195812-3u99i9lm/files/wandb-summary.json
+index 9e26dfe..05c8524 100644
+--- a/V2/wandb/run-20211029_195812-3u99i9lm/files/wandb-summary.json
++++ b/V2/wandb/run-20211029_195812-3u99i9lm/files/wandb-summary.json
+@@ -1 +1 @@
+-{}
+\ No newline at end of file
++{"_wandb": {"runtime": 174}}
+\ No newline at end of file
+diff --git a/V2/wandb/run-20211029_195812-3u99i9lm/run-3u99i9lm.wandb b/V2/wandb/run-20211029_195812-3u99i9lm/run-3u99i9lm.wandb
+index 76e5028..64f8436 100644
+Binary files a/V2/wandb/run-20211029_195812-3u99i9lm/run-3u99i9lm.wandb and b/V2/wandb/run-20211029_195812-3u99i9lm/run-3u99i9lm.wandb differ
