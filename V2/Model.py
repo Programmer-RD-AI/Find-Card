@@ -485,3 +485,4 @@ class Model:
 # TODO - Add Param to load the data saved
 # TODO - Add @classmethod do give update of the project
 # TODO - Add A Progress Bar
+# TODO - Define What metric does what
