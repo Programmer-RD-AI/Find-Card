@@ -300,6 +300,17 @@ class Model:
                 lowest_mse = mean_squared_error(pred.to("cpu"), target)
         return lowest_mse
 
+    def create_x_y_w_h(xmin, ymin, xmax, ymax):
+        x = xmin
+        y = ymin
+        w = xmax - xmin
+        h = ymax - ymin
+        return x, y, w, h
+
+    def crop_img(x, y, w, h, img):
+        crop = img[y : y + h, x : x + w]
+        return crop
+
     def create_ssim(self, preds, target, height, width):
         lowest_ssim = 0
         ssim = SSIM()
@@ -308,29 +319,17 @@ class Model:
         )
         for pred_i in range(len(preds)):
             pred = preds_new[pred_i]
-            xmin, ymin, xmax, ymax = pred[0], pred[1], pred[2], pred[3]
-            xmin = round(int(xmin) * width)
-            xmax = round(int(xmax) * width)
-            ymin = round(int(ymin) * height)
-            ymax = round(int(ymax) * height)
-            x = xmin
-            y = ymin
-            w = xmax - xmin
-            h = ymax - ymin
             info = self.data[self.create_target_and_preds_iter]
             img = cv2.imread(info["file_name"])
-            crop_pred = torch.from_numpy(img[y : y + h, x : x + w]).view(-1, 3, h, w)
-            xmin, ymin, xmax, ymax = target[0], target[1], target[2], target[3]
-            xmin = round(int(xmin) * width)
-            xmax = round(int(xmax) * width)
-            ymin = round(int(ymin) * height)
-            ymax = round(int(ymax) * height)
-            x = xmin
-            y = ymin
-            w = xmax - xmin
-            h = ymax - ymin
-            crop_target = torch.from_numpy(img[y : y + h, x : x + w]).view(1, 3, h, w)
-            if ssim(crop_pred, crop_target) > lowest_ssim:
+            crop_img_target = torch.from_numpy(
+                self.crop_img(self.create_x_y_w_h(target), img)
+            )
+            crop_img_pred = torch.from_numpy(
+                np.array(self.crop_img(self.create_x_y_w_h(pred), img))
+            )
+            print(crop_img_pred.shape)
+            print(crop_img_target.shape)
+            if ssim(crop_img_pred, crop_img_target) > lowest_ssim:
                 lowest_ssim = ssim(pred.to("cpu"), target)
         return lowest_ssim
 
