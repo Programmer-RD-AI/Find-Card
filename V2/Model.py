@@ -42,8 +42,8 @@ class Model:
         base_lr: float = 0.00025,
         data: pd.DataFrame = pd.read_csv("./Data.csv").sample(frac=1),
         labels: list = ["Card"],
-        max_iter: int = 500,
-        eval_period: int = 50,
+        max_iter: int = 250,
+        eval_period: int = 250,
         ims_per_batch: int = 2,
         batch_size_per_image: int = 128,
         score_thresh_test: float = 0.625,
@@ -533,7 +533,7 @@ class Model:
         for metric_file in metrics_file:
             wandb.log(metric_file)
         for test_img in test_images:
-            wandb.log({test_img[0]: wandb.log(wandb.Image(test_img[1]))})
+            wandb.log({test_img[0]: wandb.Image(test_img[1])})
         wandb.log({"RMSE": rmse})
         wandb.log({"MSE": mse})
         wandb.log({"PSNR": psnr})
