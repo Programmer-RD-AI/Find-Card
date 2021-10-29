@@ -358,13 +358,13 @@ class Model:
         - create_target_and_preds - create the target and predictions
         """
         info = self.data.iloc[self.create_target_and_preds_iter]
-        img = cv2.imread(info["file_name"])
-        height, width = cv2.imread(info["file_name"]).shape[:2]
+        img = cv2.imread(info["Path"])
+        height, width = cv2.imread(info["Path"]).shape[:2]
         xmin, ymin, xmax, ymax = (
-            info["annotations"][0]["bbox"][0],
-            info["annotations"][0]["bbox"][1],
-            info["annotations"][0]["bbox"][2],
-            info["annotations"][0]["bbox"][3],
+            info["XMin"],
+            info["YMin"],
+            info["XMax"],
+            info["YMax"],
         )
         xmin = round(xmin * width)
         xmax = round(xmax * width)
@@ -453,7 +453,7 @@ class Model:
         for pred_i in tqdm(range(len(preds))):
             pred = preds_new[pred_i]
             info = self.data[self.create_target_and_preds_iter]
-            img = cv2.imread(info["file_name"])
+            img = cv2.imread(info["Path"])
             x, y, w, h = self.create_x_y_w_h(target[0], target[1], target[2], target[3])
             crop_img_target = torch.from_numpy(self.crop_img(x, y, w, h, img))
             x, y, w, h = self.create_x_y_w_h(pred[0], pred[1], pred[2], pred[3])
