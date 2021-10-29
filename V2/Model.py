@@ -210,7 +210,7 @@ class Model:
             record["annotations"] = objs
             new_data.append(record)
         np.random.shuffle(new_data)  # Shuffling the data
-        np.save("data.npy", new_data)  # Saving the data
+        # np.save("data.npy", new_data)  # Saving the data
         return new_data
 
     def save(self, **kwargs: dict) -> None:
@@ -488,11 +488,12 @@ class Model:
         return lowest_mae
 
     def train(self) -> dict:
+        """
+        - train - trains the model
+        """
         try:
+            self.remove_files_in_output()
             torch.cuda.empty_cache()
-            """
-            - train - trains the model
-            """
             wandb.init(
                 project=PROJECT_NAME,
                 name=self.NAME,
@@ -567,9 +568,11 @@ class Model:
                 "psnr": psnr,
             }
             torch.cuda.empty_cache()
+            self.remove_files_in_output()
         except:
             torch.cuda.empty_cache()
             pass
+
     def __str__(self) -> str:
         return f"""
             BASE_LR={self.BASE_LR}
