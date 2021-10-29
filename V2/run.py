@@ -1,7 +1,7 @@
 from Model import *
 
 params = {
-    "models": [
+    "MODEL": [
         "fast_rcnn_R_50_FPN_1x.yaml",
         "faster_rcnn_R_50_C4_1x.yaml",
         "faster_rcnn_R_50_C4_3x.yaml",
@@ -18,10 +18,14 @@ params = {
         "faster_rcnn_R_101_FPN_3x.yaml",
         "faster_rcnn_X_101_32x8d_FPN_3x.yaml",
     ],
-    "max_iters": [50, 100, 125, 250, 500, 1000, 2000, 2500, 5000],
-    "base_lrs": [0.1, 0.01, 0.001, 0.0001, 0.00001, 0.000001],
-    "ims_per_batchs": [1, 2, 3, 4, 5, 6, 7, 8, 9, 10],
-    "batch_size_per_images": [8, 16, 32, 64, 128, 256, 512],
+    "MAX_ITER": [500],
+    "LABELS": [["Card"]],
+    "CREATE_TARGET_AND_PREDS": [55],
+    "EVAL_PERIOD": [500],
+    "SCORE_THRESH_TEST": [0.625],
+    "BASE_LR": [0.1, 0.01, 0.001, 0.0001, 0.00001, 0.000001],
+    "IMS_PER_BATCH": [1, 2, 3, 4, 5, 6, 7, 8, 9, 10],
+    "BATCH_SIZE_PER_IMAGE": [8, 16, 32, 64, 128, 256, 512],
 }
 model = Model()
 model.train()
