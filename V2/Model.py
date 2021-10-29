@@ -127,7 +127,7 @@ class Model:
         ):  # Iter over the files in the directory
             os.remove(f"./output/{file_to_remove}")  # Delete the iter file
 
-    def test(self, data_idx: int) -> list:
+    def test(self, data_idx: int = 61) -> list:
         """
         - test - croping and creating a box around the img xmin,ymin, xmax, ymax
         -----------------------------------------------------
