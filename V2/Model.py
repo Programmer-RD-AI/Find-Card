@@ -1,3 +1,6 @@
+# Imports
+from tqdm import tqdm
+from sklearn.model_selection import ParameterGrid
 import random
 import cv2
 from detectron2.data import MetadataCatalog, DatasetCatalog
@@ -25,29 +28,72 @@ import tensorboard
 import os
 from detectron2.utils.logger import setup_logger
 
+# Setup Logger
 setup_logger()
+
+# Params
 
 ENTITY = "find-card"
 PROJECT_NAME = "Find-Card"
 
-
+# Model
 class Model:
+    """
+    # Function
+    - __init__ = initialize and get all of the params need
+    - remove_files_in_output - remove all of the file in ./output/
+    - test - croping and creating a box around the img xmin,ymin, xmax, ymax
+    - load_data - loading the data in the detectron2 data format
+    - save - it save the object with the {name}-{wandb-name}.pt and .pth
+    - create_cfg - create the config
+    - __train - trains the cfg
+    - create_predictor - create the predictor to predict images
+    - create_coco_eval - create COCO Evalutor and tests it
+    - metrics_file_to_dict - in ./output/metrics.json it logs the metrics of the model and
+    - predict_test_images - predict test images
+    - create_target_and_preds - create the target and predictions
+    - create_rmse - Create Root-mean-square deviation
+    - create_mse - Create Mean-square deviation
+    - create_x_y_w_h - Conver xmin,ymin, xmax, ymax to x,y,w,h
+    - crop_img - cropping the image using x,y,w,h
+    - create_ssim - create SSIM # TODO it is not done yet
+    - create_psnr - Peak signal-to-noise ratio (how similar is a image)
+    - create_mae - Mean absolute error
+    - train - trains the model
+    """
+
     def __init__(
         self,
-        base_lr=0.00025,
-        data=pd.read_csv("./Data.csv").sample(frac=1),
-        labels=["Card"],
-        max_iter=500,
-        eval_period=5,
-        ims_per_batch=2,
-        batch_size_per_image=128,
-        score_thresh_test=0.625,
-        model="COCO-Detection/faster_rcnn_X_101_32x8d_FPN_3x.yaml",
-        name="baseline",
-        create_target_and_preds=29,
-    ):
+        base_lr: float = 0.00025,
+        data: pd.DataFrame = pd.read_csv("./Data.csv").sample(frac=1),
+        labels: list = ["Card"],
+        max_iter: int = 500,
+        eval_period: int = 5,
+        ims_per_batch: int = 2,
+        batch_size_per_image: int = 128,
+        score_thresh_test: float = 0.625,
+        model: str = "COCO-Detection/faster_rcnn_X_101_32x8d_FPN_3x.yaml",
+        name: str = "baseline",
+        create_target_and_preds: int = 29,
+    ) -> None:
+        """
+        - __init__ = initialize and get all of the params need
+        -------------------------------------------------------
+        - base_lr = the base learning rate of the model which will allow the optimizer optimze better
+        - data = the data to create the dataset in detectron2 data format
+            - the data will be saved in ./data.npy file
+        - labels = labels of the dataset
+        - max_iter = no. of epochs or how many times the model needs to go through the data
+        - eval_period = step by step amount of iters that the model will be tested
+        - ims_per_batch = Number of Images that is in a Batch
+        - batch_size_per_image = Batch size for every image
+        - score_thresh_test = how much sure does the model be to show the predictions
+        - model = the model from the detectron2 model_zoo
+        - name = name of the wandb log
+        - create_target_and_preds = testing image
+        """
         self.remove_files_in_output()
-        self.data = data  # pd.read_csv("./Data.csv").sample(frac=1)
+        self.data = data
         self.labels = labels  # ["Card"]
         self.tests = {
             "models": [
@@ -60,7 +106,8 @@ class Model:
                 "retinanet_R_50_FPN_1x.yaml",
                 "retinanet_R_50_FPN_3x.yaml",
                 "rpn_R_50_C4_1x.yaml",
-                "rpn_R_50_FPN_1x.yaml" "faster_rcnn_R_50_FPN_1x.yaml",
+                "rpn_R_50_FPN_1x.yaml",
+                "faster_rcnn_R_50_FPN_1x.yaml",
                 "faster_rcnn_R_50_FPN_3x.yaml",
                 "faster_rcnn_R_101_DC5_3x.yaml",
                 "faster_rcnn_R_101_FPN_3x.yaml",
@@ -70,13 +117,17 @@ class Model:
             "base_lrs": [0.1, 0.01, 0.001, 0.0001, 0.00001, 0.000001],
             "ims_per_batchs": [1, 2, 3, 4, 5, 6, 7, 8, 9, 10],
             "batch_size_per_images": [8, 16, 32, 64, 128, 256, 512],
-        }
-        DatasetCatalog.register("data", lambda: self.load_data())
-        MetadataCatalog.get("data").set(thing_classes=self.labels)
-        self.metadata = MetadataCatalog.get("data")
-        DatasetCatalog.register("test", lambda: self.load_data(test=True))
-        MetadataCatalog.get("test").set(thing_classes=self.labels)
-        self.metadata_test = MetadataCatalog.get("test")
+        }  # Tests for Param Tunning
+        DatasetCatalog.register(
+            "data", lambda: self.load_data()
+        )  # Registering the training data
+        MetadataCatalog.get("data").set(thing_classes=self.labels)  # Adding the labels
+        self.metadata = MetadataCatalog.get("data")  # Getting the metadata
+        DatasetCatalog.register(
+            "test", lambda: self.load_data(test=True)
+        )  # Registering the test data
+        MetadataCatalog.get("test").set(thing_classes=self.labels)  # Adding the labels
+        self.metadata_test = MetadataCatalog.get("test")  # Getting the metadata
         self.BASE_LR = base_lr
         self.MAX_ITER = max_iter
         self.EVAL_PERIOD = eval_period
@@ -85,17 +136,20 @@ class Model:
         self.SCORE_THRESH_TEST = score_thresh_test
         self.model = model
         self.NAME = name
-        self.cfg = self.create_cfg()
+        self.cfg = self.create_cfg()  # Creating the model config
         self.create_target_and_preds_iter = create_target_and_preds
         self.remove_files_in_output()
 
     @staticmethod
-    def remove_files_in_output():
-        files_to_remove = os.listdir("./output/")
-        for file_to_remove in files_to_remove:
-            os.remove(f"./output/{file_to_remove}")
+    def remove_files_in_output() -> None:
+        files_to_remove = os.listdir("./output/")  # Get the files in the directory
+        print("Remove files in output directory")
+        for file_to_remove in tqdm(
+            files_to_remove
+        ):  # Iter over the files in the directory
+            os.remove(f"./output/{file_to_remove}")  # Delete the iter file
 
-    def test(self, data_idx):
+    def test(self, data_idx: int) -> list:
         info = self.data.iloc[data_idx]
         img = cv2.imread(f'./Img/{info["Path"]}')
         height, width = cv2.imread("./Img/" + info["Path"]).shape[:2]
@@ -111,7 +165,7 @@ class Model:
         x, y, w, h = round(x), round(y), round(w), round(h)
         roi = img[y : y + h, x : x + w]
         cv2.rectangle(img, (x, y), (x + w, y + h), (200, 0, 0), 10)
-        return img, roi
+        return [img, roi]
 
     def load_data(self, test=False):
         if test is True:
@@ -123,6 +177,7 @@ class Model:
             self.data = np.load("./data.npy", allow_pickle=True)
             return self.data
         new_data = []
+        print("Loading Data")
         for idx in tqdm(range(len(self.data))):
             record = {}
             info = self.data.iloc[idx]
@@ -157,6 +212,7 @@ class Model:
     def save(self, **kwargs):
         torch.cuda.empty_cache()
         files_and_object = kwargs
+        print("Save")
         for files_and_object_key, files_and_object_key in tqdm(
             zip(files_and_object.keys(), files_and_object.values())
         ):
@@ -216,6 +272,7 @@ class Model:
     def metrics_file_to_dict(self):
         new_logs = []
         logs = open("./output/metrics.json", "r").read().split("\n")
+        print("Metrics file to dict")
         for log in tqdm(range(len(logs))):
             try:
                 res = ast.literal_eval(logs[log])
@@ -227,7 +284,8 @@ class Model:
     def predict_test_images(self, predictor):
         imgs = []
         torch.cuda.empty_cache()
-        for img in os.listdir("./test_imgs/"):
+        print("Predict")
+        for img in tqdm(os.listdir("./test_imgs/")):
             v = Visualizer(
                 cv2.imread(f"./test_imgs/{img}")[:, :, ::-1], metadata=self.metadata
             )
@@ -270,7 +328,7 @@ class Model:
         ):
             preds["instances"].__dict__["_fields"]["pred_boxes"].__dict__[
                 "tensor"
-            ] = torch.tensor([[0, 0, 0, 0]])
+            ] = torch.tensor([[1, 1, 1, 1]])
         print(preds)
         target = torch.tensor([xmin, ymin, xmax, ymax])
 
@@ -282,7 +340,8 @@ class Model:
         preds_new = (
             preds["instances"].__dict__["_fields"]["pred_boxes"].__dict__["tensor"]
         )
-        for pred_i in range(len(preds)):
+        print("Creating RMSE")
+        for pred_i in tqdm(range(len(preds))):
             pred = preds_new[pred_i]
             if r_mean_squared_error(pred.to("cpu"), target) > lowest_rmse:
                 lowest_rmse = r_mean_squared_error(pred.to("cpu"), target)
@@ -294,7 +353,8 @@ class Model:
         preds_new = (
             preds["instances"].__dict__["_fields"]["pred_boxes"].__dict__["tensor"]
         )
-        for pred_i in range(len(preds)):
+        print("Creating MSE")
+        for pred_i in tqdm(range(len(preds))):
             pred = preds_new[pred_i]
             if mean_squared_error(pred.to("cpu"), target) > lowest_mse:
                 lowest_mse = mean_squared_error(pred.to("cpu"), target)
@@ -311,6 +371,7 @@ class Model:
     @staticmethod
     def crop_img(x, y, w, h, img):
         crop = img[y : y + h, x : x + w]
+        cv2.imwrite("./test.png", crop)
         return crop
 
     def create_ssim(self, preds, target, height, width):
@@ -319,7 +380,8 @@ class Model:
         preds_new = (
             preds["instances"].__dict__["_fields"]["pred_boxes"].__dict__["tensor"]
         )
-        for pred_i in range(len(preds)):
+        print("Creating SSIM")
+        for pred_i in tqdm(range(len(preds))):
             pred = preds_new[pred_i]
             print(target)
             print(pred)
@@ -341,7 +403,8 @@ class Model:
         preds_new = (
             preds["instances"].__dict__["_fields"]["pred_boxes"].__dict__["tensor"]
         )
-        for pred_i in range(len(preds)):
+        print("Creating PSNR")
+        for pred_i in tqdm(range(len(preds))):
             pred = preds_new[pred_i]
             if psnr(pred.to("cpu"), target) > lowest_psnr:
                 lowest_psnr = psnr(pred.to("cpu"), target)
@@ -353,7 +416,8 @@ class Model:
         preds_new = (
             preds["instances"].__dict__["_fields"]["pred_boxes"].__dict__["tensor"]
         )
-        for pred_i in range(len(preds)):
+        print("Creating MAE")
+        for pred_i in tqdm(range(len(preds))):
             pred = preds_new[pred_i]
             if mae(pred.to("cpu"), target) > lowest_mae:
                 lowest_mae = mae(pred.to("cpu"), target)
@@ -396,7 +460,7 @@ class Model:
         ) = self.create_target_and_preds(predictor)
         rmse = self.create_rmse(preds, target)
         mse = self.create_mse(preds, target)
-        ssim = self.create_ssim(preds, target, height, width)
+        # ssim = self.create_ssim(preds, target, height, width)
         psnr = self.create_psnr(preds, target)
         wandb.log(metrics_coco)
         for metric_file in metrics_file:
@@ -405,7 +469,6 @@ class Model:
             wandb.log({test_img[0]: wandb.log(wandb.Image(test_img[1]))})
         wandb.log({"RMSE": rmse})
         wandb.log({"MSE": mse})
-        wandb.log({"SSIM": ssim})
         wandb.log({"PSNR": psnr})
         self.save(
             {
@@ -418,7 +481,6 @@ class Model:
                 "target": target,
                 "rmse": rmse,
                 "mse": mse,
-                "ssim": ssim,
                 "psnr": psnr,
             }
         )
@@ -433,7 +495,6 @@ class Model:
             "target": target,
             "rmse": rmse,
             "mse": mse,
-            "ssim": ssim,
             "psnr": psnr,
         }
 
@@ -480,7 +541,54 @@ class Model:
             """
 
 
-# TODO - Create a OOP Class which Tests all possible params
+class Param_Tunning:
+    def __init__(self, params):
+        required_labels = [
+            "BASE_LR",
+            "LABELS",
+            "MAX_ITER",
+            "EVAL_PERIOD",
+            "IMS_PER_BATCH",
+            "BATCH_SIZE_PER_IMAGE",
+            "SCORE_THRESH_TEST",
+            "MODEL",
+            "CREATE_TARGET_AND_PREDS",
+        ]
+        params_not_in_required_labels = []
+
+        for required_label in tqdm(list(required_labels.keys())):
+            if required_label not in list(params.keys()):
+                params_not_in_required_labels.append(required_label)
+        if params_not_in_required_labels != []:
+            raise ValueError(f"{params_not_in_required_labels} are required in params")
+        self.params = ParameterGrid(params)
+
+    def tune(self):
+        models = {"Model": [], "Metrics_COCO": [], "Metrics_File": []}
+        for param in tqdm(self.params):
+            model = Model(
+                base_lr=param["BASE_LR"],
+                labels=param["LABELS"],
+                max_iter=param["MAX_ITER"],
+                eval_period=param["EVAL_PERIOD"],
+                ims_per_batch=param["IMS_PER_BATCH"],
+                batch_size_per_image=param["BATCH_SIZE_PER_IMAGE"],
+                score_thresh_test=param["SCORE_THRESH_TEST"],
+                model=param["MODEL"],
+                name=str(param),
+                create_target_and_preds=param["CREATE_TARGET_AND_PREDS"],
+            )
+            metrics = model.train()
+            metrics_coco = metrics["metrics_coco"]
+            metrics_file = metrics["metrics_file"]
+            models["Model"].append(param["MODEL"])
+            models["Metrics_COCO"].append(metrics_coco)
+            models["Metrics_File"].append(metrics_file)
+        models = pd.DataFrame(models)
+        models.to_csv("./tune.csv")
+        return models
+
+
 # TODO - Add Comments and What is the output of the function and description,etc..
 # TODO - Add Param to load the data saved
 # TODO - Add @classmethod do give update of the project
@@ -488,3 +596,4 @@ class Model:
 # TODO - Define What metric does what
 # TODO - Do Unit tests
 # TODO - Add Funtion what will load the models and others and predict easily
+# TODO - Add Raise
