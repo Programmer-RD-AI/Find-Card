@@ -1,0 +1,30 @@
+diff --git a/V2/Model.py b/V2/Model.py
+index 2fe5273..8ad1dbf 100644
+--- a/V2/Model.py
++++ b/V2/Model.py
+@@ -311,6 +311,7 @@ class Model:
+     @staticmethod
+     def crop_img(x, y, w, h, img):
+         crop = img[y : y + h, x : x + w]
++        cv2.imwrite("./test.png", crop)
+         return crop
+ 
+     def create_ssim(self, preds, target, height, width):
+diff --git a/V2/output/metrics.json b/V2/output/metrics.json
+deleted file mode 100644
+index 50c25c2..0000000
+--- a/V2/output/metrics.json
++++ /dev/null
+@@ -1,3 +0,0 @@
+-{"data_time": 0.002334182500362658, "eta_seconds": 492.2777457601478, "fast_rcnn/cls_accuracy": 0.302734375, "fast_rcnn/false_negative": 0.06904761904761905, "fast_rcnn/fg_cls_accuracy": 0.930952380952381, "iteration": 19, "loss_box_reg": 0.36457931995391846, "loss_cls": 0.7583798170089722, "loss_rpn_cls": 0.025776554830372334, "loss_rpn_loc": 0.006265446776524186, "lr": 9.7405e-06, "roi_head/num_bg_samples": 115.75, "roi_head/num_fg_samples": 12.25, "rpn/num_neg_anchors": 252.0, "rpn/num_pos_anchors": 4.0, "time": 1.025578637000308, "total_loss": 1.2027013322804123}
+-{"data_time": 0.002252273000522109, "eta_seconds": 456.9510167298995, "fast_rcnn/cls_accuracy": 0.662109375, "fast_rcnn/false_negative": 0.51, "fast_rcnn/fg_cls_accuracy": 0.49, "iteration": 39, "loss_box_reg": 0.3455461263656616, "loss_cls": 0.6444836854934692, "loss_rpn_cls": 0.048353444784879684, "loss_rpn_loc": 0.008299409411847591, "lr": 1.97305e-05, "roi_head/num_bg_samples": 116.0, "roi_head/num_fg_samples": 12.0, "rpn/num_neg_anchors": 251.5, "rpn/num_pos_anchors": 4.5, "time": 0.9696345330003169, "total_loss": 1.1083638740237802}
+-{"data_time": 0.0027644364995467186, "eta_seconds": 433.4525280801972, "fast_rcnn/cls_accuracy": 0.88671875, "fast_rcnn/false_negative": 1.0, "fast_rcnn/fg_cls_accuracy": 0.0, "iteration": 59, "loss_box_reg": 0.3384545147418976, "loss_cls": 0.44973157346248627, "loss_rpn_cls": 0.03071855753660202, "loss_rpn_loc": 0.008881173562258482, "lr": 2.9720499999999998e-05, "roi_head/num_bg_samples": 116.75, "roi_head/num_fg_samples": 11.25, "rpn/num_neg_anchors": 251.0, "rpn/num_pos_anchors": 5.0, "time": 0.9758844099997077, "total_loss": 0.9069253127090633}
+diff --git a/V2/wandb/latest-run b/V2/wandb/latest-run
+index 2642f4a..daad5d3 120000
+--- a/V2/wandb/latest-run
++++ b/V2/wandb/latest-run
+@@ -1 +1 @@
+-run-20211029_103743-3qatks27
+\ No newline at end of file
++run-20211029_110514-z3t1ecay
+\ No newline at end of file

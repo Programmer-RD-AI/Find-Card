@@ -1,0 +1,381 @@
+diff --git a/V2/box.jpg b/V2/box.jpg
+index 54d3662..c38da34 100644
+Binary files a/V2/box.jpg and b/V2/box.jpg differ
+diff --git a/V2/crop.jpg b/V2/crop.jpg
+index 2befc91..9f51961 100644
+Binary files a/V2/crop.jpg and b/V2/crop.jpg differ
+diff --git a/V2/output.png b/V2/output.png
+index 540ae0c..ab7d89c 100644
+Binary files a/V2/output.png and b/V2/output.png differ
+diff --git a/V2/output/metrics.json b/V2/output/metrics.json
+deleted file mode 100644
+index 7a01053..0000000
+--- a/V2/output/metrics.json
++++ /dev/null
+@@ -1,9 +0,0 @@
+-{"data_time": 0.0026208500003122026, "eta_seconds": 414.9676742403244, "fast_rcnn/cls_accuracy": 0.177734375, "fast_rcnn/false_negative": 0.09545454545454546, "fast_rcnn/fg_cls_accuracy": 0.9045454545454545, "iteration": 19, "loss_box_reg": 0.3522993326187134, "loss_cls": 0.8014278709888458, "loss_rpn_cls": 0.018210981972515583, "loss_rpn_loc": 0.0055716028437018394, "lr": 9.7405e-06, "roi_head/num_bg_samples": 115.75, "roi_head/num_fg_samples": 12.25, "rpn/num_neg_anchors": 251.5, "rpn/num_pos_anchors": 4.5, "time": 0.8645159880006759, "total_loss": 1.2131880953675136}
+-{"data_time": 0.002700746000300569, "eta_seconds": 442.3367599197445, "fast_rcnn/cls_accuracy": 0.66015625, "fast_rcnn/false_negative": 0.4878472222222222, "fast_rcnn/fg_cls_accuracy": 0.5121527777777778, "iteration": 39, "loss_box_reg": 0.2928631156682968, "loss_cls": 0.6592471301555634, "loss_rpn_cls": 0.04662539064884186, "loss_rpn_loc": 0.005479648942127824, "lr": 1.97305e-05, "roi_head/num_bg_samples": 117.75, "roi_head/num_fg_samples": 10.25, "rpn/num_neg_anchors": 252.0, "rpn/num_pos_anchors": 4.0, "time": 1.002125246000105, "total_loss": 1.03752052760683}
+-{"data_time": 0.002915678500357899, "eta_seconds": 423.1047268797556, "fast_rcnn/cls_accuracy": 0.900390625, "fast_rcnn/false_negative": 1.0, "fast_rcnn/fg_cls_accuracy": 0.0, "iteration": 59, "loss_box_reg": 0.34688952565193176, "loss_cls": 0.4673869013786316, "loss_rpn_cls": 0.01653128769248724, "loss_rpn_loc": 0.009292074479162693, "lr": 2.9720499999999998e-05, "roi_head/num_bg_samples": 116.5, "roi_head/num_fg_samples": 11.5, "rpn/num_neg_anchors": 250.25, "rpn/num_pos_anchors": 5.75, "time": 0.9508253570002125, "total_loss": 0.8477557227015495}
+-{"data_time": 0.002589498500128684, "eta_seconds": 409.32082274988716, "fast_rcnn/cls_accuracy": 0.91796875, "fast_rcnn/false_negative": 1.0, "fast_rcnn/fg_cls_accuracy": 0.0, "iteration": 79, "loss_box_reg": 0.30450472235679626, "loss_cls": 0.3436949700117111, "loss_rpn_cls": 0.03657875023782253, "loss_rpn_loc": 0.0065450724214315414, "lr": 3.9710500000000005e-05, "roi_head/num_bg_samples": 117.5, "roi_head/num_fg_samples": 10.5, "rpn/num_neg_anchors": 251.25, "rpn/num_pos_anchors": 4.75, "time": 0.9794528145002914, "total_loss": 0.7241434160387143}
+-{"data_time": 0.0028472459998738486, "eta_seconds": 396.7470134000905, "fast_rcnn/cls_accuracy": 0.908203125, "fast_rcnn/false_negative": 1.0, "fast_rcnn/fg_cls_accuracy": 0.0, "iteration": 99, "loss_box_reg": 0.35290035605430603, "loss_cls": 0.2946748584508896, "loss_rpn_cls": 0.02225905144587159, "loss_rpn_loc": 0.005359880859032273, "lr": 4.97005e-05, "roi_head/num_bg_samples": 116.25, "roi_head/num_fg_samples": 11.75, "rpn/num_neg_anchors": 253.0, "rpn/num_pos_anchors": 3.0, "time": 1.1623377429996253, "total_loss": 0.6676745389122516}
+-{"data_time": 0.0025420814990866347, "eta_seconds": 379.2934099498234, "fast_rcnn/cls_accuracy": 0.908203125, "fast_rcnn/false_negative": 1.0, "fast_rcnn/fg_cls_accuracy": 0.0, "iteration": 119, "loss_box_reg": 0.35386575758457184, "loss_cls": 0.27486203610897064, "loss_rpn_cls": 0.013286472298204899, "loss_rpn_loc": 0.006258231354877353, "lr": 5.96905e-05, "roi_head/num_bg_samples": 116.25, "roi_head/num_fg_samples": 11.75, "rpn/num_neg_anchors": 252.0, "rpn/num_pos_anchors": 4.0, "time": 1.0712581005000175, "total_loss": 0.6735123773105443}
+-{"data_time": 0.002627927500725491, "eta_seconds": 359.3305988998327, "fast_rcnn/cls_accuracy": 0.912109375, "fast_rcnn/false_negative": 1.0, "fast_rcnn/fg_cls_accuracy": 0.0, "iteration": 139, "loss_box_reg": 0.317229226231575, "loss_cls": 0.2478296384215355, "loss_rpn_cls": 0.02962871827185154, "loss_rpn_loc": 0.005452191457152367, "lr": 6.96805e-05, "roi_head/num_bg_samples": 116.75, "roi_head/num_fg_samples": 11.25, "rpn/num_neg_anchors": 252.25, "rpn/num_pos_anchors": 3.75, "time": 1.015815403000488, "total_loss": 0.627249100478366}
+-{"data_time": 0.0025833180006884504, "eta_seconds": 339.367787849842, "fast_rcnn/cls_accuracy": 0.892578125, "fast_rcnn/false_negative": 1.0, "fast_rcnn/fg_cls_accuracy": 0.0, "iteration": 159, "loss_box_reg": 0.3830440193414688, "loss_cls": 0.2726282328367233, "loss_rpn_cls": 0.011340477969497442, "loss_rpn_loc": 0.004757197108119726, "lr": 7.967050000000001e-05, "roi_head/num_bg_samples": 114.25, "roi_head/num_fg_samples": 13.75, "rpn/num_neg_anchors": 252.0, "rpn/num_pos_anchors": 4.0, "time": 0.9763805840002533, "total_loss": 0.7168807398993522}
+-{"data_time": 0.002706944000237854, "eta_seconds": 321.98447760019917, "fast_rcnn/cls_accuracy": 0.900390625, "fast_rcnn/false_negative": 1.0, "fast_rcnn/fg_cls_accuracy": 0.0, "iteration": 179, "loss_box_reg": 0.35051536560058594, "loss_cls": 0.24525251984596252, "loss_rpn_cls": 0.015950128436088562, "loss_rpn_loc": 0.008825895842164755, "lr": 8.966049999999999e-05, "roi_head/num_bg_samples": 115.25, "roi_head/num_fg_samples": 12.75, "rpn/num_neg_anchors": 251.5, "rpn/num_pos_anchors": 4.5, "time": 1.151469429500139, "total_loss": 0.6398588831070811}
+diff --git a/V2/param-tunning.ipynb b/V2/param-tunning.ipynb
+index b8a37dd..78a1a91 100644
+--- a/V2/param-tunning.ipynb
++++ b/V2/param-tunning.ipynb
+@@ -17,6 +17,7 @@
+     "import ast \n",
+     "import tensorboard,os\n",
+     "from detectron2.utils.logger import setup_logger\n",
++    "\n",
+     "setup_logger()\n",
+     "import numpy as np\n",
+     "import pandas as pd\n",
+@@ -28,33 +29,25 @@
+     "from detectron2.structures import BoxMode\n",
+     "from tqdm import tqdm\n",
+     "from detectron2.utils.visualizer import Visualizer\n",
+-    "from detectron2.data import MetadataCatalog, DatasetCatalog\n",
+-    "PROJECT_NAME = \"Find-Card\""
++    "from detectron2.data import MetadataCatalog, DatasetCatalog"
+    ]
+   },
+   {
+    "cell_type": "code",
+-<<<<<<< Updated upstream
+    "execution_count": 2,
+-=======
+-   "execution_count": 3,
+->>>>>>> Stashed changes
+    "id": "54f77166-567f-4e53-87a4-bebed5fcf8d9",
+    "metadata": {},
+    "outputs": [],
+    "source": [
+     "files_to_remove = os.listdir('./output/')\n",
++    "files_to_remove.remove('metrics.json')\n",
+     "for file_to_remove in files_to_remove:\n",
+     "    os.remove(f'./output/{file_to_remove}')"
+    ]
+   },
+   {
+    "cell_type": "code",
+-<<<<<<< Updated upstream
+    "execution_count": 8,
+-=======
+-   "execution_count": 4,
+->>>>>>> Stashed changes
+    "id": "886fa83a-c439-4554-8d17-777cee97dfdb",
+    "metadata": {},
+    "outputs": [],
+@@ -64,11 +57,7 @@
+   },
+   {
+    "cell_type": "code",
+-<<<<<<< Updated upstream
+    "execution_count": 9,
+-=======
+-   "execution_count": 5,
+->>>>>>> Stashed changes
+    "id": "9f392a7f-893b-4b55-af75-1a5987b1e741",
+    "metadata": {},
+    "outputs": [
+@@ -78,11 +67,7 @@
+        "True"
+       ]
+      },
+-<<<<<<< Updated upstream
+      "execution_count": 9,
+-=======
+-     "execution_count": 5,
+->>>>>>> Stashed changes
+      "metadata": {},
+      "output_type": "execute_result"
+     }
+@@ -103,18 +88,14 @@
+     "x,y,w,h = round(x),round(y),round(w),round(h)\n",
+     "cv2.imwrite('./output.png',img)\n",
+     "roi=img[y:y+h,x:x+w]\n",
+-    "# cv2.imwrite(str('crop') + '.jpg', roi)\n",
++    "cv2.imwrite(str('crop') + '.jpg', roi)\n",
+     "cv2.rectangle(img,(x,y),(x+w,y+h),(200,0,0),10)\n",
+-    "# cv2.imwrite(str('box') + '.jpg', img)"
++    "cv2.imwrite(str('box') + '.jpg', img)"
+    ]
+   },
+   {
+    "cell_type": "code",
+-<<<<<<< Updated upstream
+    "execution_count": 10,
+-=======
+-   "execution_count": 6,
+->>>>>>> Stashed changes
+    "id": "b17e1f90-c8b5-432e-be3a-df122a2fb919",
+    "metadata": {},
+    "outputs": [],
+@@ -161,11 +142,7 @@
+   },
+   {
+    "cell_type": "code",
+-<<<<<<< Updated upstream
+    "execution_count": 11,
+-=======
+-   "execution_count": 7,
+->>>>>>> Stashed changes
+    "id": "fb92183d-6ced-44ec-9586-ed3ce8ce9b49",
+    "metadata": {},
+    "outputs": [],
+@@ -176,11 +153,7 @@
+   },
+   {
+    "cell_type": "code",
+-<<<<<<< Updated upstream
+    "execution_count": 12,
+-=======
+-   "execution_count": 8,
+->>>>>>> Stashed changes
+    "id": "de01b6ab-0060-4988-bea8-90145f494d8e",
+    "metadata": {},
+    "outputs": [],
+@@ -196,11 +169,7 @@
+   },
+   {
+    "cell_type": "code",
+-<<<<<<< Updated upstream
+    "execution_count": 13,
+-=======
+-   "execution_count": 9,
+->>>>>>> Stashed changes
+    "id": "c6fa0905-7359-47bb-82d1-7e46e01e98f8",
+    "metadata": {},
+    "outputs": [],
+@@ -238,11 +207,7 @@
+   },
+   {
+    "cell_type": "code",
+-<<<<<<< Updated upstream
+    "execution_count": 14,
+-=======
+-   "execution_count": 10,
+->>>>>>> Stashed changes
+    "id": "ce211722-cd2a-4392-a22d-e769ae8c5a40",
+    "metadata": {},
+    "outputs": [],
+@@ -258,30 +223,21 @@
+   },
+   {
+    "cell_type": "code",
+-<<<<<<< Updated upstream
+    "execution_count": 15,
+-=======
+-   "execution_count": 11,
+->>>>>>> Stashed changes
+    "id": "93b60993-b010-4f8b-a9cc-ce7ff377dcb2",
+    "metadata": {},
+    "outputs": [],
+    "source": [
+-    "NAME = \"baseline\""
++    "NAME = \"test\""
+    ]
+   },
+   {
+    "cell_type": "code",
+-<<<<<<< Updated upstream
+    "execution_count": 16,
+-=======
+-   "execution_count": 12,
+->>>>>>> Stashed changes
+    "id": "6a2539e4-017c-4bbd-99bd-439f1712a127",
+    "metadata": {},
+    "outputs": [
+     {
+-<<<<<<< Updated upstream
+      "data": {
+       "text/html": [
+        "Finishing last run (ID:2dgc24mc) before initializing another..."
+@@ -360,26 +316,13 @@
+       "\u001b[34m\u001b[1mwandb\u001b[0m: wandb version 0.12.6 is available!  To upgrade, please run:\n",
+       "\u001b[34m\u001b[1mwandb\u001b[0m:  $ pip install wandb --upgrade\n",
+       "2021-10-28 19:56:56.409292: I tensorflow/stream_executor/platform/default/dso_loader.cc:49] Successfully opened dynamic library libcudart.so.11.0\n"
+-=======
+-     "name": "stderr",
+-     "output_type": "stream",
+-     "text": [
+-      "\u001b[34m\u001b[1mwandb\u001b[0m: W&B API key is configured (use `wandb login --relogin` to force relogin)\n",
+-      "\u001b[34m\u001b[1mwandb\u001b[0m: wandb version 0.12.6 is available!  To upgrade, please run:\n",
+-      "\u001b[34m\u001b[1mwandb\u001b[0m:  $ pip install wandb --upgrade\n",
+-      "2021-10-28 19:14:45.313889: I tensorflow/stream_executor/platform/default/dso_loader.cc:49] Successfully opened dynamic library libcudart.so.11.0\n"
+->>>>>>> Stashed changes
+      ]
+     },
+     {
+      "data": {
+       "text/html": [
+        "\n",
+-<<<<<<< Updated upstream
+        "                    Syncing run <strong><a href=\"https://wandb.ai/ranuga-d/Find-Card/runs/a5atekbh\" target=\"_blank\">test</a></strong> to <a href=\"https://wandb.ai/ranuga-d/Find-Card\" target=\"_blank\">Weights & Biases</a> (<a href=\"https://docs.wandb.com/integrations/jupyter.html\" target=\"_blank\">docs</a>).<br/>\n",
+-=======
+-       "                    Syncing run <strong><a href=\"https://wandb.ai/find-card/Find-Card/runs/ukfewicg\" target=\"_blank\">baseline</a></strong> to <a href=\"https://wandb.ai/find-card/Find-Card\" target=\"_blank\">Weights & Biases</a> (<a href=\"https://docs.wandb.com/integrations/jupyter.html\" target=\"_blank\">docs</a>).<br/>\n",
+->>>>>>> Stashed changes
+        "\n",
+        "                "
+       ],
+@@ -394,11 +337,7 @@
+      "name": "stdout",
+      "output_type": "stream",
+      "text": [
+-<<<<<<< Updated upstream
+       "\u001b[32m[10/28 19:57:06 d2.engine.defaults]: \u001b[0mModel:\n",
+-=======
+-      "\u001b[32m[10/28 19:14:54 d2.engine.defaults]: \u001b[0mModel:\n",
+->>>>>>> Stashed changes
+       "GeneralizedRCNN(\n",
+       "  (backbone): FPN(\n",
+       "    (fpn_lateral2): Conv2d(256, 256, kernel_size=(1, 1), stride=(1, 1))\n",
+@@ -946,62 +885,20 @@
+      "name": "stderr",
+      "output_type": "stream",
+      "text": [
+-<<<<<<< Updated upstream
+       "100%|███████████████████████████████████████| 1853/1853 [01:53<00:00, 16.33it/s]"
+-=======
+-      "100%|██████████| 1853/1853 [02:00<00:00, 15.32it/s]"
+      ]
+     },
+     {
+      "name": "stdout",
+      "output_type": "stream",
+      "text": [
+-      "\u001b[32m[10/28 19:16:55 d2.data.build]: \u001b[0mRemoved 0 images with no usable annotations. 1853 images left.\n",
+-      "\u001b[32m[10/28 19:16:55 d2.data.build]: \u001b[0mDistribution of instances among all 1 categories:\n",
+-      "\u001b[36m|  category  | #instances   |\n",
+-      "|:----------:|:-------------|\n",
+-      "|    Card    | 1853         |\n",
+-      "|            |              |\u001b[0m\n",
+-      "\u001b[32m[10/28 19:16:55 d2.data.dataset_mapper]: \u001b[0m[DatasetMapper] Augmentations used in training: [ResizeShortestEdge(short_edge_length=(640, 672, 704, 736, 768, 800), max_size=1333, sample_style='choice'), RandomFlip()]\n",
+-      "\u001b[32m[10/28 19:16:55 d2.data.build]: \u001b[0mUsing training sampler TrainingSampler\n",
+-      "\u001b[32m[10/28 19:16:55 d2.data.common]: \u001b[0mSerializing 1853 elements to byte tensors and concatenating them all ...\n",
+-      "\u001b[32m[10/28 19:16:55 d2.data.common]: \u001b[0mSerialized dataset takes 0.35 MiB\n"
+-     ]
+-    },
+-    {
+-     "name": "stderr",
+-     "output_type": "stream",
+-     "text": [
+-      "\n",
+-      "2021-10-28 19:16:56.102242: I tensorflow/stream_executor/platform/default/dso_loader.cc:49] Successfully opened dynamic library libcudart.so.11.0\n",
+-      "Skip loading parameter 'roi_heads.box_predictor.cls_score.weight' to the model due to incompatible shapes: (81, 1024) in the checkpoint but (2, 1024) in the model! You might want to double check if this is expected.\n",
+-      "Skip loading parameter 'roi_heads.box_predictor.cls_score.bias' to the model due to incompatible shapes: (81,) in the checkpoint but (2,) in the model! You might want to double check if this is expected.\n",
+-      "Skip loading parameter 'roi_heads.box_predictor.bbox_pred.weight' to the model due to incompatible shapes: (320, 1024) in the checkpoint but (4, 1024) in the model! You might want to double check if this is expected.\n",
+-      "Skip loading parameter 'roi_heads.box_predictor.bbox_pred.bias' to the model due to incompatible shapes: (320,) in the checkpoint but (4,) in the model! You might want to double check if this is expected.\n",
+-      "Some model parameters or buffers are not found in the checkpoint:\n",
+-      "\u001b[34mroi_heads.box_predictor.bbox_pred.{bias, weight}\u001b[0m\n",
+-      "\u001b[34mroi_heads.box_predictor.cls_score.{bias, weight}\u001b[0m\n",
+-      "The checkpoint state_dict contains keys that are not used by the model:\n",
+-      "  \u001b[35mproposal_generator.anchor_generator.cell_anchors.{0, 1, 2, 3, 4}\u001b[0m\n"
+->>>>>>> Stashed changes
+-     ]
+-    },
+-    {
+-     "name": "stdout",
+-     "output_type": "stream",
+-     "text": [
+-<<<<<<< Updated upstream
+       "\u001b[32m[10/28 19:59:00 d2.data.build]: \u001b[0mRemoved 0 images with no usable annotations. 1853 images left.\n"
+-=======
+-      "\u001b[32m[10/28 19:17:00 d2.engine.train_loop]: \u001b[0mStarting training from iteration 0\n"
+->>>>>>> Stashed changes
+      ]
+     },
+     {
+      "name": "stderr",
+      "output_type": "stream",
+      "text": [
+-<<<<<<< Updated upstream
+       "\n"
+      ]
+     },
+@@ -1021,26 +918,6 @@
+       "\u001b[0;32m/media/indika/Sync/anaconda3/envs/detectron2/lib/python3.8/site-packages/detectron2/data/build.py\u001b[0m in \u001b[0;36mget_detection_dataset_dicts\u001b[0;34m(names, filter_empty, min_keypoints, proposal_files)\u001b[0m\n\u001b[1;32m    249\u001b[0m             \u001b[0mclass_names\u001b[0m \u001b[0;34m=\u001b[0m \u001b[0mMetadataCatalog\u001b[0m\u001b[0;34m.\u001b[0m\u001b[0mget\u001b[0m\u001b[0;34m(\u001b[0m\u001b[0mnames\u001b[0m\u001b[0;34m[\u001b[0m\u001b[0;36m0\u001b[0m\u001b[0;34m]\u001b[0m\u001b[0;34m)\u001b[0m\u001b[0;34m.\u001b[0m\u001b[0mthing_classes\u001b[0m\u001b[0;34m\u001b[0m\u001b[0;34m\u001b[0m\u001b[0m\n\u001b[1;32m    250\u001b[0m             \u001b[0mcheck_metadata_consistency\u001b[0m\u001b[0;34m(\u001b[0m\u001b[0;34m\"thing_classes\"\u001b[0m\u001b[0;34m,\u001b[0m \u001b[0mnames\u001b[0m\u001b[0;34m)\u001b[0m\u001b[0;34m\u001b[0m\u001b[0;34m\u001b[0m\u001b[0m\n\u001b[0;32m--> 251\u001b[0;31m             \u001b[0mprint_instances_class_histogram\u001b[0m\u001b[0;34m(\u001b[0m\u001b[0mdataset_dicts\u001b[0m\u001b[0;34m,\u001b[0m \u001b[0mclass_names\u001b[0m\u001b[0;34m)\u001b[0m\u001b[0;34m\u001b[0m\u001b[0;34m\u001b[0m\u001b[0m\n\u001b[0m\u001b[1;32m    252\u001b[0m         \u001b[0;32mexcept\u001b[0m \u001b[0mAttributeError\u001b[0m\u001b[0;34m:\u001b[0m  \u001b[0;31m# class names are not available for this dataset\u001b[0m\u001b[0;34m\u001b[0m\u001b[0;34m\u001b[0m\u001b[0m\n\u001b[1;32m    253\u001b[0m             \u001b[0;32mpass\u001b[0m\u001b[0;34m\u001b[0m\u001b[0;34m\u001b[0m\u001b[0m\n",
+       "\u001b[0;32m/media/indika/Sync/anaconda3/envs/detectron2/lib/python3.8/site-packages/detectron2/data/build.py\u001b[0m in \u001b[0;36mprint_instances_class_histogram\u001b[0;34m(dataset_dicts, class_names)\u001b[0m\n\u001b[1;32m    171\u001b[0m         \u001b[0;32mif\u001b[0m \u001b[0mlen\u001b[0m\u001b[0;34m(\u001b[0m\u001b[0mclasses\u001b[0m\u001b[0;34m)\u001b[0m\u001b[0;34m:\u001b[0m\u001b[0;34m\u001b[0m\u001b[0;34m\u001b[0m\u001b[0m\n\u001b[1;32m    172\u001b[0m             \u001b[0;32massert\u001b[0m \u001b[0mclasses\u001b[0m\u001b[0;34m.\u001b[0m\u001b[0mmin\u001b[0m\u001b[0;34m(\u001b[0m\u001b[0;34m)\u001b[0m \u001b[0;34m>=\u001b[0m \u001b[0;36m0\u001b[0m\u001b[0;34m,\u001b[0m \u001b[0;34mf\"Got an invalid category_id={classes.min()}\"\u001b[0m\u001b[0;34m\u001b[0m\u001b[0;34m\u001b[0m\u001b[0m\n\u001b[0;32m--> 173\u001b[0;31m             assert (\n\u001b[0m\u001b[1;32m    174\u001b[0m                 \u001b[0mclasses\u001b[0m\u001b[0;34m.\u001b[0m\u001b[0mmax\u001b[0m\u001b[0;34m(\u001b[0m\u001b[0;34m)\u001b[0m \u001b[0;34m<\u001b[0m \u001b[0mnum_classes\u001b[0m\u001b[0;34m\u001b[0m\u001b[0;34m\u001b[0m\u001b[0m\n\u001b[1;32m    175\u001b[0m             ), f\"Got an invalid category_id={classes.max()} for a dataset of {num_classes} classes\"\n",
+       "\u001b[0;31mAssertionError\u001b[0m: Got an invalid category_id=1 for a dataset of 1 classes"
+-=======
+-      "/media/indika/Sync/anaconda3/envs/detectron2/lib/python3.8/site-packages/torch/_tensor.py:575: UserWarning: floor_divide is deprecated, and will be removed in a future version of pytorch. It currently rounds toward 0 (like the 'trunc' function NOT 'floor'). This results in incorrect rounding for negative values.\n",
+-      "To keep the current behavior, use torch.div(a, b, rounding_mode='trunc'), or for actual floor division, use torch.div(a, b, rounding_mode='floor'). (Triggered internally at  ../aten/src/ATen/native/BinaryOps.cpp:467.)\n",
+-      "  return torch.floor_divide(self, other)\n"
+-     ]
+-    },
+-    {
+-     "name": "stdout",
+-     "output_type": "stream",
+-     "text": [
+-      "\u001b[32m[10/28 19:17:21 d2.utils.events]: \u001b[0m eta: 0:06:54  iter: 19  total_loss: 1.213  loss_cls: 0.8014  loss_box_reg: 0.3523  loss_rpn_cls: 0.01821  loss_rpn_loc: 0.005572  time: 0.9362  data_time: 0.0277  lr: 9.7405e-06  max_mem: 6044M\n",
+-      "\u001b[32m[10/28 19:17:42 d2.utils.events]: \u001b[0m eta: 0:07:22  iter: 39  total_loss: 1.038  loss_cls: 0.6592  loss_box_reg: 0.2929  loss_rpn_cls: 0.04663  loss_rpn_loc: 0.00548  time: 1.0046  data_time: 0.0027  lr: 1.9731e-05  max_mem: 6044M\n",
+-      "\u001b[32m[10/28 19:18:03 d2.utils.events]: \u001b[0m eta: 0:07:03  iter: 59  total_loss: 0.8478  loss_cls: 0.4674  loss_box_reg: 0.3469  loss_rpn_cls: 0.01653  loss_rpn_loc: 0.009292  time: 1.0220  data_time: 0.0028  lr: 2.972e-05  max_mem: 6044M\n",
+-      "\u001b[32m[10/28 19:18:23 d2.utils.events]: \u001b[0m eta: 0:06:49  iter: 79  total_loss: 0.7241  loss_cls: 0.3437  loss_box_reg: 0.3045  loss_rpn_cls: 0.03658  loss_rpn_loc: 0.006545  time: 1.0118  data_time: 0.0025  lr: 3.9711e-05  max_mem: 6044M\n",
+-      "\u001b[32m[10/28 19:18:48 d2.utils.events]: \u001b[0m eta: 0:06:36  iter: 99  total_loss: 0.6677  loss_cls: 0.2947  loss_box_reg: 0.3529  loss_rpn_cls: 0.02226  loss_rpn_loc: 0.00536  time: 1.0551  data_time: 0.0031  lr: 4.9701e-05  max_mem: 6048M\n",
+-      "\u001b[32m[10/28 19:19:10 d2.utils.events]: \u001b[0m eta: 0:06:19  iter: 119  total_loss: 0.6735  loss_cls: 0.2749  loss_box_reg: 0.3539  loss_rpn_cls: 0.01329  loss_rpn_loc: 0.006258  time: 1.0703  data_time: 0.0027  lr: 5.9691e-05  max_mem: 6048M\n",
+-      "\u001b[32m[10/28 19:19:32 d2.utils.events]: \u001b[0m eta: 0:05:59  iter: 139  total_loss: 0.6272  loss_cls: 0.2478  loss_box_reg: 0.3172  loss_rpn_cls: 0.02963  loss_rpn_loc: 0.005452  time: 1.0694  data_time: 0.0030  lr: 6.9681e-05  max_mem: 6048M\n",
+-      "\u001b[32m[10/28 19:19:52 d2.utils.events]: \u001b[0m eta: 0:05:39  iter: 159  total_loss: 0.7169  loss_cls: 0.2726  loss_box_reg: 0.383  loss_rpn_cls: 0.01134  loss_rpn_loc: 0.004757  time: 1.0604  data_time: 0.0027  lr: 7.9671e-05  max_mem: 6048M\n",
+-      "\u001b[32m[10/28 19:20:17 d2.utils.events]: \u001b[0m eta: 0:05:21  iter: 179  total_loss: 0.6399  loss_cls: 0.2453  loss_box_reg: 0.3505  loss_rpn_cls: 0.01595  loss_rpn_loc: 0.008826  time: 1.0810  data_time: 0.0029  lr: 8.966e-05  max_mem: 6048M\n"
+->>>>>>> Stashed changes
+      ]
+     }
+    ],
+@@ -1051,7 +928,7 @@
+     "from detectron2.utils.logger import setup_logger\n",
+     "setup_logger()\n",
+     "torch.cuda.empty_cache()\n",
+-    "wandb.init(entity=\"find-card\",project=PROJECT_NAME, name=NAME,config={\n",
++    "wandb.init(project=\"Find-Card\", name=NAME,config={\n",
+     "    'BASE_LR':BASE_LR,\n",
+     "    'MAX_ITER':MAX_ITER,\n",
+     "    'EVAL_PERIOD':EVAL_PERIOD,\n",
+@@ -1195,12 +1072,10 @@
+   }
+  ],
+  "metadata": {
+-  "interpreter": {
+-   "hash": "585e9a5027b519a27e411109b09a66bc779a1bba36bd86b08fdb64645f8a2c5a"
+-  },
+   "kernelspec": {
+    "display_name": "Python 3.8.12 64-bit ('detectron2': conda)",
+-   "name": "python3"
++   "language": "python",
++   "name": "python3812jvsc74a57bd0585e9a5027b519a27e411109b09a66bc779a1bba36bd86b08fdb64645f8a2c5a"
+   },
+   "language_info": {
+    "codemirror_mode": {
+diff --git a/V2/wandb/latest-run b/V2/wandb/latest-run
+index 6d15e5e..4bd0b72 120000
+--- a/V2/wandb/latest-run
++++ b/V2/wandb/latest-run
+@@ -1 +1 @@
+-run-20211028_195641-a5atekbh
+\ No newline at end of file
++run-20211028_201107-2jukfznr
+\ No newline at end of file
+diff --git a/V2/wandb/run-20211028_195641-a5atekbh/files/config.yaml b/V2/wandb/run-20211028_195641-a5atekbh/files/config.yaml
+index 98f5b3f..5cc92f3 100644
+--- a/V2/wandb/run-20211028_195641-a5atekbh/files/config.yaml
++++ b/V2/wandb/run-20211028_195641-a5atekbh/files/config.yaml
+@@ -36,6 +36,8 @@ _wandb:
+     t:
+       1:
+       - 1
++      2:
++      - 1
+       3:
+       - 13
+       - 16
+diff --git a/V2/wandb/run-20211028_195641-a5atekbh/files/wandb-summary.json b/V2/wandb/run-20211028_195641-a5atekbh/files/wandb-summary.json
+index 9e26dfe..5046cf2 100644
+--- a/V2/wandb/run-20211028_195641-a5atekbh/files/wandb-summary.json
++++ b/V2/wandb/run-20211028_195641-a5atekbh/files/wandb-summary.json
+@@ -1 +1 @@
+-{}
+\ No newline at end of file
++{"_wandb": {"runtime": 845}}
+\ No newline at end of file
