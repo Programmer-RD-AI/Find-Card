@@ -68,7 +68,7 @@ class Model:
         - name = name of the wandb log
         - create_target_and_preds = testing image
         """
-        # self.remove_files_in_output()
+        self.remove_files_in_output()
         self.data = data
         self.data_other = data
         self.labels = labels  # ["Card"]
@@ -116,7 +116,7 @@ class Model:
         self.cfg = self.create_cfg()  # Creating the model config
         self.create_target_and_preds_iter = create_target_and_preds
         self.test_sample_size = test_sample_size
-        # self.remove_files_in_output()
+        self.remove_files_in_output()
 
     @staticmethod
     def remove_files_in_output() -> None:
