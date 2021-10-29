@@ -217,7 +217,7 @@ class Model:
             record["annotations"] = objs
             new_data.append(record)
         np.random.shuffle(new_data)  # Shuffling the data
-        np.save("data.npy", new_data)  # Saving the data
+        # np.save("data.npy", new_data)  # Saving the data
         return new_data
 
     def save(self, **kwargs: dict) -> None:

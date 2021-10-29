@@ -1,0 +1,79 @@
+diff --git a/V2/Model.py b/V2/Model.py
+index bf61dd8..619114a 100644
+--- a/V2/Model.py
++++ b/V2/Model.py
+@@ -217,7 +217,7 @@ class Model:
+             record["annotations"] = objs
+             new_data.append(record)
+         np.random.shuffle(new_data)  # Shuffling the data
+-        np.save("data.npy", new_data)  # Saving the data
++        # np.save("data.npy", new_data)  # Saving the data
+         return new_data
+ 
+     def save(self, **kwargs: dict) -> None:
+diff --git a/V2/data.npy b/V2/data.npy
+deleted file mode 100644
+index e72c418..0000000
+Binary files a/V2/data.npy and /dev/null differ
+diff --git a/V2/output/events.out.tfevents.1635517046.programmer-rd-ai.142587.0 b/V2/output/events.out.tfevents.1635517046.programmer-rd-ai.142587.0
+deleted file mode 100644
+index dfecf0e..0000000
+Binary files a/V2/output/events.out.tfevents.1635517046.programmer-rd-ai.142587.0 and /dev/null differ
+diff --git a/V2/output/metrics.json b/V2/output/metrics.json
+deleted file mode 100644
+index 24c427c..0000000
+--- a/V2/output/metrics.json
++++ /dev/null
+@@ -1,3 +0,0 @@
+-{"data_time": 0.00043154449986104737, "eta_seconds": 53.20285080000758, "fast_rcnn/cls_accuracy": 0.75, "fast_rcnn/false_negative": 1.0, "fast_rcnn/fg_cls_accuracy": 0.0, "iteration": 19, "loss_box_reg": 0.9081557989120483, "loss_cls": 0.5826588571071625, "loss_rpn_cls": 0.17776916921138763, "loss_rpn_loc": 0.006609502714127302, "lr": 0.0038962, "roi_head/num_bg_samples": 6.0, "roi_head/num_fg_samples": 2.0, "rpn/num_neg_anchors": 248.0, "rpn/num_pos_anchors": 8.0, "time": 0.1108392725000158, "total_loss": 1.6826724391430616}
+-{"data_time": 0.0016366719996767642, "eta_seconds": 56.77159989003485, "fast_rcnn/cls_accuracy": 0.75, "fast_rcnn/false_negative": 1.0, "fast_rcnn/fg_cls_accuracy": 0.0, "iteration": 39, "loss_box_reg": 0.9949785768985748, "loss_cls": 0.47209107875823975, "loss_rpn_cls": 0.22496379911899567, "loss_rpn_loc": 0.042251091450452805, "lr": 0.0078922, "roi_head/num_bg_samples": 6.0, "roi_head/num_fg_samples": 2.0, "rpn/num_neg_anchors": 239.0, "rpn/num_pos_anchors": 17.0, "time": 0.13719239549982376, "total_loss": 1.7938931863754988}
+-{"data_time": 0.0011925834996873164, "eta_seconds": 53.03712545986855, "fast_rcnn/cls_accuracy": 0.75, "fast_rcnn/false_negative": 1.0, "fast_rcnn/fg_cls_accuracy": 0.0, "iteration": 59, "loss_box_reg": 0.9606228768825531, "loss_cls": 0.6251382231712341, "loss_rpn_cls": 0.3739440590143204, "loss_rpn_loc": 0.04501241073012352, "lr": 0.0118882, "roi_head/num_bg_samples": 6.0, "roi_head/num_fg_samples": 2.0, "rpn/num_neg_anchors": 240.5, "rpn/num_pos_anchors": 15.5, "time": 0.1176861219996681, "total_loss": 2.1886799675412476}
+diff --git a/V2/run.py b/V2/run.py
+index f94b6a6..de2767e 100644
+--- a/V2/run.py
++++ b/V2/run.py
+@@ -25,7 +25,7 @@ params = {
+     "BASE_LR": [0.1, 0.01, 0.001, 0.0001, 0.00001, 0.000001],
+     "IMS_PER_BATCH": [1, 2, 3, 4, 5, 6, 7, 8, 9, 10],
+     "BATCH_SIZE_PER_IMAGE": [8, 16, 32, 64, 128, 256, 512],
+-    "EVAL_PERIOD": [500],
++    "EVAL_PERIOD": [250],
+     "SCORE_THRESH_TEST": [0.625],
+     "CREATE_TARGET_AND_PREDS": [59],
+ }
+diff --git a/V2/wandb/latest-run b/V2/wandb/latest-run
+index 252530c..73eabc4 120000
+--- a/V2/wandb/latest-run
++++ b/V2/wandb/latest-run
+@@ -1 +1 @@
+-run-20211029_194714-2hyb77au
+\ No newline at end of file
++run-20211029_194915-3tswjrv4
+\ No newline at end of file
+diff --git a/V2/wandb/run-20211029_194714-2hyb77au/files/config.yaml b/V2/wandb/run-20211029_194714-2hyb77au/files/config.yaml
+index 1015347..9c8e0ce 100644
+--- a/V2/wandb/run-20211029_194714-2hyb77au/files/config.yaml
++++ b/V2/wandb/run-20211029_194714-2hyb77au/files/config.yaml
+@@ -40,6 +40,10 @@ _wandb:
+       1:
+       - 1
+       - 5
++      2:
++      - 1
++      - 3
++      - 5
+       3:
+       - 13
+       - 16
+diff --git a/V2/wandb/run-20211029_194714-2hyb77au/files/wandb-summary.json b/V2/wandb/run-20211029_194714-2hyb77au/files/wandb-summary.json
+index 9e26dfe..91df001 100644
+--- a/V2/wandb/run-20211029_194714-2hyb77au/files/wandb-summary.json
++++ b/V2/wandb/run-20211029_194714-2hyb77au/files/wandb-summary.json
+@@ -1 +1 @@
+-{}
+\ No newline at end of file
++{"_wandb": {"runtime": 24}}
+\ No newline at end of file
+diff --git a/V2/wandb/run-20211029_194714-2hyb77au/run-2hyb77au.wandb b/V2/wandb/run-20211029_194714-2hyb77au/run-2hyb77au.wandb
+index fe90bdb..3f738e9 100644
+Binary files a/V2/wandb/run-20211029_194714-2hyb77au/run-2hyb77au.wandb and b/V2/wandb/run-20211029_194714-2hyb77au/run-2hyb77au.wandb differ

@@ -8,7 +8,7 @@ BATCH_SIZE_PER_IMAGE:
   value: 8
 EVAL_PERIOD:
   desc: null
-  value: 500
+  value: 250
 IMS_PER_BATCH:
   desc: null
   value: 1
@@ -21,7 +21,7 @@ MODEL:
 NAME:
   desc: null
   value: '{''BASE_LR'': 0.1, ''BATCH_SIZE_PER_IMAGE'': 8, ''CREATE_TARGET_AND_PREDS'':
-    59, ''EVAL_PERIOD'': 500, ''IMS_PER_BATCH'': 1, ''LABELS'': [''Card''], ''MAX_ITER'':
+    59, ''EVAL_PERIOD'': 250, ''IMS_PER_BATCH'': 1, ''LABELS'': [''Card''], ''MAX_ITER'':
     500, ''MODEL'': ''faster_rcnn_R_50_C4_1x.yaml'', ''SCORE_THRESH_TEST'': 0.625}'
 SCORE_THRESH_TEST:
   desc: null
@@ -35,7 +35,7 @@ _wandb:
     is_jupyter_run: false
     is_kaggle_kernel: false
     python_version: 3.8.12
-    start_time: 1635517034
+    start_time: 1635517155
     t:
       1:
       - 1

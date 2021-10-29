@@ -30,9 +30,7 @@ params = {
     "CREATE_TARGET_AND_PREDS": [59],
 }
 params = ParameterGrid(params)
-params_iter = tqdm(params)
-for param in params_iter:
-    param.set_description(str(param))
+for param in tqdm(params):
     model = Model(
         base_lr=param["BASE_LR"],
         labels=param["LABELS"],
