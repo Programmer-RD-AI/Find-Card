@@ -1,0 +1,78 @@
+diff --git a/V2/Model.py b/V2/Model.py
+index bf61dd8..619114a 100644
+--- a/V2/Model.py
++++ b/V2/Model.py
+@@ -217,7 +217,7 @@ class Model:
+             record["annotations"] = objs
+             new_data.append(record)
+         np.random.shuffle(new_data)  # Shuffling the data
+-        np.save("data.npy", new_data)  # Saving the data
++        # np.save("data.npy", new_data)  # Saving the data
+         return new_data
+ 
+     def save(self, **kwargs: dict) -> None:
+diff --git a/V2/data.npy b/V2/data.npy
+deleted file mode 100644
+index e72c418..0000000
+Binary files a/V2/data.npy and /dev/null differ
+diff --git a/V2/output/events.out.tfevents.1635517046.programmer-rd-ai.142587.0 b/V2/output/events.out.tfevents.1635517046.programmer-rd-ai.142587.0
+deleted file mode 100644
+index 1a6fb01..0000000
+Binary files a/V2/output/events.out.tfevents.1635517046.programmer-rd-ai.142587.0 and /dev/null differ
+diff --git a/V2/output/metrics.json b/V2/output/metrics.json
+deleted file mode 100644
+index 817c10d..0000000
+--- a/V2/output/metrics.json
++++ /dev/null
+@@ -1,6 +0,0 @@
+-{"data_time": 0.00043154449986104737, "eta_seconds": 53.20285080000758, "fast_rcnn/cls_accuracy": 0.75, "fast_rcnn/false_negative": 1.0, "fast_rcnn/fg_cls_accuracy": 0.0, "iteration": 19, "loss_box_reg": 0.9081557989120483, "loss_cls": 0.5826588571071625, "loss_rpn_cls": 0.17776916921138763, "loss_rpn_loc": 0.006609502714127302, "lr": 0.0038962, "roi_head/num_bg_samples": 6.0, "roi_head/num_fg_samples": 2.0, "rpn/num_neg_anchors": 248.0, "rpn/num_pos_anchors": 8.0, "time": 0.1108392725000158, "total_loss": 1.6826724391430616}
+-{"data_time": 0.0016366719996767642, "eta_seconds": 56.77159989003485, "fast_rcnn/cls_accuracy": 0.75, "fast_rcnn/false_negative": 1.0, "fast_rcnn/fg_cls_accuracy": 0.0, "iteration": 39, "loss_box_reg": 0.9949785768985748, "loss_cls": 0.47209107875823975, "loss_rpn_cls": 0.22496379911899567, "loss_rpn_loc": 0.042251091450452805, "lr": 0.0078922, "roi_head/num_bg_samples": 6.0, "roi_head/num_fg_samples": 2.0, "rpn/num_neg_anchors": 239.0, "rpn/num_pos_anchors": 17.0, "time": 0.13719239549982376, "total_loss": 1.7938931863754988}
+-{"data_time": 0.0011925834996873164, "eta_seconds": 53.03712545986855, "fast_rcnn/cls_accuracy": 0.75, "fast_rcnn/false_negative": 1.0, "fast_rcnn/fg_cls_accuracy": 0.0, "iteration": 59, "loss_box_reg": 0.9606228768825531, "loss_cls": 0.6251382231712341, "loss_rpn_cls": 0.3739440590143204, "loss_rpn_loc": 0.04501241073012352, "lr": 0.0118882, "roi_head/num_bg_samples": 6.0, "roi_head/num_fg_samples": 2.0, "rpn/num_neg_anchors": 240.5, "rpn/num_pos_anchors": 15.5, "time": 0.1176861219996681, "total_loss": 2.1886799675412476}
+-{"data_time": 0.001438239999970392, "eta_seconds": 52.348688070132994, "fast_rcnn/cls_accuracy": 0.8125, "fast_rcnn/false_negative": 1.0, "fast_rcnn/fg_cls_accuracy": 0.0, "iteration": 79, "loss_box_reg": 0.5488077253103256, "loss_cls": 0.5742446184158325, "loss_rpn_cls": 0.2992796450853348, "loss_rpn_loc": 0.05635051988065243, "lr": 0.0158842, "roi_head/num_bg_samples": 6.5, "roi_head/num_fg_samples": 1.5, "rpn/num_neg_anchors": 237.0, "rpn/num_pos_anchors": 19.0, "time": 0.1356191449999642, "total_loss": 1.560345109552145}
+-{"eta_seconds": 51.72548940263141, "iteration": 84, "rpn/num_neg_anchors": 241.5, "rpn/num_pos_anchors": 14.5}
+-{"data_time": 0.001635668499602616, "fast_rcnn/cls_accuracy": 0.8125, "fast_rcnn/false_negative": 1.0, "fast_rcnn/fg_cls_accuracy": 0.0, "iteration": 83, "loss_box_reg": 0.5900994092226028, "loss_cls": 0.5742446184158325, "loss_rpn_cls": 0.34407763183116913, "loss_rpn_loc": 0.04972972348332405, "lr": 0.0166834, "roi_head/num_bg_samples": 6.5, "roi_head/num_fg_samples": 1.0, "time": 0.13315614650036878, "total_loss": 1.725377183407545}
+diff --git a/V2/run.py b/V2/run.py
+index f94b6a6..03019ed 100644
+--- a/V2/run.py
++++ b/V2/run.py
+@@ -25,12 +25,14 @@ params = {
+     "BASE_LR": [0.1, 0.01, 0.001, 0.0001, 0.00001, 0.000001],
+     "IMS_PER_BATCH": [1, 2, 3, 4, 5, 6, 7, 8, 9, 10],
+     "BATCH_SIZE_PER_IMAGE": [8, 16, 32, 64, 128, 256, 512],
+-    "EVAL_PERIOD": [500],
++    "EVAL_PERIOD": [250],
+     "SCORE_THRESH_TEST": [0.625],
+     "CREATE_TARGET_AND_PREDS": [59],
+ }
+ params = ParameterGrid(params)
+-for param in tqdm(params):
++params_iter = tqdm(params)
++for param in params_iter:
++    params_iter.set_description(str(param))
+     model = Model(
+         base_lr=param["BASE_LR"],
+         labels=param["LABELS"],
+diff --git a/V2/wandb/latest-run b/V2/wandb/latest-run
+index 252530c..a555d27 120000
+--- a/V2/wandb/latest-run
++++ b/V2/wandb/latest-run
+@@ -1 +1 @@
+-run-20211029_194714-2hyb77au
+\ No newline at end of file
++run-20211029_195402-1vf6ki3g
+\ No newline at end of file
+diff --git a/V2/wandb/run-20211029_194714-2hyb77au/files/config.yaml b/V2/wandb/run-20211029_194714-2hyb77au/files/config.yaml
+index 1015347..9c8e0ce 100644
+--- a/V2/wandb/run-20211029_194714-2hyb77au/files/config.yaml
++++ b/V2/wandb/run-20211029_194714-2hyb77au/files/config.yaml
+@@ -40,6 +40,10 @@ _wandb:
+       1:
+       - 1
+       - 5
++      2:
++      - 1
++      - 3
++      - 5
+       3:
+       - 13
+       - 16
