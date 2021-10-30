@@ -133,6 +133,10 @@ class Model:
         """
         files_to_remove = os.listdir("./output/")  # Get the files in the directory
         # print("Remove files in output directory")
+        try:
+            files_to_remove.remove('test_coco_format.json')
+        except:
+            pass
         for file_to_remove in tqdm(
             files_to_remove
         ):  # Iter over the files in the directory
