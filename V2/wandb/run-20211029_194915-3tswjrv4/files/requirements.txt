@@ -114,7 +114,7 @@ jupyter-server==1.8.0
 jupyter==1.0.0
 jupyterlab-server==2.6.0
 jupyterlab-widgets==1.0.2
-jupyterlab==3.0.16
+jupyterlab==3.0.17
 kaleido==0.2.1
 keras-preprocessing==1.1.2
 keras==2.4.3
@@ -203,7 +203,7 @@ pysocks==1.7.1
 python-dateutil==2.8.2
 pytz==2021.1
 pywavelets==1.1.1
-pyyaml==5.1
+pyyaml==5.4
 pyzmq==19.0.2
 qtconsole==5.1.1
 qtpy==1.11.2
@@ -242,7 +242,7 @@ tensorboard==2.7.0
 tensorboardx==2.4
 tensorflow-estimator==2.4.0
 tensorflow-hub==0.11.0
-tensorflow==2.4.1
+tensorflow==2.5.1
 tensorrt==0.0.1
 termcolor==1.1.0
 terminado==0.12.1
