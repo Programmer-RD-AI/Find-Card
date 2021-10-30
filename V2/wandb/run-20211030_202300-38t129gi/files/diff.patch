@@ -1,0 +1,38 @@
+diff --git a/V2/wandb/latest-run b/V2/wandb/latest-run
+index 11ee36c..53d2164 120000
+--- a/V2/wandb/latest-run
++++ b/V2/wandb/latest-run
+@@ -1 +1 @@
+-run-20211030_194103-gc4qg8oh
+\ No newline at end of file
++run-20211030_202300-38t129gi
+\ No newline at end of file
+diff --git a/V2/wandb/run-20211030_194103-gc4qg8oh/files/config.yaml b/V2/wandb/run-20211030_194103-gc4qg8oh/files/config.yaml
+index 616cb82..5865107 100644
+--- a/V2/wandb/run-20211030_194103-gc4qg8oh/files/config.yaml
++++ b/V2/wandb/run-20211030_194103-gc4qg8oh/files/config.yaml
+@@ -40,7 +40,12 @@ _wandb:
+       - 1
+       - 3
+       - 5
++      2:
++      - 1
++      - 3
++      - 5
+       3:
++      - 2
+       - 13
+       - 16
+       4: 3.8.12
+diff --git a/V2/wandb/run-20211030_194103-gc4qg8oh/files/wandb-summary.json b/V2/wandb/run-20211030_194103-gc4qg8oh/files/wandb-summary.json
+index 9e26dfe..7160958 100644
+--- a/V2/wandb/run-20211030_194103-gc4qg8oh/files/wandb-summary.json
++++ b/V2/wandb/run-20211030_194103-gc4qg8oh/files/wandb-summary.json
+@@ -1 +1 @@
+-{}
+\ No newline at end of file
++{"bbox": {"AP": 0.09838949819894868, "AP50": 0.1834185276287987, "AP75": 0.11001100110011, "APs": 0.0, "APm": 0.0025227469442040155, "APl": 0.09984879746220944}, "_runtime": 2472, "_timestamp": 1635605535, "_step": 36, "data_time": 0.001565614500123047, "eta_seconds": 0.0, "fast_rcnn/cls_accuracy": 0.875, "fast_rcnn/false_negative": 0.75, "fast_rcnn/fg_cls_accuracy": 0.25, "iteration": 499, "loss_box_reg": 0.7316900193691254, "loss_cls": 0.3411682993173599, "loss_rpn_cls": 0.015659480821341276, "loss_rpn_loc": 0.007461815141141415, "lr": 9.98002e-05, "roi_head/num_bg_samples": 6.0, "roi_head/num_fg_samples": 2.0, "rpn/num_neg_anchors": 252.5, "rpn/num_pos_anchors": 3.5, "time": 0.16794630000003963, "total_loss": 1.1561878009670181, "./test_imgs/WhatsApp Image 2021-10-19 at 21.27.06.jpeg": {"_type": "image-file", "path": "media/images/test_imgs/WhatsApp Image 2021-10-19 at 21.27.06.jpeg_26_96682232800fdecee1a5.png", "sha256": "96682232800fdecee1a54720797824bd93ea544ee78d340af77a2faa1cd32769", "size": 1558027, "format": "png", "width": 1600, "height": 1200}, "./test_imgs/WhatsApp Image 2021-10-19 at 21.27.07 (1).jpeg": {"_type": "image-file", "path": "media/images/test_imgs/WhatsApp Image 2021-10-19 at 21.27.07 (1).jpeg_27_8631c528fbd4e4f42ccc.png", "sha256": "8631c528fbd4e4f42ccc969f5ca66f6b2a38bf70211f5093a8ec6404e2c8e4fd", "size": 832542, "format": "png", "width": 1600, "height": 1200}, "./test_imgs/WhatsApp Image 2021-10-19 at 21.27.09 (1).jpeg": {"_type": "image-file", "path": "media/images/test_imgs/WhatsApp Image 2021-10-19 at 21.27.09 (1).jpeg_28_01e696e033052fc8232c.png", "sha256": "01e696e033052fc8232c96271a0bd6f8c9811f2fec600ba26fb07adbae640d8a", "size": 1359969, "format": "png", "width": 1200, "height": 1600}, "./test_imgs/WhatsApp Image 2021-10-19 at 21.27.07.jpeg": {"_type": "image-file", "path": "media/images/test_imgs/WhatsApp Image 2021-10-19 at 21.27.07.jpeg_29_92038815b69f46e6edd3.png", "sha256": "92038815b69f46e6edd30e2b1577941277548f7300669a2eb180b7ba6ce6ef9d", "size": 2311982, "format": "png", "width": 1600, "height": 1200}, "./test_imgs/WhatsApp Image 2021-10-19 at 21.27.09 (2).jpeg": {"_type": "image-file", "path": "media/images/test_imgs/WhatsApp Image 2021-10-19 at 21.27.09 (2).jpeg_30_c37527a42d4f06998ebd.png", "sha256": "c37527a42d4f06998ebd5e4d9fd2660a735f9bcbdb778f6387c1502cc228768b", "size": 2078526, "format": "png", "width": 1200, "height": 1600}, "./test_imgs/WhatsApp Image 2021-10-19 at 21.27.08.jpeg": {"_type": "image-file", "path": "media/images/test_imgs/WhatsApp Image 2021-10-19 at 21.27.08.jpeg_31_3f0745e3fc67b9660ca0.png", "sha256": "3f0745e3fc67b9660ca07e9f2e933fd60370b051bf7e1d5204a9edb31a9a58dd", "size": 1822661, "format": "png", "width": 1200, "height": 1600}, "./test_imgs/WhatsApp Image 2021-10-19 at 21.27.08 (1).jpeg": {"_type": "image-file", "path": "media/images/test_imgs/WhatsApp Image 2021-10-19 at 21.27.08 (1).jpeg_32_476b46b64355a24b3a7c.png", "sha256": "476b46b64355a24b3a7c7a2ef63825b7fe18432d64b614a3d6ed12f5c4992310", "size": 2183938, "format": "png", "width": 1200, "height": 1600}, "./test_imgs/WhatsApp Image 2021-10-19 at 21.27.09.jpeg": {"_type": "image-file", "path": "media/images/test_imgs/WhatsApp Image 2021-10-19 at 21.27.09.jpeg_33_395645239412490c8601.png", "sha256": "395645239412490c8601f17f2c5bb0d054bc7ceca7b9f75b045bafede1c79dad", "size": 886486, "format": "png", "width": 1200, "height": 1600}, "RMSE": 114.63520812988281, "MSE": 13141.23046875, "PSNR": 26.582767486572266, "_wandb": {"runtime": 2471}}
+\ No newline at end of file
+diff --git a/V2/wandb/run-20211030_194103-gc4qg8oh/run-gc4qg8oh.wandb b/V2/wandb/run-20211030_194103-gc4qg8oh/run-gc4qg8oh.wandb
+index a91b880..7ca9943 100644
+Binary files a/V2/wandb/run-20211030_194103-gc4qg8oh/run-gc4qg8oh.wandb and b/V2/wandb/run-20211030_194103-gc4qg8oh/run-gc4qg8oh.wandb differ
