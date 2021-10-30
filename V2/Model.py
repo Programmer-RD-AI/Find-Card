@@ -134,7 +134,7 @@ class Model:
         files_to_remove = os.listdir("./output/")  # Get the files in the directory
         # print("Remove files in output directory")
         try:
-            files_to_remove.remove('test_coco_format.json')
+            files_to_remove.remove("test_coco_format.json")
         except:
             pass
         for file_to_remove in tqdm(
@@ -223,6 +223,8 @@ class Model:
             new_data.append(record)
         np.random.shuffle(new_data)  # Shuffling the data
         # np.save("data.npy", new_data)  # Saving the data
+        if test is True:
+            return new_data[: self.test_sample_size]
         return new_data
 
     def save(self, **kwargs: dict) -> None:
