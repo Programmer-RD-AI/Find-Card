@@ -14,7 +14,7 @@ IMS_PER_BATCH:
   value: 1
 MAX_ITER:
   desc: null
-  value: 2500
+  value: 3250
 MODEL:
   desc: null
   value: COCO-Detection/faster_rcnn_X_101_32x8d_FPN_3x.yaml
@@ -33,7 +33,7 @@ _wandb:
     is_jupyter_run: false
     is_kaggle_kernel: false
     python_version: 3.8.12
-    start_time: 1635648883
+    start_time: 1635650289
     t:
       1:
       - 1

@@ -50,7 +50,7 @@ class Model:
         model: str = "COCO-Detection/faster_rcnn_X_101_32x8d_FPN_3x.yaml",
         name: str = "baseline",
         create_target_and_preds: int = 29,
-        test_sample_size=32,
+        test_sample_size=250,
     ) -> None:
         """
         - __init__ = initialize and get all of the params need
