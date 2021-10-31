@@ -1,0 +1,40 @@
+diff --git a/V2/Model.py b/V2/Model.py
+index 2baa393..d592b57 100644
+--- a/V2/Model.py
++++ b/V2/Model.py
+@@ -668,13 +668,13 @@ class Model:
+ 
+ 
+ class Param_Tunning:
+-    def __init__(self, params: dict) -> None:
++    def __init__(self,) -> None:
+         f"""
+         initialize the Class
+         params - dict like {Model().test}
+         """
+ 
+-    def tune(self, params) -> dict:
++    def tune(self, params : dict) -> dict:
+         """
+         Tune all of the parameters
+         """
+diff --git a/V2/run.py b/V2/run.py
+index 67a8e01..de8b91f 100644
+--- a/V2/run.py
++++ b/V2/run.py
+@@ -1,4 +1,5 @@
+ from Model import *
+-
++model = Model()
++model.train()
+ pt = Param_Tunning()
+ pt.tune(params)
+diff --git a/V2/wandb/latest-run b/V2/wandb/latest-run
+index 96a8a3c..ba6a0c6 120000
+--- a/V2/wandb/latest-run
++++ b/V2/wandb/latest-run
+@@ -1 +1 @@
+-run-20211031_115221-2ka0cy99
+\ No newline at end of file
++run-20211031_130812-2zpgspba
+\ No newline at end of file
