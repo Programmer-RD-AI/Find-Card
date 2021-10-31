@@ -22,3 +22,17 @@ So this would be better than V1
 For parameter tunning all of the models and base_lrs and other metrics it will take around 24 Hours.
 
 I am still waiting for a long time to train the model.
+
+## How to train the model
+
+`from Model import *`
+`model = Model()`
+`model.train()`
+
+Do
+
+`pip3 freeze > requirments.txt`
+then
+`python3 run.py`
+
+After that you can run the final model if you want to run parameter tunning
