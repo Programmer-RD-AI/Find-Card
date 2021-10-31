@@ -42,7 +42,6 @@ params = {
     "IMS_PER_BATCH": [
         1,
         2,
-        3,
     ],
     "BATCH_SIZE_PER_IMAGE": [32, 64, 128],
 }

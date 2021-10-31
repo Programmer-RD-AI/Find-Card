@@ -1,0 +1,21 @@
+diff --git a/V2/Model.py b/V2/Model.py
+index d592b57..4793f20 100644
+--- a/V2/Model.py
++++ b/V2/Model.py
+@@ -42,7 +42,6 @@ params = {
+     "IMS_PER_BATCH": [
+         1,
+         2,
+-        3,
+     ],
+     "BATCH_SIZE_PER_IMAGE": [32, 64, 128],
+ }
+diff --git a/V2/wandb/latest-run b/V2/wandb/latest-run
+index 69c27f2..dfaca18 120000
+--- a/V2/wandb/latest-run
++++ b/V2/wandb/latest-run
+@@ -1 +1 @@
+-run-20211031_143450-17k9oc8o
+\ No newline at end of file
++run-20211031_151406-28v15qok
+\ No newline at end of file
