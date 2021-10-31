@@ -668,13 +668,13 @@ class Model:
 
 
 class Param_Tunning:
-    def __init__(self, params: dict) -> None:
+    def __init__(self,) -> None:
         f"""
         initialize the Class
         params - dict like {Model().test}
         """
 
-    def tune(self, params) -> dict:
+    def tune(self, params : dict) -> dict:
         """
         Tune all of the parameters
         """
