@@ -705,6 +705,9 @@ class Param_Tunning:
                 torch.cuda.empty_cache()
 
     def ray_tune_func(self, config):
+        """
+        https://docs.ray.io/en/latest/tune/index.html
+        """
         base_lr = config['BASE_LR']
         ims_per_batch = config["IMS_PER_BATCH"],
         batch_size_per_image = config['BATCH_SIZE_PER_IMAGE']
@@ -721,6 +724,9 @@ class Param_Tunning:
         tune.report(average_precisions=ap)
 
     def ray_tune(self):
+        """
+        https://docs.ray.io/en/latest/tune/user-guide.html
+        """
         analysis = tune.run(
             self.ray_tune_func,
             config=params,
