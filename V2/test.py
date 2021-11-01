@@ -11,17 +11,17 @@
 # print(type())
 
 
-from barcode import EAN13
-  
-# Make sure to pass the number as string
-number = '094718024596'
-  
-# Now, let's create an object of EAN13
-# class and pass the number
-my_code = EAN13(number)
-  
-# Our barcode is ready. Let's save it.
-my_code.save("iartmart-1")
+# from barcode import EAN13
+
+# # Make sure to pass the number as string
+# number = '094718024596'
+
+# # Now, let's create an object of EAN13
+# # class and pass the number
+# my_code = EAN13(number)
+
+# # Our barcode is ready. Let's save it.
+# my_code.save("iartmart-1")
 
 # import qrcode
 # from PIL import Image
@@ -36,3 +36,13 @@ my_code.save("iartmart-1")
 # qr.make(fit=True)
 # img = qr.make_image(fill_color="black", back_color="white").convert('RGB')
 # img.save("iartmart-2.png")
+
+def to_jaden_case(string):
+    string = string.split(' ')
+    new_string_list = []
+    for s in string:
+        # s[0] = s[0].capitalize()
+        print(s.split(''))
+
+
+to_jaden_case("How can mirrors be real if our eyes aren't real")
