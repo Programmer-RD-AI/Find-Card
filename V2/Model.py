@@ -129,12 +129,10 @@ class Model:
             MetadataCatalog.get("test").set(
                 thing_classes=self.labels
             )  # Adding the labels
-            self.metadata_test = MetadataCatalog.get(
-                "test")  # Getting the metadata
+            self.metadata_test = MetadataCatalog.get("test")  # Getting the metadata
         except:
             self.metadata = MetadataCatalog.get("data")  # Getting the metadata
-            self.metadata_test = MetadataCatalog.get(
-                "test")  # Getting the metadata
+            self.metadata_test = MetadataCatalog.get("test")  # Getting the metadata
         self.BASE_LR = base_lr
         self.MAX_ITER = max_iter
         self.EVAL_PERIOD = eval_period
@@ -153,8 +151,7 @@ class Model:
         """
         - remove_files_in_output - remove all of the file in ./output/
         """
-        files_to_remove = os.listdir(
-            "./output/")  # Get the files in the directory
+        files_to_remove = os.listdir("./output/")  # Get the files in the directory
         # print("Remove files in output directory")
         try:
             files_to_remove.remove("test_coco_format.json")
@@ -192,7 +189,7 @@ class Model:
         w = xmax - xmin
         h = ymax - ymin
         x, y, w, h = round(x), round(y), round(w), round(h)
-        roi = img[y: y + h, x: x + w]  # crop the image
+        roi = img[y : y + h, x : x + w]  # crop the image
         cv2.rectangle(
             img, (x, y), (x + w, y + h), (200, 0, 0), 10
         )  # draw box around the bbox
@@ -276,8 +273,7 @@ class Model:
         """
         torch.cuda.empty_cache()
         cfg = get_cfg()  # Creating a new cfg
-        cfg.merge_from_file(model_zoo.get_config_file(
-            self.model))  # Add the model
+        cfg.merge_from_file(model_zoo.get_config_file(self.model))  # Add the model
         cfg.DATASETS.TRAIN = ("data",)  # adding train DataSet
         cfg.DATASETS.TEST = ()
         cfg.MODEL.WEIGHTS = model_zoo.get_checkpoint_url(
@@ -288,8 +284,7 @@ class Model:
         cfg.SOLVER.BASE_LR = self.BASE_LR  # Set Base LR
         cfg.SOLVER.STEPS = []  # Set Steps
         cfg.SOLVER.IMS_PER_BATCH = self.IMS_PER_BATCH  # Set IMS_PER_BATCH
-        cfg.MODEL.ROI_HEADS.NUM_CLASSES = len(
-            self.labels)  # Set len(self.labels)
+        cfg.MODEL.ROI_HEADS.NUM_CLASSES = len(self.labels)  # Set len(self.labels)
         cfg.MODEL.ROI_HEADS.BATCH_SIZE_PER_IMAGE = (
             self.BATCH_SIZE_PER_IMAGE
         )  # Set Batch_Size_Per_Image
@@ -335,10 +330,8 @@ class Model:
         - predictor - to create the evaluator
         """
         torch.cuda.empty_cache()
-        evaluator = COCOEvaluator(
-            "test", output_dir="./output/")  # Create evaluator
-        val_loader = build_detection_test_loader(
-            self.cfg, "test")  # Create data loader
+        evaluator = COCOEvaluator("test", output_dir="./output/")  # Create evaluator
+        val_loader = build_detection_test_loader(self.cfg, "test")  # Create data loader
         metrics = inference_on_dataset(
             predictor.model, val_loader, evaluator
         )  # Test the data with the evaluator
@@ -374,12 +367,10 @@ class Model:
         # print("Predict")
         for img in tqdm(os.listdir("./test_imgs/")):  # iterate over the test images
             v = Visualizer(
-                cv2.imread(f"./test_imgs/{img}")[:,
-                                                 :, ::-1], metadata=self.metadata
+                cv2.imread(f"./test_imgs/{img}")[:, :, ::-1], metadata=self.metadata
             )
             v = v.draw_instance_predictions(
-                predictor(cv2.imread(
-                    f"./test_imgs/{img}"))["instances"].to("cpu")
+                predictor(cv2.imread(f"./test_imgs/{img}"))["instances"].to("cpu")
             )  # Draw pred boxes
             v = v.get_image()[:, :, ::-1]
             plt.figure(figsize=(24, 12))
@@ -413,8 +404,7 @@ class Model:
         h = ymax - ymin
         preds = predictor(img)
         if (
-            len(preds["instances"].__dict__["_fields"]
-                ["pred_boxes"].__dict__["tensor"])
+            len(preds["instances"].__dict__["_fields"]["pred_boxes"].__dict__["tensor"])
             <= 0
         ):
             preds["instances"].__dict__["_fields"]["pred_boxes"].__dict__[
@@ -431,8 +421,7 @@ class Model:
         lowest_rmse = 0
         r_mean_squared_error = MeanSquaredError(squared=False)
         preds_new = (
-            preds["instances"].__dict__[
-                "_fields"]["pred_boxes"].__dict__["tensor"]
+            preds["instances"].__dict__["_fields"]["pred_boxes"].__dict__["tensor"]
         )
         # print("Creating RMSE")
         for pred_i in tqdm(range(len(preds))):
@@ -441,6 +430,21 @@ class Model:
                 lowest_rmse = r_mean_squared_error(pred.to("cpu"), target)
         return float(lowest_rmse)
 
+    def create_iou(self, preds: torch.tensor, targets: torch.tensor) -> float:
+        ious = []
+        for pred_box, true_box in zip(preds, targets):
+            xA = max(true_box[0], pred_box[0])
+            yA = max(true_box[1], pred_box[1])
+            xB = min(true_box[2], pred_box[2])
+            yB = min(true_box[3], pred_box[3])
+            interArea = max(0, xB - xA + 1) * max(0, yB - yA + 1)
+            boxAArea = (true_box[2] - true_box[0] + 1) * (true_box[3] - true_box[1] + 1)
+            boxBArea = (pred_box[2] - pred_box[0] + 1) * (pred_box[3] - pred_box[1] + 1)
+            iou = interArea / float(boxAArea + boxBArea - interArea)
+            ious.append(iou)
+        iou = np.mean(ious)
+        return iou
+
     def create_mse(self, preds: torch.tensor, target: torch.tensor) -> float:
         """
         - create_mse - Create Mean-square deviation
@@ -448,8 +452,7 @@ class Model:
         lowest_mse = 0
         mean_squared_error = MeanSquaredError(squared=True)
         preds_new = (
-            preds["instances"].__dict__[
-                "_fields"]["pred_boxes"].__dict__["tensor"]
+            preds["instances"].__dict__["_fields"]["pred_boxes"].__dict__["tensor"]
         )
         # print("Creating MSE")
         for pred_i in tqdm(range(len(preds))):
@@ -474,7 +477,7 @@ class Model:
         """
         - crop_img - cropping the image using x,y,w,h
         """
-        crop = img[y: y + h, x: x + w]
+        crop = img[y : y + h, x : x + w]
         cv2.imwrite("./test.png", crop)
         return crop
 
@@ -487,21 +490,17 @@ class Model:
         lowest_ssim = 0
         ssim = SSIM()
         preds_new = (
-            preds["instances"].__dict__[
-                "_fields"]["pred_boxes"].__dict__["tensor"]
+            preds["instances"].__dict__["_fields"]["pred_boxes"].__dict__["tensor"]
         )
         # print("Creating SSIM")
         for pred_i in tqdm(range(len(preds))):
             pred = preds_new[pred_i]
             info = self.data[self.create_target_and_preds_iter]
             img = cv2.imread(info["Path"])
-            x, y, w, h = self.create_x_y_w_h(
-                target[0], target[1], target[2], target[3])
+            x, y, w, h = self.create_x_y_w_h(target[0], target[1], target[2], target[3])
             crop_img_target = torch.from_numpy(self.crop_img(x, y, w, h, img))
-            x, y, w, h = self.create_x_y_w_h(
-                pred[0], pred[1], pred[2], pred[3])
-            crop_img_pred = torch.from_numpy(
-                np.array(self.crop_img(x, y, w, h, img)))
+            x, y, w, h = self.create_x_y_w_h(pred[0], pred[1], pred[2], pred[3])
+            crop_img_pred = torch.from_numpy(np.array(self.crop_img(x, y, w, h, img)))
             if ssim(crop_img_pred, crop_img_target) > lowest_ssim:
                 lowest_ssim = ssim(pred.to("cpu"), target)
         return lowest_ssim
@@ -513,8 +512,7 @@ class Model:
         lowest_psnr = 0
         psnr = PSNR()
         preds_new = (
-            preds["instances"].__dict__[
-                "_fields"]["pred_boxes"].__dict__["tensor"]
+            preds["instances"].__dict__["_fields"]["pred_boxes"].__dict__["tensor"]
         )
         # print("Creating PSNR")
         for pred_i in tqdm(range(len(preds))):
@@ -530,8 +528,7 @@ class Model:
         lowest_mae = 0
         mae = MeanAbsoluteError()
         preds_new = (
-            preds["instances"].__dict__[
-                "_fields"]["pred_boxes"].__dict__["tensor"]
+            preds["instances"].__dict__["_fields"]["pred_boxes"].__dict__["tensor"]
         )
         # print("Creating MAE")
         for pred_i in tqdm(range(len(preds))):
@@ -559,7 +556,7 @@ class Model:
                 "MODEL": self.model,
                 "NAME": self.NAME,
             },
-            sync_tensorboard=True
+            sync_tensorboard=True,
         )
         trainer = self.__train()
         predictor = self.create_predictor()
@@ -583,6 +580,7 @@ class Model:
         rmse = self.create_rmse(preds, target)
         mse = self.create_mse(preds, target)
         # ssim = self.create_ssim(preds, target, height, width)
+        iou = self.create_iou(preds, target)
         psnr = self.create_psnr(preds, target)
         wandb.log(metrics_coco)
         for metric_file in metrics_file:
@@ -592,6 +590,7 @@ class Model:
         wandb.log({"RMSE": rmse})
         wandb.log({"MSE": mse})
         wandb.log({"PSNR": psnr})
+        wandb.log({"IOU": iou})
         try:
             self.save(
                 trainer=trainer,
@@ -619,6 +618,7 @@ class Model:
             "rmse": rmse,
             "mse": mse,
             "psnr": psnr,
+            "IOU": iou,
         }
         # torch.cuda.empty_cache()
         # self.remove_files_in_output()
@@ -667,13 +667,15 @@ class Model:
 
 
 class Param_Tunning:
-    def __init__(self,) -> None:
+    def __init__(
+        self,
+    ) -> None:
         f"""
         initialize the Class
         params - dict like {Model().test}
         """
 
-    def tune(self, params : dict) -> dict:
+    def tune(self, params: dict) -> dict:
         """
         Tune all of the parameters
         """
@@ -707,10 +709,10 @@ class Param_Tunning:
         """
         https://docs.ray.io/en/latest/tune/index.html
         """
-        base_lr = config['BASE_LR']
-        ims_per_batch = config["IMS_PER_BATCH"],
-        batch_size_per_image = config['BATCH_SIZE_PER_IMAGE']
-        model = 'COCO-Detection/' + config['MODEL']
+        base_lr = config["BASE_LR"]
+        ims_per_batch = (config["IMS_PER_BATCH"],)
+        batch_size_per_image = config["BATCH_SIZE_PER_IMAGE"]
+        model = "COCO-Detection/" + config["MODEL"]
         model = Model(
             base_lr=base_lr,
             model=model,
@@ -719,7 +721,7 @@ class Param_Tunning:
         )
         model.remove_files_in_output()
         metrics = model.train()
-        ap = metrics['metrics_coco']['bbox.AP']
+        ap = metrics["metrics_coco"]["bbox.AP"]
         tune.report(average_precisions=ap)
 
     def ray_tune(self):
@@ -727,11 +729,8 @@ class Param_Tunning:
         https://docs.ray.io/en/latest/tune/user-guide.html
         """
         analysis = tune.run(
-            self.ray_tune_func,
-            config=params,
-            resources_per_trial={"gpu": 0, 'cpu': 1}
-
+            self.ray_tune_func, config=params, resources_per_trial={"gpu": 0, "cpu": 1}
         )
-        analysis.get_best_results(metrics='average_precisions', model='max')
+        analysis.get_best_results(metrics="average_precisions", model="max")
         df = analysis.results_df
-        df.to_csv('./Logs.csv')
+        df.to_csv("./Logs.csv")
