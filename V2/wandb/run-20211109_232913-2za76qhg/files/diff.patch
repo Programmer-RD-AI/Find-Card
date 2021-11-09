@@ -1,0 +1,538 @@
+diff --git a/V2/Model.py b/V2/Model.py
+index 4793f20..5b89781 100644
+--- a/V2/Model.py
++++ b/V2/Model.py
+@@ -129,12 +129,10 @@ class Model:
+             MetadataCatalog.get("test").set(
+                 thing_classes=self.labels
+             )  # Adding the labels
+-            self.metadata_test = MetadataCatalog.get(
+-                "test")  # Getting the metadata
++            self.metadata_test = MetadataCatalog.get("test")  # Getting the metadata
+         except:
+             self.metadata = MetadataCatalog.get("data")  # Getting the metadata
+-            self.metadata_test = MetadataCatalog.get(
+-                "test")  # Getting the metadata
++            self.metadata_test = MetadataCatalog.get("test")  # Getting the metadata
+         self.BASE_LR = base_lr
+         self.MAX_ITER = max_iter
+         self.EVAL_PERIOD = eval_period
+@@ -153,8 +151,7 @@ class Model:
+         """
+         - remove_files_in_output - remove all of the file in ./output/
+         """
+-        files_to_remove = os.listdir(
+-            "./output/")  # Get the files in the directory
++        files_to_remove = os.listdir("./output/")  # Get the files in the directory
+         # print("Remove files in output directory")
+         try:
+             files_to_remove.remove("test_coco_format.json")
+@@ -192,7 +189,7 @@ class Model:
+         w = xmax - xmin
+         h = ymax - ymin
+         x, y, w, h = round(x), round(y), round(w), round(h)
+-        roi = img[y: y + h, x: x + w]  # crop the image
++        roi = img[y : y + h, x : x + w]  # crop the image
+         cv2.rectangle(
+             img, (x, y), (x + w, y + h), (200, 0, 0), 10
+         )  # draw box around the bbox
+@@ -276,8 +273,7 @@ class Model:
+         """
+         torch.cuda.empty_cache()
+         cfg = get_cfg()  # Creating a new cfg
+-        cfg.merge_from_file(model_zoo.get_config_file(
+-            self.model))  # Add the model
++        cfg.merge_from_file(model_zoo.get_config_file(self.model))  # Add the model
+         cfg.DATASETS.TRAIN = ("data",)  # adding train DataSet
+         cfg.DATASETS.TEST = ()
+         cfg.MODEL.WEIGHTS = model_zoo.get_checkpoint_url(
+@@ -288,8 +284,7 @@ class Model:
+         cfg.SOLVER.BASE_LR = self.BASE_LR  # Set Base LR
+         cfg.SOLVER.STEPS = []  # Set Steps
+         cfg.SOLVER.IMS_PER_BATCH = self.IMS_PER_BATCH  # Set IMS_PER_BATCH
+-        cfg.MODEL.ROI_HEADS.NUM_CLASSES = len(
+-            self.labels)  # Set len(self.labels)
++        cfg.MODEL.ROI_HEADS.NUM_CLASSES = len(self.labels)  # Set len(self.labels)
+         cfg.MODEL.ROI_HEADS.BATCH_SIZE_PER_IMAGE = (
+             self.BATCH_SIZE_PER_IMAGE
+         )  # Set Batch_Size_Per_Image
+@@ -335,10 +330,8 @@ class Model:
+         - predictor - to create the evaluator
+         """
+         torch.cuda.empty_cache()
+-        evaluator = COCOEvaluator(
+-            "test", output_dir="./output/")  # Create evaluator
+-        val_loader = build_detection_test_loader(
+-            self.cfg, "test")  # Create data loader
++        evaluator = COCOEvaluator("test", output_dir="./output/")  # Create evaluator
++        val_loader = build_detection_test_loader(self.cfg, "test")  # Create data loader
+         metrics = inference_on_dataset(
+             predictor.model, val_loader, evaluator
+         )  # Test the data with the evaluator
+@@ -374,12 +367,10 @@ class Model:
+         # print("Predict")
+         for img in tqdm(os.listdir("./test_imgs/")):  # iterate over the test images
+             v = Visualizer(
+-                cv2.imread(f"./test_imgs/{img}")[:,
+-                                                 :, ::-1], metadata=self.metadata
++                cv2.imread(f"./test_imgs/{img}")[:, :, ::-1], metadata=self.metadata
+             )
+             v = v.draw_instance_predictions(
+-                predictor(cv2.imread(
+-                    f"./test_imgs/{img}"))["instances"].to("cpu")
++                predictor(cv2.imread(f"./test_imgs/{img}"))["instances"].to("cpu")
+             )  # Draw pred boxes
+             v = v.get_image()[:, :, ::-1]
+             plt.figure(figsize=(24, 12))
+@@ -413,8 +404,7 @@ class Model:
+         h = ymax - ymin
+         preds = predictor(img)
+         if (
+-            len(preds["instances"].__dict__["_fields"]
+-                ["pred_boxes"].__dict__["tensor"])
++            len(preds["instances"].__dict__["_fields"]["pred_boxes"].__dict__["tensor"])
+             <= 0
+         ):
+             preds["instances"].__dict__["_fields"]["pred_boxes"].__dict__[
+@@ -431,8 +421,7 @@ class Model:
+         lowest_rmse = 0
+         r_mean_squared_error = MeanSquaredError(squared=False)
+         preds_new = (
+-            preds["instances"].__dict__[
+-                "_fields"]["pred_boxes"].__dict__["tensor"]
++            preds["instances"].__dict__["_fields"]["pred_boxes"].__dict__["tensor"]
+         )
+         # print("Creating RMSE")
+         for pred_i in tqdm(range(len(preds))):
+@@ -441,6 +430,21 @@ class Model:
+                 lowest_rmse = r_mean_squared_error(pred.to("cpu"), target)
+         return float(lowest_rmse)
+ 
++    def create_iou(self, preds: torch.tensor, targets: torch.tensor) -> float:
++        ious = []
++        for pred_box, true_box in zip(preds, targets):
++            xA = max(true_box[0], pred_box[0])
++            yA = max(true_box[1], pred_box[1])
++            xB = min(true_box[2], pred_box[2])
++            yB = min(true_box[3], pred_box[3])
++            interArea = max(0, xB - xA + 1) * max(0, yB - yA + 1)
++            boxAArea = (true_box[2] - true_box[0] + 1) * (true_box[3] - true_box[1] + 1)
++            boxBArea = (pred_box[2] - pred_box[0] + 1) * (pred_box[3] - pred_box[1] + 1)
++            iou = interArea / float(boxAArea + boxBArea - interArea)
++            ious.append(iou)
++        iou = np.mean(ious)
++        return iou
++
+     def create_mse(self, preds: torch.tensor, target: torch.tensor) -> float:
+         """
+         - create_mse - Create Mean-square deviation
+@@ -448,8 +452,7 @@ class Model:
+         lowest_mse = 0
+         mean_squared_error = MeanSquaredError(squared=True)
+         preds_new = (
+-            preds["instances"].__dict__[
+-                "_fields"]["pred_boxes"].__dict__["tensor"]
++            preds["instances"].__dict__["_fields"]["pred_boxes"].__dict__["tensor"]
+         )
+         # print("Creating MSE")
+         for pred_i in tqdm(range(len(preds))):
+@@ -474,7 +477,7 @@ class Model:
+         """
+         - crop_img - cropping the image using x,y,w,h
+         """
+-        crop = img[y: y + h, x: x + w]
++        crop = img[y : y + h, x : x + w]
+         cv2.imwrite("./test.png", crop)
+         return crop
+ 
+@@ -487,21 +490,17 @@ class Model:
+         lowest_ssim = 0
+         ssim = SSIM()
+         preds_new = (
+-            preds["instances"].__dict__[
+-                "_fields"]["pred_boxes"].__dict__["tensor"]
++            preds["instances"].__dict__["_fields"]["pred_boxes"].__dict__["tensor"]
+         )
+         # print("Creating SSIM")
+         for pred_i in tqdm(range(len(preds))):
+             pred = preds_new[pred_i]
+             info = self.data[self.create_target_and_preds_iter]
+             img = cv2.imread(info["Path"])
+-            x, y, w, h = self.create_x_y_w_h(
+-                target[0], target[1], target[2], target[3])
++            x, y, w, h = self.create_x_y_w_h(target[0], target[1], target[2], target[3])
+             crop_img_target = torch.from_numpy(self.crop_img(x, y, w, h, img))
+-            x, y, w, h = self.create_x_y_w_h(
+-                pred[0], pred[1], pred[2], pred[3])
+-            crop_img_pred = torch.from_numpy(
+-                np.array(self.crop_img(x, y, w, h, img)))
++            x, y, w, h = self.create_x_y_w_h(pred[0], pred[1], pred[2], pred[3])
++            crop_img_pred = torch.from_numpy(np.array(self.crop_img(x, y, w, h, img)))
+             if ssim(crop_img_pred, crop_img_target) > lowest_ssim:
+                 lowest_ssim = ssim(pred.to("cpu"), target)
+         return lowest_ssim
+@@ -513,8 +512,7 @@ class Model:
+         lowest_psnr = 0
+         psnr = PSNR()
+         preds_new = (
+-            preds["instances"].__dict__[
+-                "_fields"]["pred_boxes"].__dict__["tensor"]
++            preds["instances"].__dict__["_fields"]["pred_boxes"].__dict__["tensor"]
+         )
+         # print("Creating PSNR")
+         for pred_i in tqdm(range(len(preds))):
+@@ -530,8 +528,7 @@ class Model:
+         lowest_mae = 0
+         mae = MeanAbsoluteError()
+         preds_new = (
+-            preds["instances"].__dict__[
+-                "_fields"]["pred_boxes"].__dict__["tensor"]
++            preds["instances"].__dict__["_fields"]["pred_boxes"].__dict__["tensor"]
+         )
+         # print("Creating MAE")
+         for pred_i in tqdm(range(len(preds))):
+@@ -559,7 +556,7 @@ class Model:
+                 "MODEL": self.model,
+                 "NAME": self.NAME,
+             },
+-            sync_tensorboard=True
++            sync_tensorboard=True,
+         )
+         trainer = self.__train()
+         predictor = self.create_predictor()
+@@ -583,6 +580,7 @@ class Model:
+         rmse = self.create_rmse(preds, target)
+         mse = self.create_mse(preds, target)
+         # ssim = self.create_ssim(preds, target, height, width)
++        iou = self.create_iou(preds, target)
+         psnr = self.create_psnr(preds, target)
+         wandb.log(metrics_coco)
+         for metric_file in metrics_file:
+@@ -592,6 +590,7 @@ class Model:
+         wandb.log({"RMSE": rmse})
+         wandb.log({"MSE": mse})
+         wandb.log({"PSNR": psnr})
++        wandb.log({"IOU": iou})
+         try:
+             self.save(
+                 trainer=trainer,
+@@ -619,6 +618,7 @@ class Model:
+             "rmse": rmse,
+             "mse": mse,
+             "psnr": psnr,
++            "IOU": iou,
+         }
+         # torch.cuda.empty_cache()
+         # self.remove_files_in_output()
+@@ -667,13 +667,15 @@ class Model:
+ 
+ 
+ class Param_Tunning:
+-    def __init__(self,) -> None:
++    def __init__(
++        self,
++    ) -> None:
+         f"""
+         initialize the Class
+         params - dict like {Model().test}
+         """
+ 
+-    def tune(self, params : dict) -> dict:
++    def tune(self, params: dict) -> dict:
+         """
+         Tune all of the parameters
+         """
+@@ -707,10 +709,10 @@ class Param_Tunning:
+         """
+         https://docs.ray.io/en/latest/tune/index.html
+         """
+-        base_lr = config['BASE_LR']
+-        ims_per_batch = config["IMS_PER_BATCH"],
+-        batch_size_per_image = config['BATCH_SIZE_PER_IMAGE']
+-        model = 'COCO-Detection/' + config['MODEL']
++        base_lr = config["BASE_LR"]
++        ims_per_batch = (config["IMS_PER_BATCH"],)
++        batch_size_per_image = config["BATCH_SIZE_PER_IMAGE"]
++        model = "COCO-Detection/" + config["MODEL"]
+         model = Model(
+             base_lr=base_lr,
+             model=model,
+@@ -719,7 +721,7 @@ class Param_Tunning:
+         )
+         model.remove_files_in_output()
+         metrics = model.train()
+-        ap = metrics['metrics_coco']['bbox.AP']
++        ap = metrics["metrics_coco"]["bbox.AP"]
+         tune.report(average_precisions=ap)
+ 
+     def ray_tune(self):
+@@ -727,11 +729,8 @@ class Param_Tunning:
+         https://docs.ray.io/en/latest/tune/user-guide.html
+         """
+         analysis = tune.run(
+-            self.ray_tune_func,
+-            config=params,
+-            resources_per_trial={"gpu": 0, 'cpu': 1}
+-
++            self.ray_tune_func, config=params, resources_per_trial={"gpu": 0, "cpu": 1}
+         )
+-        analysis.get_best_results(metrics='average_precisions', model='max')
++        analysis.get_best_results(metrics="average_precisions", model="max")
+         df = analysis.results_df
+-        df.to_csv('./Logs.csv')
++        df.to_csv("./Logs.csv")
+diff --git a/V2/run.py b/V2/run.py
+index de8b91f..a3a16f4 100644
+--- a/V2/run.py
++++ b/V2/run.py
+@@ -1,5 +1,5 @@
+ from Model import *
+ model = Model()
+ model.train()
+-pt = Param_Tunning()
+-pt.tune(params)
++# pt = Param_Tunning()
++# pt.tune(params)
+diff --git a/V2/test.py b/V2/test.py
+index 7acf23b..f4b32b2 100644
+--- a/V2/test.py
++++ b/V2/test.py
+@@ -1,48 +1,29 @@
+-# from sklearn.model_selection import ParameterGrid
+-# param_grid = {'param1': ['value1', 'value2', 'value3'], 'paramN' : ['value1', 'value2', 'valueM']}
+-
+-# grid = ParameterGrid(param_grid)
+-
+-# for params in grid:
+-#     print(params)
+-
+-# import pandas as pd
+-# print(type(pd.read_csv('./V2/Data.csv')))
+-# print(type())
+-
+-
+-# from barcode import EAN13
+-
+-# # Make sure to pass the number as string
+-# number = '094718024596'
+-
+-# # Now, let's create an object of EAN13
+-# # class and pass the number
+-# my_code = EAN13(number)
+-
+-# # Our barcode is ready. Let's save it.
+-# my_code.save("iartmart-1")
+-
+-# import qrcode
+-# from PIL import Image
+-# img = qrcode.make('https://iartmart.com/')
+-# qr = qrcode.QRCode(
+-#     version=1,
+-#     error_correction=qrcode.constants.ERROR_CORRECT_H,
+-#     box_size=10,
+-#     border=4,
+-# )
+-# qr.add_data('https://iartmart.com/')
+-# qr.make(fit=True)
+-# img = qr.make_image(fill_color="black", back_color="white").convert('RGB')
+-# img.save("iartmart-2.png")
+-
+-def to_jaden_case(string):
+-    string = string.split(' ')
+-    new_string_list = []
+-    for s in string:
+-        # s[0] = s[0].capitalize()
+-        print(s.split(''))
+-
+-
+-to_jaden_case("How can mirrors be real if our eyes aren't real")
++from collections import namedtuple
++import numpy as np
++import cv2
++
++Detection = namedtuple("Detection", ["image_path", "gt", "pred"])
++
++
++def bb_intersection_over_union(true_box, pred_box):
++    xA = max(true_box[0], pred_box[0])
++    yA = max(true_box[1], pred_box[1])
++    xB = min(true_box[2], pred_box[2])
++    yB = min(true_box[3], pred_box[3])
++    interArea = max(0, xB - xA + 1) * max(0, yB - yA + 1)
++    boxAArea = (true_box[2] - true_box[0] + 1) * (true_box[3] - true_box[1] + 1)
++    boxBArea = (pred_box[2] - pred_box[0] + 1) * (pred_box[3] - pred_box[1] + 1)
++    iou = interArea / float(boxAArea + boxBArea - interArea)
++    return iou
++
++
++examples = [
++    Detection("image_0002.jpg", [39, 63, 203, 112], [54, 66, 198, 114]),
++    Detection("image_0016.jpg", [49, 75, 203, 125], [42, 78, 186, 126]),
++    Detection("image_0075.jpg", [31, 69, 201, 125], [18, 63, 235, 135]),
++    Detection("image_0090.jpg", [50, 72, 197, 121], [54, 72, 198, 120]),
++    Detection("image_0120.jpg", [35, 51, 196, 110], [36, 60, 180, 108]),
++]
++for detection in examples:
++    image = cv2.imread(detection.image_path)
++    iou = bb_intersection_over_union(detection.gt, detection.pred)
+diff --git a/V2/wandb/latest-run b/V2/wandb/latest-run
+index 08c2bfa..822b3a4 120000
+--- a/V2/wandb/latest-run
++++ b/V2/wandb/latest-run
+@@ -1 +1 @@
+-run-20211031_173402-1uu74wdt
+\ No newline at end of file
++run-20211109_232913-2za76qhg
+\ No newline at end of file
+diff --git a/iartmart-1.svg b/iartmart-1.svg
+deleted file mode 100644
+index a116201..0000000
+--- a/iartmart-1.svg
++++ /dev/null
+@@ -1,70 +0,0 @@
+-<?xml version="1.0" encoding="UTF-8"?>
+-<!DOCTYPE svg
+-  PUBLIC '-//W3C//DTD SVG 1.1//EN'
+-  'http://www.w3.org/Graphics/SVG/1.1/DTD/svg11.dtd'>
+-<svg version="1.1" xmlns="http://www.w3.org/2000/svg" width="44.000mm" height="23.000mm">
+-    <!--Autogenerated with python-barcode 0.13.1-->
+-    <g id="barcode_group">
+-        <rect width="100%" height="100%" style="fill:white"/>
+-        <rect x="6.500mm" y="1.000mm" width="0.330mm" height="15.000mm" style="fill:black;"/>
+-        <rect x="6.830mm" y="1.000mm" width="0.330mm" height="15.000mm" style="fill:white;"/>
+-        <rect x="7.160mm" y="1.000mm" width="0.330mm" height="15.000mm" style="fill:black;"/>
+-        <rect x="7.490mm" y="1.000mm" width="0.990mm" height="15.000mm" style="fill:white;"/>
+-        <rect x="8.480mm" y="1.000mm" width="0.330mm" height="15.000mm" style="fill:black;"/>
+-        <rect x="8.810mm" y="1.000mm" width="0.330mm" height="15.000mm" style="fill:white;"/>
+-        <rect x="9.140mm" y="1.000mm" width="0.660mm" height="15.000mm" style="fill:black;"/>
+-        <rect x="9.800mm" y="1.000mm" width="0.330mm" height="15.000mm" style="fill:white;"/>
+-        <rect x="10.130mm" y="1.000mm" width="0.330mm" height="15.000mm" style="fill:black;"/>
+-        <rect x="10.460mm" y="1.000mm" width="0.990mm" height="15.000mm" style="fill:white;"/>
+-        <rect x="11.450mm" y="1.000mm" width="0.660mm" height="15.000mm" style="fill:black;"/>
+-        <rect x="12.110mm" y="1.000mm" width="0.330mm" height="15.000mm" style="fill:white;"/>
+-        <rect x="12.440mm" y="1.000mm" width="0.990mm" height="15.000mm" style="fill:black;"/>
+-        <rect x="13.430mm" y="1.000mm" width="0.330mm" height="15.000mm" style="fill:white;"/>
+-        <rect x="13.760mm" y="1.000mm" width="0.660mm" height="15.000mm" style="fill:black;"/>
+-        <rect x="14.420mm" y="1.000mm" width="0.660mm" height="15.000mm" style="fill:white;"/>
+-        <rect x="15.080mm" y="1.000mm" width="0.660mm" height="15.000mm" style="fill:black;"/>
+-        <rect x="15.740mm" y="1.000mm" width="0.660mm" height="15.000mm" style="fill:white;"/>
+-        <rect x="16.400mm" y="1.000mm" width="0.330mm" height="15.000mm" style="fill:black;"/>
+-        <rect x="16.730mm" y="1.000mm" width="0.330mm" height="15.000mm" style="fill:white;"/>
+-        <rect x="17.060mm" y="1.000mm" width="0.660mm" height="15.000mm" style="fill:black;"/>
+-        <rect x="17.720mm" y="1.000mm" width="0.330mm" height="15.000mm" style="fill:white;"/>
+-        <rect x="18.050mm" y="1.000mm" width="0.990mm" height="15.000mm" style="fill:black;"/>
+-        <rect x="19.040mm" y="1.000mm" width="0.990mm" height="15.000mm" style="fill:white;"/>
+-        <rect x="20.030mm" y="1.000mm" width="0.660mm" height="15.000mm" style="fill:black;"/>
+-        <rect x="20.690mm" y="1.000mm" width="0.330mm" height="15.000mm" style="fill:white;"/>
+-        <rect x="21.020mm" y="1.000mm" width="0.330mm" height="15.000mm" style="fill:black;"/>
+-        <rect x="21.350mm" y="1.000mm" width="0.330mm" height="15.000mm" style="fill:white;"/>
+-        <rect x="21.680mm" y="1.000mm" width="0.330mm" height="15.000mm" style="fill:black;"/>
+-        <rect x="22.010mm" y="1.000mm" width="0.330mm" height="15.000mm" style="fill:white;"/>
+-        <rect x="22.340mm" y="1.000mm" width="0.330mm" height="15.000mm" style="fill:black;"/>
+-        <rect x="22.670mm" y="1.000mm" width="0.330mm" height="15.000mm" style="fill:white;"/>
+-        <rect x="23.000mm" y="1.000mm" width="0.660mm" height="15.000mm" style="fill:black;"/>
+-        <rect x="23.660mm" y="1.000mm" width="0.330mm" height="15.000mm" style="fill:white;"/>
+-        <rect x="23.990mm" y="1.000mm" width="0.660mm" height="15.000mm" style="fill:black;"/>
+-        <rect x="24.650mm" y="1.000mm" width="0.660mm" height="15.000mm" style="fill:white;"/>
+-        <rect x="25.310mm" y="1.000mm" width="0.330mm" height="15.000mm" style="fill:black;"/>
+-        <rect x="25.640mm" y="1.000mm" width="0.330mm" height="15.000mm" style="fill:white;"/>
+-        <rect x="25.970mm" y="1.000mm" width="0.990mm" height="15.000mm" style="fill:black;"/>
+-        <rect x="26.960mm" y="1.000mm" width="0.660mm" height="15.000mm" style="fill:white;"/>
+-        <rect x="27.620mm" y="1.000mm" width="0.330mm" height="15.000mm" style="fill:black;"/>
+-        <rect x="27.950mm" y="1.000mm" width="0.660mm" height="15.000mm" style="fill:white;"/>
+-        <rect x="28.610mm" y="1.000mm" width="0.990mm" height="15.000mm" style="fill:black;"/>
+-        <rect x="29.600mm" y="1.000mm" width="0.330mm" height="15.000mm" style="fill:white;"/>
+-        <rect x="29.930mm" y="1.000mm" width="0.990mm" height="15.000mm" style="fill:black;"/>
+-        <rect x="30.920mm" y="1.000mm" width="0.330mm" height="15.000mm" style="fill:white;"/>
+-        <rect x="31.250mm" y="1.000mm" width="0.330mm" height="15.000mm" style="fill:black;"/>
+-        <rect x="31.580mm" y="1.000mm" width="0.660mm" height="15.000mm" style="fill:white;"/>
+-        <rect x="32.240mm" y="1.000mm" width="0.330mm" height="15.000mm" style="fill:black;"/>
+-        <rect x="32.570mm" y="1.000mm" width="0.330mm" height="15.000mm" style="fill:white;"/>
+-        <rect x="32.900mm" y="1.000mm" width="0.330mm" height="15.000mm" style="fill:black;"/>
+-        <rect x="33.230mm" y="1.000mm" width="1.320mm" height="15.000mm" style="fill:white;"/>
+-        <rect x="34.550mm" y="1.000mm" width="0.660mm" height="15.000mm" style="fill:black;"/>
+-        <rect x="35.210mm" y="1.000mm" width="0.660mm" height="15.000mm" style="fill:white;"/>
+-        <rect x="35.870mm" y="1.000mm" width="0.660mm" height="15.000mm" style="fill:black;"/>
+-        <rect x="36.530mm" y="1.000mm" width="0.330mm" height="15.000mm" style="fill:white;"/>
+-        <rect x="36.860mm" y="1.000mm" width="0.330mm" height="15.000mm" style="fill:black;"/>
+-        <rect x="37.190mm" y="1.000mm" width="0.330mm" height="15.000mm" style="fill:white;"/>
+-        <rect x="37.520mm" y="1.000mm" width="0.330mm" height="15.000mm" style="fill:black;"/>
+-        <text x="22.175mm" y="21.000mm" style="fill:black;font-size:10pt;text-anchor:middle;">0947180245961</text>
+-    </g>
+-</svg>
+diff --git a/new_code.svg b/new_code.svg
+deleted file mode 100644
+index 69cb468..0000000
+--- a/new_code.svg
++++ /dev/null
+@@ -1,70 +0,0 @@
+-<?xml version="1.0" encoding="UTF-8"?>
+-<!DOCTYPE svg
+-  PUBLIC '-//W3C//DTD SVG 1.1//EN'
+-  'http://www.w3.org/Graphics/SVG/1.1/DTD/svg11.dtd'>
+-<svg version="1.1" xmlns="http://www.w3.org/2000/svg" width="44.000mm" height="23.000mm">
+-    <!--Autogenerated with python-barcode 0.13.1-->
+-    <g id="barcode_group">
+-        <rect width="100%" height="100%" style="fill:white"/>
+-        <rect x="6.500mm" y="1.000mm" width="0.330mm" height="15.000mm" style="fill:black;"/>
+-        <rect x="6.830mm" y="1.000mm" width="0.330mm" height="15.000mm" style="fill:white;"/>
+-        <rect x="7.160mm" y="1.000mm" width="0.330mm" height="15.000mm" style="fill:black;"/>
+-        <rect x="7.490mm" y="1.000mm" width="0.990mm" height="15.000mm" style="fill:white;"/>
+-        <rect x="8.480mm" y="1.000mm" width="0.330mm" height="15.000mm" style="fill:black;"/>
+-        <rect x="8.810mm" y="1.000mm" width="0.330mm" height="15.000mm" style="fill:white;"/>
+-        <rect x="9.140mm" y="1.000mm" width="0.660mm" height="15.000mm" style="fill:black;"/>
+-        <rect x="9.800mm" y="1.000mm" width="0.330mm" height="15.000mm" style="fill:white;"/>
+-        <rect x="10.130mm" y="1.000mm" width="0.330mm" height="15.000mm" style="fill:black;"/>
+-        <rect x="10.460mm" y="1.000mm" width="0.660mm" height="15.000mm" style="fill:white;"/>
+-        <rect x="11.120mm" y="1.000mm" width="0.990mm" height="15.000mm" style="fill:black;"/>
+-        <rect x="12.110mm" y="1.000mm" width="0.330mm" height="15.000mm" style="fill:white;"/>
+-        <rect x="12.440mm" y="1.000mm" width="0.660mm" height="15.000mm" style="fill:black;"/>
+-        <rect x="13.100mm" y="1.000mm" width="0.660mm" height="15.000mm" style="fill:white;"/>
+-        <rect x="13.760mm" y="1.000mm" width="0.660mm" height="15.000mm" style="fill:black;"/>
+-        <rect x="14.420mm" y="1.000mm" width="0.660mm" height="15.000mm" style="fill:white;"/>
+-        <rect x="15.080mm" y="1.000mm" width="0.330mm" height="15.000mm" style="fill:black;"/>
+-        <rect x="15.410mm" y="1.000mm" width="0.660mm" height="15.000mm" style="fill:white;"/>
+-        <rect x="16.070mm" y="1.000mm" width="0.660mm" height="15.000mm" style="fill:black;"/>
+-        <rect x="16.730mm" y="1.000mm" width="0.330mm" height="15.000mm" style="fill:white;"/>
+-        <rect x="17.060mm" y="1.000mm" width="1.320mm" height="15.000mm" style="fill:black;"/>
+-        <rect x="18.380mm" y="1.000mm" width="0.330mm" height="15.000mm" style="fill:white;"/>
+-        <rect x="18.710mm" y="1.000mm" width="0.330mm" height="15.000mm" style="fill:black;"/>
+-        <rect x="19.040mm" y="1.000mm" width="0.660mm" height="15.000mm" style="fill:white;"/>
+-        <rect x="19.700mm" y="1.000mm" width="0.990mm" height="15.000mm" style="fill:black;"/>
+-        <rect x="20.690mm" y="1.000mm" width="0.330mm" height="15.000mm" style="fill:white;"/>
+-        <rect x="21.020mm" y="1.000mm" width="0.330mm" height="15.000mm" style="fill:black;"/>
+-        <rect x="21.350mm" y="1.000mm" width="0.330mm" height="15.000mm" style="fill:white;"/>
+-        <rect x="21.680mm" y="1.000mm" width="0.330mm" height="15.000mm" style="fill:black;"/>
+-        <rect x="22.010mm" y="1.000mm" width="0.330mm" height="15.000mm" style="fill:white;"/>
+-        <rect x="22.340mm" y="1.000mm" width="0.330mm" height="15.000mm" style="fill:black;"/>
+-        <rect x="22.670mm" y="1.000mm" width="0.330mm" height="15.000mm" style="fill:white;"/>
+-        <rect x="23.000mm" y="1.000mm" width="0.660mm" height="15.000mm" style="fill:black;"/>
+-        <rect x="23.660mm" y="1.000mm" width="0.660mm" height="15.000mm" style="fill:white;"/>
+-        <rect x="24.320mm" y="1.000mm" width="0.660mm" height="15.000mm" style="fill:black;"/>
+-        <rect x="24.980mm" y="1.000mm" width="0.330mm" height="15.000mm" style="fill:white;"/>
+-        <rect x="25.310mm" y="1.000mm" width="0.660mm" height="15.000mm" style="fill:black;"/>
+-        <rect x="25.970mm" y="1.000mm" width="0.330mm" height="15.000mm" style="fill:white;"/>
+-        <rect x="26.300mm" y="1.000mm" width="0.660mm" height="15.000mm" style="fill:black;"/>
+-        <rect x="26.960mm" y="1.000mm" width="0.660mm" height="15.000mm" style="fill:white;"/>
+-        <rect x="27.620mm" y="1.000mm" width="0.330mm" height="15.000mm" style="fill:black;"/>
+-        <rect x="27.950mm" y="1.000mm" width="1.320mm" height="15.000mm" style="fill:white;"/>
+-        <rect x="29.270mm" y="1.000mm" width="0.330mm" height="15.000mm" style="fill:black;"/>
+-        <rect x="29.600mm" y="1.000mm" width="0.330mm" height="15.000mm" style="fill:white;"/>
+-        <rect x="29.930mm" y="1.000mm" width="0.330mm" height="15.000mm" style="fill:black;"/>
+-        <rect x="30.260mm" y="1.000mm" width="0.330mm" height="15.000mm" style="fill:white;"/>
+-        <rect x="30.590mm" y="1.000mm" width="0.990mm" height="15.000mm" style="fill:black;"/>
+-        <rect x="31.580mm" y="1.000mm" width="0.660mm" height="15.000mm" style="fill:white;"/>
+-        <rect x="32.240mm" y="1.000mm" width="0.330mm" height="15.000mm" style="fill:black;"/>
+-        <rect x="32.570mm" y="1.000mm" width="0.660mm" height="15.000mm" style="fill:white;"/>
+-        <rect x="33.230mm" y="1.000mm" width="0.990mm" height="15.000mm" style="fill:black;"/>
+-        <rect x="34.220mm" y="1.000mm" width="0.330mm" height="15.000mm" style="fill:white;"/>
+-        <rect x="34.550mm" y="1.000mm" width="0.330mm" height="15.000mm" style="fill:black;"/>
+-        <rect x="34.880mm" y="1.000mm" width="0.990mm" height="15.000mm" style="fill:white;"/>
+-        <rect x="35.870mm" y="1.000mm" width="0.330mm" height="15.000mm" style="fill:black;"/>
+-        <rect x="36.200mm" y="1.000mm" width="0.660mm" height="15.000mm" style="fill:white;"/>
+-        <rect x="36.860mm" y="1.000mm" width="0.330mm" height="15.000mm" style="fill:black;"/>
+-        <rect x="37.190mm" y="1.000mm" width="0.330mm" height="15.000mm" style="fill:white;"/>
+-        <rect x="37.520mm" y="1.000mm" width="0.330mm" height="15.000mm" style="fill:black;"/>
+-        <text x="22.175mm" y="21.000mm" style="fill:black;font-size:10pt;text-anchor:middle;">5901234123457</text>
+-    </g>
+-</svg>
