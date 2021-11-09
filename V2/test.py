@@ -1,48 +1,29 @@
-# from sklearn.model_selection import ParameterGrid
-# param_grid = {'param1': ['value1', 'value2', 'value3'], 'paramN' : ['value1', 'value2', 'valueM']}
+from collections import namedtuple
+import numpy as np
+import cv2
 
-# grid = ParameterGrid(param_grid)
-
-# for params in grid:
-#     print(params)
-
-# import pandas as pd
-# print(type(pd.read_csv('./V2/Data.csv')))
-# print(type())
+Detection = namedtuple("Detection", ["image_path", "gt", "pred"])
 
 
-# from barcode import EAN13
-
-# # Make sure to pass the number as string
-# number = '094718024596'
-
-# # Now, let's create an object of EAN13
-# # class and pass the number
-# my_code = EAN13(number)
-
-# # Our barcode is ready. Let's save it.
-# my_code.save("iartmart-1")
-
-# import qrcode
-# from PIL import Image
-# img = qrcode.make('https://iartmart.com/')
-# qr = qrcode.QRCode(
-#     version=1,
-#     error_correction=qrcode.constants.ERROR_CORRECT_H,
-#     box_size=10,
-#     border=4,
-# )
-# qr.add_data('https://iartmart.com/')
-# qr.make(fit=True)
-# img = qr.make_image(fill_color="black", back_color="white").convert('RGB')
-# img.save("iartmart-2.png")
-
-def to_jaden_case(string):
-    string = string.split(' ')
-    new_string_list = []
-    for s in string:
-        # s[0] = s[0].capitalize()
-        print(s.split(''))
+def bb_intersection_over_union(true_box, pred_box):
+    xA = max(true_box[0], pred_box[0])
+    yA = max(true_box[1], pred_box[1])
+    xB = min(true_box[2], pred_box[2])
+    yB = min(true_box[3], pred_box[3])
+    interArea = max(0, xB - xA + 1) * max(0, yB - yA + 1)
+    boxAArea = (true_box[2] - true_box[0] + 1) * (true_box[3] - true_box[1] + 1)
+    boxBArea = (pred_box[2] - pred_box[0] + 1) * (pred_box[3] - pred_box[1] + 1)
+    iou = interArea / float(boxAArea + boxBArea - interArea)
+    return iou
 
 
-to_jaden_case("How can mirrors be real if our eyes aren't real")
+examples = [
+    Detection("image_0002.jpg", [39, 63, 203, 112], [54, 66, 198, 114]),
+    Detection("image_0016.jpg", [49, 75, 203, 125], [42, 78, 186, 126]),
+    Detection("image_0075.jpg", [31, 69, 201, 125], [18, 63, 235, 135]),
+    Detection("image_0090.jpg", [50, 72, 197, 121], [54, 72, 198, 120]),
+    Detection("image_0120.jpg", [35, 51, 196, 110], [36, 60, 180, 108]),
+]
+for detection in examples:
+    image = cv2.imread(detection.image_path)
+    iou = bb_intersection_over_union(detection.gt, detection.pred)
