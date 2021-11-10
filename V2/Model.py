@@ -10,7 +10,14 @@ from tqdm import tqdm
 from detectron2.structures import BoxMode
 from detectron2.config import get_cfg
 from detectron2.engine import DefaultPredictor, DefaultTrainer
-from torchmetrics import MeanSquaredError, MeanAbsoluteError, SSIM, PSNR
+from torchmetrics import (
+    MeanSquaredError,
+    MeanAbsoluteError,
+    Precision,
+    Recall,
+    SSIM,
+    PSNR,
+)
 from detectron2 import model_zoo
 import wandb
 import pandas as pd
@@ -430,6 +437,18 @@ class Model:
                 lowest_rmse = r_mean_squared_error(pred.to("cpu"), target)
         return float(lowest_rmse)
 
+    def create_recall(self, preds: torch.tensor, target: torch.tensor) -> float:
+        lowest_recall = 0
+        recall = Recall()
+        preds_new = (
+            preds["instances"].__dict__["_fields"]["pred_boxes"].__dict__["tensor"]
+        )
+        for pred_i in tqdm(range(len(preds))):
+            pred = preds_new[pred_i]
+            if recall(pred.to("cpu"), target) > lowest_recall:
+                lowest_recall = recall(pred.to("cpu"), target)
+        return float(lowest_recall)
+
     def create_iou(self, preds: torch.tensor, targets: torch.tensor) -> float:
         ious = []
         for pred_box, true_box in zip(preds, targets):
@@ -537,6 +556,30 @@ class Model:
                 lowest_mae = mae(pred.to("cpu"), target)
         return lowest_mae
 
+    def create_precision(self, preds: torch.tensor, target: torch.tensor) -> float:
+        lowest_precision = 0
+        precision = Precision()
+        preds_new = (
+            preds["instances"].__dict__["_fields"]["pred_boxes"].__dict__["tensor"]
+        )
+        # print("Creating MAE")
+        for pred_i in tqdm(range(len(preds))):
+            pred = preds_new[pred_i]
+            if precision(pred.to("cpu"), target) > lowest_precision:
+                lowest_precision = precision(pred.to("cpu"), target)
+        return lowest_precision
+
+    def create_precision_and_recall(
+        self, preds: torch.tensor, target: torch.tensor
+    ) -> float:
+        recall = self.create_recall(preds, target)
+        precision = self.create_precision(preds, target)
+        if recall > precision:
+            precision_recall = precision - recall
+        else:
+            precision_recall = recall - precision
+        return precision_recall
+
     def train(self) -> dict:
         """
         - train - trains the model
@@ -582,6 +625,9 @@ class Model:
         # ssim = self.create_ssim(preds, target, height, width)
         iou = self.create_iou(preds, target)
         psnr = self.create_psnr(preds, target)
+        precision = self.create_precision(preds, target)
+        recall = self.create_recall(preds, target)
+        precision_recall = self.create_precision_recall(preds, target)
         wandb.log(metrics_coco)
         for metric_file in metrics_file:
             wandb.log(metric_file)
@@ -591,6 +637,9 @@ class Model:
         wandb.log({"MSE": mse})
         wandb.log({"PSNR": psnr})
         wandb.log({"IOU": iou})
+        wandb.log({"Precision": precision})
+        wandb.log({"Recall": recall})
+        wandb.log({"Precision Recall": precision_recall})
         try:
             self.save(
                 trainer=trainer,
@@ -734,3 +783,20 @@ class Param_Tunning:
         analysis.get_best_results(metrics="average_precisions", model="max")
         df = analysis.results_df
         df.to_csv("./Logs.csv")
+
+
+# TODO : Add more metrics
+# TODO : Precision x Recall Curve (PR Curve)
+# TODO : Clean the Code
+# TODO : Create Funtion that I use multiple times
+# TODO : Add Comments
+# TODO : Add more Params Detectron2 Model
+# TODO : Fix SSIM
+# TODO : Add the funtion orderly
+# TODO : Check Other Models
+# TODO : YoloV1
+# TODO : YoloV2
+# TODO : YoloV3
+# TODO : YoloV4
+# TODO : YoloV5
+# TODO : OpenCV
