@@ -1,4 +1,5 @@
 # Imports
+import random
 from ray import tune
 from detectron2.config.config import CfgNode
 from tqdm import tqdm
@@ -95,10 +96,11 @@ class Model:
         - name = name of the wandb log
         - create_target_and_preds = testing image
         """
-        # self.remove_files_in_output()
+        self.remove_files_in_output()
         self.data = data
         self.data_other = data
-        self.labels = labels  # ["Card"]
+        self.labels = labels
+        self.devices = ["cpu", "cuda"]
         self.tests = {
             "models": [
                 "fast_rcnn_R_50_FPN_1x.yaml",
@@ -151,7 +153,19 @@ class Model:
         self.cfg = self.create_cfg()  # Creating the model config
         self.create_target_and_preds_iter = create_target_and_preds
         self.test_sample_size = test_sample_size
-        # self.remove_files_in_output()
+        self.config = (
+            {
+                "BASE_LR": self.BASE_LR,
+                "MAX_ITER": self.MAX_ITER,
+                "EVAL_PERIOD": self.EVAL_PERIOD,
+                "IMS_PER_BATCH": self.IMS_PER_BATCH,
+                "BATCH_SIZE_PER_IMAGE": self.BATCH_SIZE_PER_IMAGE,
+                "SCORE_THRESH_TEST": self.SCORE_THRESH_TEST,
+                "MODEL": self.model,
+                "NAME": self.NAME,
+            },
+        )
+        self.remove_files_in_output()
 
     @staticmethod
     def remove_files_in_output() -> None:
@@ -159,7 +173,6 @@ class Model:
         - remove_files_in_output - remove all of the file in ./output/
         """
         files_to_remove = os.listdir("./output/")  # Get the files in the directory
-        # print("Remove files in output directory")
         try:
             files_to_remove.remove("test_coco_format.json")
         except:
@@ -169,7 +182,7 @@ class Model:
         ):  # Iter over the files in the directory
             os.remove(f"./output/{file_to_remove}")  # Delete the iter file
 
-    def test(self, data_idx: int = 61) -> list:
+    def test(self, data_idx: int = random.ranint(0, 125)) -> list:
         """
         - test - croping and creating a box around the img xmin,ymin, xmax, ymax
         -----------------------------------------------------
@@ -220,7 +233,6 @@ class Model:
             self.data = np.load("./data.npy", allow_pickle=True)
             return self.data
         new_data = []
-        # print("Loading Data")
         for idx in tqdm(range(len(self.data))):  # iter over the data
             record = {}
             info = self.data.iloc[idx]
@@ -262,7 +274,6 @@ class Model:
         """
         torch.cuda.empty_cache()
         files_and_object = kwargs
-        # print("Save")
         for files_and_object_key, files_and_object_val in tqdm(
             zip(files_and_object.keys(), files_and_object.values())
         ):  # iterate over the file and object
@@ -277,6 +288,7 @@ class Model:
     def create_cfg(self) -> CfgNode:
         """
         - create_cfg - create the config of the model
+        - other params - https://github.com/facebookresearch/detectron2/blob/main/detectron2/config/defaults.py
         """
         torch.cuda.empty_cache()
         cfg = get_cfg()  # Creating a new cfg
@@ -330,15 +342,19 @@ class Model:
         torch.cuda.empty_cache()
         return predictor
 
-    def create_coco_eval(self, predictor: DefaultPredictor) -> dict:
+    def create_coco_eval(
+        self, predictor: DefaultPredictor, metadata: str = "test"
+    ) -> dict:
         """
         - create_coco_eval - create COCO Evaluator and tests it
         -------------------------------
         - predictor - to create the evaluator
         """
         torch.cuda.empty_cache()
-        evaluator = COCOEvaluator("test", output_dir="./output/")  # Create evaluator
-        val_loader = build_detection_test_loader(self.cfg, "test")  # Create data loader
+        evaluator = COCOEvaluator(metadata, output_dir="./output/")  # Create evaluator
+        val_loader = build_detection_test_loader(
+            self.cfg, metadata
+        )  # Create data loader
         metrics = inference_on_dataset(
             predictor.model, val_loader, evaluator
         )  # Test the data with the evaluator
@@ -352,7 +368,6 @@ class Model:
         new_logs = []
         try:
             logs = open("./output/metrics.json", "r").read().split("\n")
-            # print("Metrics file to dict")
             for log in tqdm(range(len(logs))):  # uterate over the logs
                 try:
                     res = ast.literal_eval(
@@ -371,7 +386,6 @@ class Model:
         """
         imgs = []
         torch.cuda.empty_cache()
-        # print("Predict")
         for img in tqdm(os.listdir("./test_imgs/")):  # iterate over the test images
             v = Visualizer(
                 cv2.imread(f"./test_imgs/{img}")[:, :, ::-1], metadata=self.metadata
@@ -430,7 +444,6 @@ class Model:
         preds_new = (
             preds["instances"].__dict__["_fields"]["pred_boxes"].__dict__["tensor"]
         )
-        # print("Creating RMSE")
         for pred_i in tqdm(range(len(preds))):
             pred = preds_new[pred_i]
             if r_mean_squared_error(pred.to("cpu"), target) > lowest_rmse:
@@ -473,7 +486,6 @@ class Model:
         preds_new = (
             preds["instances"].__dict__["_fields"]["pred_boxes"].__dict__["tensor"]
         )
-        # print("Creating MSE")
         for pred_i in tqdm(range(len(preds))):
             pred = preds_new[pred_i]
             if mean_squared_error(pred.to("cpu"), target) > lowest_mse:
@@ -511,7 +523,6 @@ class Model:
         preds_new = (
             preds["instances"].__dict__["_fields"]["pred_boxes"].__dict__["tensor"]
         )
-        # print("Creating SSIM")
         for pred_i in tqdm(range(len(preds))):
             pred = preds_new[pred_i]
             info = self.data[self.create_target_and_preds_iter]
@@ -533,7 +544,6 @@ class Model:
         preds_new = (
             preds["instances"].__dict__["_fields"]["pred_boxes"].__dict__["tensor"]
         )
-        # print("Creating PSNR")
         for pred_i in tqdm(range(len(preds))):
             pred = preds_new[pred_i]
             if psnr(pred.to("cpu"), target) > lowest_psnr:
@@ -549,7 +559,6 @@ class Model:
         preds_new = (
             preds["instances"].__dict__["_fields"]["pred_boxes"].__dict__["tensor"]
         )
-        # print("Creating MAE")
         for pred_i in tqdm(range(len(preds))):
             pred = preds_new[pred_i]
             if mae(pred.to("cpu"), target) > lowest_mae:
@@ -562,7 +571,6 @@ class Model:
         preds_new = (
             preds["instances"].__dict__["_fields"]["pred_boxes"].__dict__["tensor"]
         )
-        # print("Creating MAE")
         for pred_i in tqdm(range(len(preds))):
             pred = preds_new[pred_i]
             if precision(pred.to("cpu"), target) > lowest_precision:
@@ -580,29 +588,7 @@ class Model:
             precision_recall = recall - precision
         return precision_recall
 
-    def train(self) -> dict:
-        """
-        - train - trains the model
-        """
-        # self.remove_files_in_output()
-        torch.cuda.empty_cache()
-        wandb.init(
-            project=PROJECT_NAME,
-            name=self.NAME,
-            config={
-                "BASE_LR": self.BASE_LR,
-                "MAX_ITER": self.MAX_ITER,
-                "EVAL_PERIOD": self.EVAL_PERIOD,
-                "IMS_PER_BATCH": self.IMS_PER_BATCH,
-                "BATCH_SIZE_PER_IMAGE": self.BATCH_SIZE_PER_IMAGE,
-                "SCORE_THRESH_TEST": self.SCORE_THRESH_TEST,
-                "MODEL": self.model,
-                "NAME": self.NAME,
-            },
-            sync_tensorboard=True,
-        )
-        trainer = self.__train()
-        predictor = self.create_predictor()
+    def evaluation(self, predictor):
         metrics_coco = self.create_coco_eval(predictor)
         metrics_file = self.metrics_file_to_dict()
         test_images = self.predict_test_images(predictor)
@@ -622,36 +608,57 @@ class Model:
         ) = self.create_target_and_preds(predictor)
         rmse = self.create_rmse(preds, target)
         mse = self.create_mse(preds, target)
-        # ssim = self.create_ssim(preds, target, height, width)
+        ssim = self.create_ssim(preds, target, height, width)
         iou = self.create_iou(preds, target)
         psnr = self.create_psnr(preds, target)
         precision = self.create_precision(preds, target)
         recall = self.create_recall(preds, target)
         precision_recall = self.create_precision_recall(preds, target)
-        wandb.log(metrics_coco)
-        for metric_file in metrics_file:
+        return {
+            "Metrics": {
+                "RMSE": rmse,
+                "MSE": mse,
+                "PSNR": psnr,
+                "IOU": iou,
+                "Precision": precision,
+                "Recall": recall,
+                "Precision Recall": precision_recall,
+                "SSIM": ssim,
+            },
+            "metrics_coco": metrics_coco,
+            "metrics_file": metrics_file,
+            "test_images": test_images,
+        }
+
+    def train(self) -> dict:
+        """
+        - train - trains the model
+        """
+        # self.remove_files_in_output()
+        torch.cuda.empty_cache()
+        wandb.init(
+            project=PROJECT_NAME,
+            name=self.NAME,
+            config=self.config,
+            sync_tensorboard=True,
+        )
+        trainer = self.__train()
+        predictor = self.create_predictor()
+        metrics = self.evaluation(predictor)
+        wandb.log(metrics["metrics_coco"])
+        for metric_file in metrics["metrics_file"]:
             wandb.log(metric_file)
-        for test_img in test_images:
+        for test_img in metrics["test_images"]:
             wandb.log({test_img[0]: wandb.Image(test_img[1])})
-        wandb.log({"RMSE": rmse})
-        wandb.log({"MSE": mse})
-        wandb.log({"PSNR": psnr})
-        wandb.log({"IOU": iou})
-        wandb.log({"Precision": precision})
-        wandb.log({"Recall": recall})
-        wandb.log({"Precision Recall": precision_recall})
+        wandb.log(metrics["Metrics"])
         try:
             self.save(
                 trainer=trainer,
                 predictor=predictor,
-                metrics_coco=metrics_coco,
-                metrics_file=metrics_file,
-                test_images=test_images,
-                preds=preds,
-                target=target,
-                rmse=rmse,
-                mse=mse,
-                psnr=psnr,
+                metrics_coco=metrics["metrics_coco"],
+                metrics_file=metrics["metrics_file"],
+                test_images=metrics["test_images"],
+                metrics=metrics["Metrics"],
             )
         except:
             pass
@@ -659,18 +666,11 @@ class Model:
         return {
             "trainer": trainer,
             "predictor": predictor,
-            "metrics_coco": metrics_coco,
-            "metrics_file": metrics_file,
-            "test_images": test_images,
-            "preds": preds,
-            "target": target,
-            "rmse": rmse,
-            "mse": mse,
-            "psnr": psnr,
-            "IOU": iou,
+            "metrics_coco": metrics["metrics_coco"],
+            "metrics_file": metrics["metrics_file"],
+            "test_images": metrics["test_images"],
+            "metrics": metrics["Metrics"],
         }
-        # torch.cuda.empty_cache()
-        # self.remove_files_in_output()
 
     def __str__(self) -> str:
         return f"""
@@ -749,9 +749,6 @@ class Param_Tunning:
                 metrics = model.train()
                 torch.cuda.empty_cache()
             except Exception as e:
-                print("*" * 50)
-                print(e)
-                print("*" * 50)
                 torch.cuda.empty_cache()
 
     def ray_tune_func(self, config):
@@ -784,13 +781,6 @@ class Param_Tunning:
         df = analysis.results_df
         df.to_csv("./Logs.csv")
 
-
-# TODO : Add more metrics
-# TODO : Precision x Recall Curve (PR Curve)
-# TODO : Clean the Code
-# TODO : Create Funtion that I use multiple times
-# TODO : Add Comments
-# TODO : Add more Params Detectron2 Model
 # TODO : Fix SSIM
 # TODO : Add the funtion orderly
 # TODO : Check Other Models
