@@ -78,7 +78,7 @@ class Model:
         model: str = "COCO-Detection/faster_rcnn_X_101_32x8d_FPN_3x.yaml",
         name: str = "baseline",
         create_target_and_preds: int = 29,
-        test_sample_size=250,
+        test_sample_size=50,
     ) -> None:
         """
         - __init__ = initialize and get all of the params need
@@ -182,7 +182,7 @@ class Model:
         ):  # Iter over the files in the directory
             os.remove(f"./output/{file_to_remove}")  # Delete the iter file
 
-    def test(self, data_idx: int = random.ranint(0, 125)) -> list:
+    def test(self, data_idx: int = 50) -> list:
         """
         - test - croping and creating a box around the img xmin,ymin, xmax, ymax
         -----------------------------------------------------
