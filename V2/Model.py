@@ -663,7 +663,7 @@ class Model:
         psnr = self.create_psnr(preds, target)
         # precision = self.create_precision(preds, target)
         recall = self.create_recall(preds, target)
-        precision_recall = self.create_precision_recall(preds, target)
+        precision_recall = self.create_precision_and_recall(preds, target)
         return {
             "Metrics": {
                 "RMSE": rmse,
