@@ -1,0 +1,12 @@
+diff --git a/V2/wandb/latest-run b/V2/wandb/latest-run
+index 8ba3011..0b6e597 120000
+--- a/V2/wandb/latest-run
++++ b/V2/wandb/latest-run
+@@ -1 +1 @@
+-run-20211119_210001-1wkj0xnk
+\ No newline at end of file
++run-20211119_210531-jy6keo5j
+\ No newline at end of file
+diff --git a/V2/wandb/run-20211119_202716-179b8vus/run-179b8vus.wandb b/V2/wandb/run-20211119_202716-179b8vus/run-179b8vus.wandb
+index 5bf2ff9..121a449 100644
+Binary files a/V2/wandb/run-20211119_202716-179b8vus/run-179b8vus.wandb and b/V2/wandb/run-20211119_202716-179b8vus/run-179b8vus.wandb differ
