@@ -632,7 +632,7 @@ class Model:
         # ssim = self.create_ssim(preds, target, height, width)
         # iou = self.create_iou(preds, target)
         psnr = self.create_psnr(preds, target)
-        precision = self.create_precision(preds, target)
+        # precision = self.create_precision(preds, target)
         recall = self.create_recall(preds, target)
         precision_recall = self.create_precision_recall(preds, target)
         return {
@@ -641,7 +641,7 @@ class Model:
                 "MSE": mse,
                 "PSNR": psnr,
                 # "IOU": iou,
-                "Precision": precision,
+                # "Precision": precision,
                 "Recall": recall,
                 "Precision Recall": precision_recall,
                 # "SSIM": ssim,
