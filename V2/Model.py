@@ -629,8 +629,8 @@ class Model:
         ) = self.create_target_and_preds(predictor)
         rmse = self.create_rmse(preds, target)
         mse = self.create_mse(preds, target)
-        ssim = self.create_ssim(preds, target, height, width)
-        iou = self.create_iou(preds, target)
+        # ssim = self.create_ssim(preds, target, height, width)
+        # iou = self.create_iou(preds, target)
         psnr = self.create_psnr(preds, target)
         precision = self.create_precision(preds, target)
         recall = self.create_recall(preds, target)
@@ -640,11 +640,11 @@ class Model:
                 "RMSE": rmse,
                 "MSE": mse,
                 "PSNR": psnr,
-                "IOU": iou,
+                # "IOU": iou,
                 "Precision": precision,
                 "Recall": recall,
                 "Precision Recall": precision_recall,
-                "SSIM": ssim,
+                # "SSIM": ssim,
             },
             "metrics_coco": metrics_coco,
             "metrics_file": metrics_file,
