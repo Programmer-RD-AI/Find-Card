@@ -782,7 +782,6 @@ class Param_Tunning:
         df.to_csv("./Logs.csv")
 
 # TODO : Fix SSIM
-# TODO : Add the funtion orderly
 # TODO : Check Other Models
 # TODO : YoloV1
 # TODO : YoloV2
