@@ -1,5 +1,5 @@
 absl-py==0.12.0
-aiohttp==3.7.4.post0
+aiohttp>=3.7.4
 aiohttp-cors==0.7.0
 aioredis==1.3.1
 altair==4.1.0
@@ -115,7 +115,7 @@ jupyter-client @ file:///home/conda/feedstock_root/build_artifacts/jupyter_clien
 jupyter-console @ file:///home/conda/feedstock_root/build_artifacts/jupyter_console_1616560109969/work
 jupyter-core @ file:///home/conda/feedstock_root/build_artifacts/jupyter_core_1631852756538/work
 jupyter-server==1.8.0
-jupyterlab==3.0.16
+jupyterlab>=3.0.17
 jupyterlab-server==2.6.0
 jupyterlab-widgets @ file:///home/conda/feedstock_root/build_artifacts/jupyterlab_widgets_1631590465624/work
 kaleido==0.2.1
@@ -242,7 +242,7 @@ tensorboard==2.7.0
 tensorboard-data-server==0.6.1
 tensorboard-plugin-wit==1.8.0
 tensorboardX==2.4
-tensorflow==2.4.1
+tensorflow>=2.5.1
 tensorflow-estimator==2.4.0
 tensorflow-hub==0.11.0
 tensorrt==0.0.1
