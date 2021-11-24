@@ -662,8 +662,8 @@ class Model:
         # iou = self.create_iou(preds, target)
         psnr = self.create_psnr(preds, target)
         # precision = self.create_precision(preds, target)
-        recall = self.create_recall(preds, target)
-        precision_recall = self.create_precision_and_recall(preds, target)
+        # recall = self.create_recall(preds, target)
+        # precision_recall = self.create_precision_and_recall(preds, target)
         return {
             "Metrics": {
                 "RMSE": rmse,
@@ -671,8 +671,8 @@ class Model:
                 "PSNR": psnr,
                 # "IOU": iou,
                 # "Precision": precision,
-                "Recall": recall,
-                "Precision Recall": precision_recall,
+                # "Recall": recall,
+                # "Precision Recall": precision_recall,
                 # "SSIM": ssim,
             },
             "metrics_coco": metrics_coco,
