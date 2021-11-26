@@ -264,6 +264,9 @@ class Metrics:
     def metrics(
         self, preds: torch.tensor, target: torch.tensor
     ) -> dict:
+        """
+        - combines all metrics and easily return all of the metrics
+        """
         metrics = {
             'RMSE': self.create_rmse(preds, target),
             'Recall': self.create_recall(preds, target),
