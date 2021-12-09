@@ -2,4 +2,4 @@
 
 Find-Card
 
-object detection methods to detect cards.
+In this repo I am using object detection methods to detect cards.
