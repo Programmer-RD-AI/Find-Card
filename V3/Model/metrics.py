@@ -1,28 +1,4 @@
-# Imports
-import random
-import cv2
-import pandas as pd
-import numpy as np
-import os
-import matplotlib.pyplot as plt
-import ast
-from torchmetrics import (
-    MeanSquaredError,
-    MeanAbsoluteError,
-    Precision,
-    Recall,
-    SSIM,
-    PSNR,
-)
-import torch
-try:
-    from ray import tune
-except:
-    raise ImportError("Cant import ray from tune :(")
-try:
-    from tqdm import tqdm
-except:
-    raise ImportError("Cant import tqdm from tqdm :(")
+from Model import *
 
 
 class Metrics:
@@ -261,12 +237,68 @@ class Metrics:
         except Exception as e:
             raise ValueError(f"Some error occured in Recall and Precision {e}")
 
+    def create_ap(
+        self, preds: torch.tensor, target: torch.tensor
+    ) -> float:
+        """
+        - create_ap - Create Average Precision(AP) 
+        """
+        try:
+            preds = np.array(preds)
+            target = np.array(target)
+            ap = average_precision_score(target, preds)
+            return ap
+        except Exception as e:
+            raise ValueError(f"Some error occured in Average Precision {e}")
+
+    def create_confusion_matrix(
+        self, preds: torch.tensor, target: torch.tensor
+    ) -> float:
+        """
+        - create_confusion_matrix - Create confusion_matrix
+        """
+        try:
+            preds = np.array(preds)
+            target = np.array(target)
+            tn, fp, fn, tp = confusion_matrix(target, preds).ravel()
+            accuracy = accuracy_score(target, preds)
+            return accuracy
+        except Exception as e:
+            raise ValueError(f"Some error occured in confusion matrix {e}")
+
+    def create_auc_curve(self, preds: torch.tensor, target: torch) -> float:
+        """
+        - create_auc_curve - Create auc_curve
+        """
+        try:
+            preds = np.array(preds)
+            target = np.array(target)
+            roc_auc = roc_auc_score(target, preds)
+            fpr, tpr, thresholds = metrics.roc_curve(y, scores, pos_label=2)
+            return fpr, tpr, thresholds
+        except Exception as e:
+            raise ValueError(f"Some error occured in confusion matrix {e}")
+
+    def create_f1_score(self, preds: torch.tensor, target: torch.tensor) -> float:
+        """
+        - create_f1_score - Create f1_score
+        """
+        try:
+            precision = self.create_precision(preds, target)
+            recall = self.create_recall(preds, target)
+            f1_score = (precision * recall)/[(precision + recall)/2]
+            return f1_score
+        except Exception as e:
+            raise ValueError(f"Some error occured in confusion matrix {e}")
+
     def metrics(
         self, preds: torch.tensor, target: torch.tensor
     ) -> dict:
         """
         - combines all metrics and easily return all of the metrics
         """
+        fpr, tpr, thresholds = self.create_auc_curve(preds, target)
+
         metrics = {
             'RMSE': self.create_rmse(preds, target),
             'Recall': self.create_recall(preds, target),
@@ -276,6 +308,12 @@ class Metrics:
             'PSNR': self.create_psnr(preds, target),
             'MAE': self.create_mae(preds, target),
             'Precision': self.create_precision(preds, target),
-            'Precision and Recall': self.create_precision_and_recall(preds, target)
+            'Precision and Recall': self.create_precision_and_recall(preds, target),
+            'AP': self.create_ap(preds, target),
+            'Confusion Matrix': self.create_confusion_matrix(preds, target),
+            'AUC Curve fpr': fpr,
+            'AUC Curve tpr': tpr,
+            'AUC Curve thresholds': thresholds,
+            'F1 Score': self.create_f1_score(preds, target)
         }
         return metrics
