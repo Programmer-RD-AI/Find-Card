@@ -183,3 +183,4 @@ V3/open_images_data/oidv6-train-images-with-labels-with-rotation.csv
 V3/open_images_data/test-annotations-bbox.csv
 V3/open_images_data/test-annotations-human-imagelabels-boxable.csv
 V3/open_images_data/test-annotations-machine-imagelabels.csv
+V3/open_images_data/test-images-with-rotation.csv
