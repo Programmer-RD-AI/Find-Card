@@ -179,3 +179,4 @@ V3/wandb
 V1/wandb
 V3/open_images_data/oidv6-train-annotations-bbox.csv
 V3/open_images_data/oidv6-train-annotations-human-imagelabels.csv
+V3/open_images_data/oidv6-train-images-with-labels-with-rotation.csv
