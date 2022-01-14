@@ -19,19 +19,10 @@ labels = [
     "Debit card",
     "Credit card",
     "Business card",
-    # "Collectible card game",
-    # "Penalty card",
-    # "Telephone card",
-    # "Payment card",
 ]
 labels_r = [
     "/m/02h5d",
     "/m/0d7pp",
-    # "/m/01sdgj",
-    # "/m/0216z",
-    # "/m/02wvcj0",
-    # "/m/066zr",
-    # "/m/09vh0m",
 ]
 
 labels_and_imageed = (
@@ -104,12 +95,10 @@ for imgid in tqdm(
             data["ImageID"].append(imgid[0])
             data["OriginalURL"].append(imgid[1])
             data["OriginalLandingURL"].append(imgid[2])
-            # print(imgid)
             data["XMin"].append(imgid_of_iabaid_iter["XMin"])
             data["YMin"].append(imgid_of_iabaid_iter["YMin"])
             data["XMax"].append(imgid_of_iabaid_iter["XMax"])
             data["YMax"].append(imgid_of_iabaid_iter["YMax"])
 del images_and_bbox_and_imgid_
-# print(data)
 data = pd.DataFrame(data)
 data.to_csv(f"./data/Cleaned-Data-{str(random.randint(0,100000))}.csv", index=False)

@@ -333,7 +333,6 @@ class Download:
                 f"The function self.download_images() or Download().download_images() is not working correctly. {e}"
             )
 
-    ## Download.download() ##
 
     def download(self) -> bool:
         """summary_line

@@ -82,7 +82,6 @@ max_iters = [50, 100, 125, 250, 500, 1000, 2000, 2500, 5000]
 base_lrs = [0.1, 0.01, 0.001, 0.0001, 0.00001, 0.000001]
 ims_per_batchs = [1, 2, 3, 4, 5, 6, 7, 8, 9, 10]
 batch_size_per_images = [8, 16, 32, 64, 128, 256, 512]
-# ENTITY = "find-card"
 PROJECT_NAME = "Find-Card"
 
 # Model
@@ -292,7 +291,6 @@ class Model:
             record["annotations"] = objs
             new_data.append(record)
         np.random.shuffle(new_data)  # Shuffling the data
-        # np.save("data.npy", new_data)  # Saving the data
         if test is True:
             return new_data[: self.test_sample_size]
         return new_data
@@ -657,10 +655,7 @@ class Model:
         ) = self.create_target_and_preds(predictor)
         rmse = self.create_rmse(preds, target)
         mse = self.create_mse(preds, target)
-        # ssim = self.create_ssim(preds, target, height, width)
-        # iou = self.create_iou(preds, target)
         psnr = self.create_psnr(preds, target)
-        # precision = self.create_precision(preds, target)
         recall = self.create_recall(preds, target)
         precision_recall = self.create_precision_and_recall(preds, target)
         return {
@@ -683,12 +678,10 @@ class Model:
         """
         - train - trains the model
         """
-        # self.remove_files_in_output()
         torch.cuda.empty_cache()
         wandb.init(
             project=PROJECT_NAME,
             name=str(self.NAME),
-            # config=self.config,
             sync_tensorboard=True,
         )
         trainer = self.__train()

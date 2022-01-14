@@ -8,7 +8,6 @@ idx = 0
 for file in os.listdir("./Imgs/"):
     file = "0.jpeg"
     img = cv2.imread(f"./Imgs/{file}")
-    # img = cv2.resize(img, (1400, 1200))
     hsv = cv2.cvtColor(
         img, cv2.COLOR_BGR2HSV
     )  # Convert the Image http://pythonwife.com/wp-content/uploads/image-38.png
@@ -30,7 +29,6 @@ for file in os.listdir("./Imgs/"):
         "black_and_white.png", thresh
     )  # Saving the black and white image which is the edge of the NCIS Card
     im = cv2.imread("black_and_white.png")  # Reading The Edge Image
-    # im = cv2.resize(im, (1400, 1200))
     gray = cv2.cvtColor(
         im, cv2.COLOR_BGR2GRAY
     )  # Conver the black and white image to a image like https://i.stack.imgur.com/UPOZC.png
@@ -47,11 +45,6 @@ for file in os.listdir("./Imgs/"):
             print(x, y, w, h)
             cv2.rectangle(img, (x, y), (x + w, y + h), (200, 0, 0))
             img = cv2.imread(f"./Imgs/{file}")  # get the original image
-            # img = cv2.resize(img, (1400, 1200))
-            # y = cnt[1]  # Cropping y
-            # x = cnt[0]  # Cropping x
-            # h = cnt[1]  # Cropping h
-            # w = cnt[0]  # Cropping w
             crop_img = img[y:y + h, x:x + w]  # Cropping
             cv2.imwrite(
                 f"./Preds/{file}-{idx}.jpeg",
@@ -80,7 +73,6 @@ for key, val in zip(list(data.keys()), list(data.values())):
     print(X, Y, W, H)
     cv2.rectangle(img, (x, y), (x + w, y + h), (200, 0, 0))
     img = cv2.imread(f"./Imgs/{file}")  # get the original image
-    # img = cv2.resize(img, (1400, 1200))
     crop_img = img[Y:Y + H, X:X + W]  # Cropping
     cv2.imwrite(f"./Preds/{file}-{idx}-crop.jpeg",
                 crop_img)  # Saving the corped image
