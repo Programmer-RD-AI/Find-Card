@@ -12,14 +12,14 @@ import torch, torchvision
 import detectron2
 import json
 import ast
-import tensorboard, os
+import tensorboard
 from detectron2.utils.logger import setup_logger
 
 setup_logger()
 import numpy as np
 import pandas as pd
 import wandb
-import os, json, cv2, random
+import cv2, random
 from detectron2 import model_zoo
 from detectron2.engine import DefaultPredictor, DefaultTrainer
 from detectron2.config import get_cfg
@@ -84,24 +84,6 @@ metadata = MetadataCatalog.get("data")
 DatasetCatalog.register("test", lambda: load_data(test=True))
 MetadataCatalog.get("test").set(thing_classes=labels)
 metadata_test = MetadataCatalog.get("test")
-# models = [
-# "fast_rcnn_R_50_FPN_1x.yaml",
-# "faster_rcnn_R_50_C4_1x.yaml",
-# "faster_rcnn_R_50_C4_3x.yaml",
-# "faster_rcnn_R_50_DC5_1x.yaml",
-# "faster_rcnn_R_50_DC5_3x.yaml",
-# "retinanet_R_50_FPN_1x.py",
-# "retinanet_R_50_FPN_1x.yaml",
-# "retinanet_R_50_FPN_3x.yaml",
-# "rpn_R_50_C4_1x.yaml",
-# "rpn_R_50_FPN_1x.yaml",
-# "faster_rcnn_R_50_FPN_1x.yaml",
-# "faster_rcnn_R_50_FPN_3x.yaml",
-# "faster_rcnn_R_101_DC5_3x.yaml",
-# "faster_rcnn_R_101_FPN_3x.yaml",
-# "faster_rcnn_X_101_32x8d_FPN_3x.yaml",
-# ]
-from detectron2.utils.logger import setup_logger
 
 setup_logger()
 model = f"COCO-Detection/faster_rcnn_R_101_DC5_3x.yaml"

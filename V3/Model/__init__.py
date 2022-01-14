@@ -10,7 +10,6 @@ from sklearn.model_selection import ParameterGrid
 import cv2
 from detectron2.data import MetadataCatalog, DatasetCatalog
 from detectron2.utils.visualizer import Visualizer
-from tqdm import tqdm
 from detectron2.structures import BoxMode
 from detectron2.config import get_cfg
 from detectron2.engine import DefaultPredictor, DefaultTrainer
@@ -32,7 +31,6 @@ from detectron2.evaluation import COCOEvaluator, inference_on_dataset
 from detectron2.data import build_detection_test_loader
 import torch
 import ast
-import os
 import matplotlib.pyplot as plt
 from sklearn.metrics import confusion_matrix, accuracy_score
 from sklearn.metrics import roc_auc_score
