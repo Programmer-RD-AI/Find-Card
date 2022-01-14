@@ -23,7 +23,6 @@ class Metrics:
         """
         - create_rmse - Create Root-mean-square deviation
         """
-
         preds_new = (
             preds["instances"].__dict__[
                 "_fields"]["pred_boxes"].__dict__["tensor"]
@@ -68,7 +67,6 @@ class Metrics:
         """
         - create_mse - Create Mean-square deviation
         """
-
         preds_new = (
             preds["instances"].__dict__[
                 "_fields"]["pred_boxes"].__dict__["tensor"]
@@ -86,7 +84,6 @@ class Metrics:
         """
         - create_ssim - create SSIM # TODO it is not done yet
         """
-
         preds_new = (
             preds["instances"].__dict__[
                 "_fields"]["pred_boxes"].__dict__["tensor"]
@@ -110,7 +107,6 @@ class Metrics:
         """
         - create_psnr - Peak signal-to-noise ratio (how similar is a image)
         """
-
         preds_new = (
             preds["instances"].__dict__[
                 "_fields"]["pred_boxes"].__dict__["tensor"]
@@ -125,7 +121,6 @@ class Metrics:
         """
         - create_mae - Mean absolute error
         """
-
         preds_new = (
             preds["instances"].__dict__[
                 "_fields"]["pred_boxes"].__dict__["tensor"]
