@@ -59,7 +59,7 @@ for file in os.listdir("./Imgs/"):
                 cv2.rectangle(img, (x, y), (x + w, y + h), (200, 0, 0)),
             )
             print(x + w, y + h)
-            
+
             if f"./Imgs/{file}" in list(data.keys()):
                 print(data)
                 data[f"./Imgs/{file}"]["X"].append(x)
