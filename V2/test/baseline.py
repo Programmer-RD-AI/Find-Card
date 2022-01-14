@@ -1,34 +1,38 @@
+import ast
+import json
 import os
+import random
+
+import cv2
+import detectron2
+import matplotlib.pyplot as plt
+import numpy as np
+import pandas as pd
+import tensorboard
+import torch
+import torchvision
+import wandb
+from detectron2 import model_zoo
+from detectron2.config import get_cfg
+from detectron2.data import DatasetCatalog, MetadataCatalog, build_detection_test_loader
+from detectron2.engine import DefaultPredictor, DefaultTrainer
+from detectron2.evaluation import COCOEvaluator, inference_on_dataset
+from detectron2.structures import BoxMode
+from detectron2.utils.logger import setup_logger
+from detectron2.utils.visualizer import Visualizer
+from tqdm import tqdm
 
 files_to_remove = os.listdir("./output/")
 for file_to_remove in files_to_remove:
     os.remove(f"./output/{file_to_remove}")
 
-import matplotlib.pyplot as plt
-from detectron2.evaluation import COCOEvaluator, inference_on_dataset
-from detectron2.data import DatasetCatalog, MetadataCatalog, build_detection_test_loader
-from detectron2 import model_zoo
-from detectron2.config import get_cfg
-from detectron2.engine import DefaultPredictor, DefaultTrainer
-from detectron2.structures import BoxMode
-from detectron2.utils.logger import setup_logger
-from detectron2.utils.visualizer import Visualizer
-import torch, torchvision
-import detectron2
-import json
-import ast
-import tensorboard, os
-
 setup_logger()
-import numpy as np
-import pandas as pd
-import wandb
-import os, json, cv2, random
-from tqdm import tqdm
 
 # Version
 data = pd.read_csv("./download/Data.csv").sample(frac=1)
 idx = 0
+
+
 # Loading Data
 def load_data(data=data, test=False):
     if test is True:
@@ -46,7 +50,8 @@ def load_data(data=data, test=False):
         record = {}
         info = data.iloc[idx]
         height, width = cv2.imread("./download/Img/" + info["Path"]).shape[:2]
-        xmin, ymin, xmax, ymax = info["XMin"], info["YMin"], info["XMax"], info["YMax"]
+        xmin, ymin, xmax, ymax = info["XMin"], info["YMin"], info[
+            "XMax"], info["YMax"]
         xmin = round(xmin * width)
         xmax = round(xmax * width)
         ymin = round(ymin * height)
@@ -55,13 +60,11 @@ def load_data(data=data, test=False):
         record["height"] = height
         record["width"] = width
         record["cateogry_id"] = 0
-        objs = [
-            {
-                "bbox": [xmin, ymin, xmax, ymax],
-                "bbox_mode": BoxMode.XYXY_ABS,
-                "category_id": 0,
-            }
-        ]
+        objs = [{
+            "bbox": [xmin, ymin, xmax, ymax],
+            "bbox_mode": BoxMode.XYXY_ABS,
+            "category_id": 0,
+        }]
         record["image_id"] = idx
         record["annotations"] = objs
         new_data.append(record)
@@ -89,7 +92,7 @@ cfg = get_cfg()
 torch.cuda.empty_cache()
 cfg.merge_from_file(model_zoo.get_config_file(model))
 torch.cuda.empty_cache()
-cfg.DATASETS.TRAIN = ("data",)
+cfg.DATASETS.TRAIN = ("data", )
 torch.cuda.empty_cache()
 cfg.DATASETS.TEST = ()
 torch.cuda.empty_cache()
@@ -141,11 +144,11 @@ for log in tqdm(range(len(logs))):
         pass
 for img in os.listdir("./test_imgs/"):
     torch.cuda.empty_cache()
-    v = Visualizer(cv2.imread(f"./test_imgs/{img}")[:, :, ::-1], metadata=metadata)
+    v = Visualizer(cv2.imread(f"./test_imgs/{img}")[:, :, ::-1],
+                   metadata=metadata)
     torch.cuda.empty_cache()
     v = v.draw_instance_predictions(
-        predictor(cv2.imread(f"./test_imgs/{img}"))["instances"].to("cpu")
-    )
+        predictor(cv2.imread(f"./test_imgs/{img}"))["instances"].to("cpu"))
     torch.cuda.empty_cache()
     v = v.get_image()[:, :, ::-1]
     torch.cuda.empty_cache()
