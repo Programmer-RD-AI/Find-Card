@@ -99,7 +99,8 @@ class Download:
             self.idx_2 = idx_2
             self.idx_3 = idx_3
         except Exception as e:
-            raise ValueError(f"In the indexing parameters there was a error occurred {e}")
+            raise ValueError(
+                f"In the indexing parameters there was a error occurred {e}")
         try:
             # Initinalizing Data Storage
             self.data = data
@@ -112,7 +113,9 @@ class Download:
             self.labels = labels
             self.labels_r = labels_r
         except Exception as e:
-            raise ValueError(f"In the Labels of data parameters there was a error occurred {e}")
+            raise ValueError(
+                f"In the Labels of data parameters there was a error occurred {e}"
+            )
         try:
             # Data Loading file paths
             self.labels_and_imageids = labels_and_imageids
@@ -128,7 +131,9 @@ class Download:
             self.images_and_bbox_and_imgid_ = images_and_bbox_and_imgid_
             self.imgids = imgids
         except Exception as e:
-            raise ValueError(f"In the Collection of data parameters there was a error occurred {e}")
+            raise ValueError(
+                f"In the Collection of data parameters there was a error occurred {e}"
+            )
 
     ## Loading data section ##
 
@@ -189,8 +194,8 @@ class Download:
             print("create_imageids")
             labels_and_imageid = self.load_labels_and_imageid()
             for labelname, imageid in tqdm(
-                zip(labels_and_imageid["LabelName"], labels_and_imageid["ImageID"])
-            ):
+                    zip(labels_and_imageid["LabelName"],
+                        labels_and_imageid["ImageID"])):
                 if labelname in self.labels_r:
                     self.idx_1 += 1
                     self.imageids.append(imageid)
@@ -212,14 +217,13 @@ class Download:
             print("create_bbox")
             bboxs = self.load_bbox()
             for imgid in tqdm(
-                zip(
-                    bboxs["ImageID"],
-                    bboxs["XMin"],
-                    bboxs["YMin"],
-                    bboxs["XMax"],
-                    bboxs["YMax"],
-                )
-            ):
+                    zip(
+                        bboxs["ImageID"],
+                        bboxs["XMin"],
+                        bboxs["YMin"],
+                        bboxs["XMax"],
+                        bboxs["YMax"],
+                    )):
                 if imgid[0] in self.imageids:
                     self.idx_2 += 1
                     self.images_and_bbox_and_imgid_.append(imgid)
@@ -257,20 +261,18 @@ class Download:
             image_urls = self.load_image_urls()
             print(len(image_urls))
             for imgid in tqdm(
-                zip(
-                    image_urls["ImageID"],
-                    image_urls["OriginalURL"],
-                    image_urls["OriginalLandingURL"],
-                )
-            ):
+                    zip(
+                        image_urls["ImageID"],
+                        image_urls["OriginalURL"],
+                        image_urls["OriginalLandingURL"],
+                    )):
                 if imgid[0] in self.imgids:
                     imgid_of_iabaid = self.images_and_bbox_and_imgid_[
-                        self.images_and_bbox_and_imgid_["ImageID"] == imgid[0]
-                    ]
+                        self.images_and_bbox_and_imgid_["ImageID"] == imgid[0]]
                     for idx_3 in range(len(imgid_of_iabaid)):
                         imgid_of_iabaid_iter = self.images_and_bbox_and_imgid_[
-                            self.images_and_bbox_and_imgid_["ImageID"] == imgid[0]
-                        ].iloc[idx_3]
+                            self.images_and_bbox_and_imgid_["ImageID"] ==
+                            imgid[0]].iloc[idx_3]
                         data["ImageID"].append(imgid[0])
                         data["OriginalURL"].append(imgid[1])
                         data["OriginalLandingURL"].append(imgid[2])
@@ -306,15 +308,14 @@ class Download:
                 "ImageID": [],
             }
             for img_url, xmin, ymin, xmax, ymax, ourl in tqdm(
-                zip(
-                    self.download_url_data["ImageID"],
-                    self.download_url_data["XMin"],
-                    self.download_url_data["YMin"],
-                    self.download_url_data["XMax"],
-                    self.download_url_data["YMax"],
-                    self.download_url_data["OriginalURL"],
-                )
-            ):
+                    zip(
+                        self.download_url_data["ImageID"],
+                        self.download_url_data["XMin"],
+                        self.download_url_data["YMin"],
+                        self.download_url_data["XMax"],
+                        self.download_url_data["YMax"],
+                        self.download_url_data["OriginalURL"],
+                    )):
                 try:
                     self.idx += 1
                     urllib.request.urlretrieve(ourl, f"./Img/{self.idx}.png")
