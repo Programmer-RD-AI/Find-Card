@@ -80,7 +80,7 @@ MetadataCatalog.get("test").set(thing_classes=labels)
 metadata_test = MetadataCatalog.get("test")
 
 setup_logger()
-model = f"COCO-Detection/faster_rcnn_X_101_32x8d_FPN_3x.yaml"
+model = "COCO-Detection/faster_rcnn_X_101_32x8d_FPN_3x.yaml"
 torch.cuda.empty_cache()
 wandb.init(project="Find-Card", name="baseline")
 torch.cuda.empty_cache()

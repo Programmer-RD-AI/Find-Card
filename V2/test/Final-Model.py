@@ -89,7 +89,7 @@ for file_to_remove in files_to_remove:
     os.remove(f"./output/{file_to_remove}")
 
 setup_logger()
-model = f"COCO-Detection/" + "faster_rcnn_X_101_32x8d_FPN_3x.yaml"
+model = "COCO-Detection/" + "faster_rcnn_X_101_32x8d_FPN_3x.yaml"
 torch.cuda.empty_cache()
 wandb.init(project="Find-Card", name="Final")
 torch.cuda.empty_cache()
