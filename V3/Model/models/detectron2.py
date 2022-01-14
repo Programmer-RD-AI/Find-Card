@@ -334,7 +334,8 @@ class Model:
         torch.cuda.empty_cache()
         return predictor
 
-    def metrics_file_to_dict(self) -> list:
+    @staticmethod
+    def metrics_file_to_dict() -> list:
         """
         - metrics_file_to_dict - in ./output/metrics.json it logs the metrics of the model
         """
