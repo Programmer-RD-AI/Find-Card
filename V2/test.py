@@ -1,5 +1,4 @@
 from collections import namedtuple
-import numpy as np
 import cv2
 
 Detection = namedtuple("Detection", ["image_path", "gt", "pred"])

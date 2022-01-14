@@ -1,5 +1,4 @@
 import cv2
-import numpy as np
 
 # read input
 img = cv2.imread('./Imgs/WhatsApp Image 2021-09-28 at 09.45.58 (1).jpeg')

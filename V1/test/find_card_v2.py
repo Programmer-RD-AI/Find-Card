@@ -1,6 +1,5 @@
 from tqdm import tqdm
 import cv2
-import numpy as np
 import os,shutil
 shutil.copy('./img.png','./Imgs/img.png')
 data = {}
