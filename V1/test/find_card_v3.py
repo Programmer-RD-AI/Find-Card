@@ -12,7 +12,6 @@ data = {}
 idx = 0
 for file in tqdm(os.listdir("./Imgs/")):
     img = cv2.imread(f"./Imgs/{file}")
-    # img = cv2.resize(img, (2000, 2000))
     hsv = cv2.cvtColor(
         img, cv2.COLOR_BGR2HSV
     )  # Convert the Image http://pythonwife.com/wp-content/uploads/image-38.png
@@ -37,7 +36,6 @@ for file in tqdm(os.listdir("./Imgs/")):
         "black_and_white.png", thresh
     )  # Saving the black and white image which is the edge of the NCIS Card
     im = cv2.imread("black_and_white.png")  # Reading The Edge Image
-    # im = cv2.resize(im, (2000, 2000))
     gray = cv2.cvtColor(
         im, cv2.COLOR_BGR2GRAY
     )  # Conver the black and white image to a image like https://i.stack.imgur.com/UPOZC.png
@@ -54,12 +52,7 @@ for file in tqdm(os.listdir("./Imgs/")):
             idx += 1
             cv2.rectangle(img, (x, y), (x + w, y + h), (200, 0, 0))
             img = cv2.imread(f"./Imgs/{file}")  # get the original image
-            # img = cv2.resize(img, (2000, 2000))
             crop_img = img[y : y + h, x : x + w]  # Cropping
-            # cv2.imwrite(
-            # f"./Preds/{file}-{idx}.jpeg",
-            # cv2.rectangle(img, (x, y), (x + w, y + h), (200, 0, 0)),
-            # )  # Saving the corped image
             if f"./Imgs/{file}" in list(data.keys()):
                 data[f"{file}"]["X"].append(x)
                 data[f"{file}"]["Y"].append(y)
@@ -80,7 +73,6 @@ for key, val in zip(list(data.keys()), list(data.values())):
     print(X, Y, W, H)
     cv2.rectangle(img, (x, y), (x + w, y + h), (200, 0, 0))
     img = cv2.imread(f"./Imgs/{key}")  # get the original image
-    # img = cv2.resize(img, (2000, 2000))
     cv2.imwrite(
         f"./Preds/{file}.jpeg",
         cv2.rectangle(img, (X, Y), (X + W, Y + H), (200, 0, 0)),

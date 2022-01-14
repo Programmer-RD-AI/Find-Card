@@ -71,7 +71,6 @@ def load_data(data=data, test=False):
         record["annotations"] = objs
         new_data.append(record)
     np.random.shuffle(new_data)
-    # np.save("data.npy", new_data)
     return new_data
 
 

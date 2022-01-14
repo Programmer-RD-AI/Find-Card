@@ -17,7 +17,6 @@ for img_url, xmin, ymin, xmax, ymax, ourl in tqdm(
 ):
     try:
         idx += 1
-        # print(img_url, xmin, ymin, xmax, ymax, ourl)
         urllib.request.urlretrieve(ourl, f"./Img/{idx}.png")
         new_data["Path"].append(f"{idx}.png")
         new_data["XMin"].append(xmin)
@@ -28,6 +27,5 @@ for img_url, xmin, ymin, xmax, ymax, ourl in tqdm(
         new_data["ImageID"].append(img_url)
     except Exception as e:
         pass
-# print(new_data)
 data = pd.DataFrame(new_data)
 data.to_csv("./Data.csv", index=False)

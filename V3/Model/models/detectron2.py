@@ -251,7 +251,6 @@ class Model:
             record["annotations"] = objs
             new_data.append(record)
         np.random.shuffle(new_data)  # Shuffling the data
-        # np.save("data.npy", new_data)  # Saving the data
         if test is True:
             return new_data[: self.test_sample_size]
         return new_data
@@ -381,12 +380,10 @@ class Model:
         """
         - train - trains the model
         """
-        # self.remove_files_in_output()
         torch.cuda.empty_cache()
         wandb.init(
             project=PROJECT_NAME,
             name=str(self.NAME),
-            # config=self.config,
             sync_tensorboard=True,
         )
         trainer = self.__train()
