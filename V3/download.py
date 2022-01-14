@@ -349,3 +349,7 @@ class Download:
         except Exception as e:
             raise ValueError(
                 f"The function self.download() or Download().download() is not working correctly. {e}")
+                
+d = Download()
+d.download()
+
