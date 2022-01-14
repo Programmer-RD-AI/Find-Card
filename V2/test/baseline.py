@@ -6,26 +6,25 @@ for file_to_remove in files_to_remove:
 
 import matplotlib.pyplot as plt
 from detectron2.evaluation import COCOEvaluator, inference_on_dataset
-from detectron2.data import build_detection_test_loader
+from detectron2.data import DatasetCatalog, MetadataCatalog, build_detection_test_loader
+from detectron2 import model_zoo
+from detectron2.config import get_cfg
+from detectron2.engine import DefaultPredictor, DefaultTrainer
+from detectron2.structures import BoxMode
+from detectron2.utils.logger import setup_logger
+from detectron2.utils.visualizer import Visualizer
 import torch, torchvision
 import detectron2
 import json
 import ast
 import tensorboard, os
-from detectron2.utils.logger import setup_logger
 
 setup_logger()
 import numpy as np
 import pandas as pd
 import wandb
 import os, json, cv2, random
-from detectron2 import model_zoo
-from detectron2.engine import DefaultPredictor, DefaultTrainer
-from detectron2.config import get_cfg
-from detectron2.structures import BoxMode
 from tqdm import tqdm
-from detectron2.utils.visualizer import Visualizer
-from detectron2.data import MetadataCatalog, DatasetCatalog
 
 # Version
 data = pd.read_csv("./download/Data.csv").sample(frac=1)
@@ -80,7 +79,6 @@ metadata = MetadataCatalog.get("data")
 DatasetCatalog.register("test", lambda: load_data(test=True))
 MetadataCatalog.get("test").set(thing_classes=labels)
 metadata_test = MetadataCatalog.get("test")
-from detectron2.utils.logger import setup_logger
 
 setup_logger()
 model = f"COCO-Detection/faster_rcnn_X_101_32x8d_FPN_3x.yaml"
