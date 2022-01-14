@@ -1,5 +1,7 @@
-import cv2
 import os
+import cv2
+import numpy as np
+
 
 data = {}
 idx = 0
@@ -14,8 +16,7 @@ for file in os.listdir("./Imgs/"):
     sat = hsv[:, :, 1]  # Convert the hsv Image to GrayScale
     cv2.imwrite("sat.png", sat)  # Saving the Sat
     thresh = cv2.threshold(sat, 10, 255, cv2.THRESH_BINARY)[
-        1
-    ]  # The Outline of the Sat which is the GrayScale Img
+        1]  # The Outline of the Sat which is the GrayScale Img
     cv2.imwrite("thresh.png", thresh)  # Saving the thresh
     thresh = 255 - thresh  # Converts Black to White and White to Black
     cv2.imwrite("thresh-2.png", thresh)  # Saving the thresh
@@ -34,14 +35,13 @@ for file in os.listdir("./Imgs/"):
         im, cv2.COLOR_BGR2GRAY
     )  # Conver the black and white image to a image like https://i.stack.imgur.com/UPOZC.png
     cv2.imwrite("gray.png", gray)  # Saving the gray image
-    contours, _ = cv2.findContours(gray, cv2.RETR_LIST, cv2.CHAIN_APPROX_SIMPLE)[
-        -2:
-    ]  # Finding the boxes
+    contours, _ = cv2.findContours(
+        gray, cv2.RETR_LIST, cv2.CHAIN_APPROX_SIMPLE)[-2:]  # Finding the boxes
 
     for cnt in contours:
         x, y, w, h = cv2.boundingRect(cnt)  # Convert cnt to x,y,w,h
         if (
-            w > 125 and h > 125
+                w > 125 and h > 125
         ):  # Checking if the h and w of the image is higher than 175 so this will only get the card
             idx += 1
             print(x, y, w, h)
@@ -52,13 +52,13 @@ for file in os.listdir("./Imgs/"):
             # x = cnt[0]  # Cropping x
             # h = cnt[1]  # Cropping h
             # w = cnt[0]  # Cropping w
-            crop_img = img[y : y + h, x : x + w]  # Cropping
+            crop_img = img[y:y + h, x:x + w]  # Cropping
             cv2.imwrite(
                 f"./Preds/{file}-{idx}.jpeg",
                 cv2.rectangle(img, (x, y), (x + w, y + h), (200, 0, 0)),
             )
             print(x + w, y + h)
-            
+
             if f"./Imgs/{file}" in list(data.keys()):
                 print(data)
                 data[f"./Imgs/{file}"]["X"].append(x)
@@ -81,7 +81,8 @@ for key, val in zip(list(data.keys()), list(data.values())):
     cv2.rectangle(img, (x, y), (x + w, y + h), (200, 0, 0))
     img = cv2.imread(f"./Imgs/{file}")  # get the original image
     # img = cv2.resize(img, (1400, 1200))
-    crop_img = img[Y : Y + H, X : X + W]  # Cropping
-    cv2.imwrite(f"./Preds/{file}-{idx}-crop.jpeg", crop_img)  # Saving the corped image
+    crop_img = img[Y:Y + H, X:X + W]  # Cropping
+    cv2.imwrite(f"./Preds/{file}-{idx}-crop.jpeg",
+                crop_img)  # Saving the corped image
 print(data)
 print(list(data.keys()))
