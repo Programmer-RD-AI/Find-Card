@@ -8,7 +8,6 @@ import matplotlib.pyplot as plt
 from detectron2.evaluation import COCOEvaluator, inference_on_dataset
 from detectron2.data import build_detection_test_loader
 import torch
-import json
 import ast
 import os
 from detectron2.utils.logger import setup_logger
