@@ -6,7 +6,7 @@ class Metrics:
         self,
         init_rmse=0,
         init_recall=0,
-        init_ious=[],
+        init_ious=None,
         init_mse=0,
         init_ssim=0,
         init_psnr=0,
@@ -16,6 +16,8 @@ class Metrics:
         """
         Initialize
         """
+        if init_ious is None:
+            init_ious = []
         # RMSE
         try:
             self.lowest_rmse = init_rmse
