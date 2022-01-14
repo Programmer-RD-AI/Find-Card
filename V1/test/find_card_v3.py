@@ -1,7 +1,8 @@
 from time import sleep
 from tqdm import tqdm
 import cv2
-import os, shutil
+import os
+import shutil
 
 shutil.copy("./img.png", "./Imgs/img.png")
 shutil.copy("./img0.png", "./Imgs/img0.png")
