@@ -3,7 +3,6 @@ try:
     from ray import tune
 except:
     tune = None
-import random
 from detectron2.config.config import CfgNode
 from tqdm import tqdm
 from sklearn.model_selection import ParameterGrid

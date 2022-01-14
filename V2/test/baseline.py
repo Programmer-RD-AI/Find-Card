@@ -7,18 +7,17 @@ for file_to_remove in files_to_remove:
 import matplotlib.pyplot as plt
 from detectron2.evaluation import COCOEvaluator, inference_on_dataset
 from detectron2.data import build_detection_test_loader
-import torch, torchvision
-import detectron2
+import torch
 import json
 import ast
-import tensorboard, os
+import os
 from detectron2.utils.logger import setup_logger
 
 setup_logger()
 import numpy as np
 import pandas as pd
 import wandb
-import os, json, cv2, random
+import os, cv2
 from detectron2 import model_zoo
 from detectron2.engine import DefaultPredictor, DefaultTrainer
 from detectron2.config import get_cfg
