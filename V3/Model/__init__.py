@@ -3,11 +3,11 @@ try:
     from ray import tune
 except:
     tune = None
-from tqdm import tqdm
 import os
-import matplotlib.pyplot as plt
+
 import matplotlib.pyplot as plt
 from detectron2.utils.logger import setup_logger
+from tqdm import tqdm
 
 # Setup Logger
 setup_logger()
