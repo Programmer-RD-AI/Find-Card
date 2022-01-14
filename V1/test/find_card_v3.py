@@ -1,7 +1,9 @@
+import os
+import shutil
 from time import sleep
-from tqdm import tqdm
+
 import cv2
-import os, shutil
+from tqdm import tqdm
 
 shutil.copy("./img.png", "./Imgs/img.png")
 shutil.copy("./img0.png", "./Imgs/img0.png")
@@ -18,8 +20,7 @@ for file in tqdm(os.listdir("./Imgs/")):
     sat = hsv[:, :, 1]  # Convert the hsv Image to GrayScale
     cv2.imwrite("sat.png", sat)  # Saving the Sat
     thresh = cv2.threshold(sat, 20, 255, cv2.THRESH_BINARY)[
-        1
-    ]  # The Outline of the Sat which is the GrayScale Img
+        1]  # The Outline of the Sat which is the GrayScale Img
     cv2.imwrite("thresh.png", thresh)  # Saving the thresh
     thresh = 255 - thresh  # Converts Black to White and White to Black
     cv2.imwrite("thresh-2.png", thresh)  # Saving the thresh
@@ -39,19 +40,18 @@ for file in tqdm(os.listdir("./Imgs/")):
         im, cv2.COLOR_BGR2GRAY
     )  # Conver the black and white image to a image like https://i.stack.imgur.com/UPOZC.png
     cv2.imwrite("gray.png", gray)  # Saving the gray image
-    contours, _ = cv2.findContours(gray, cv2.RETR_LIST, cv2.CHAIN_APPROX_SIMPLE)[
-        -2:
-    ]  # Finding the boxes
+    contours, _ = cv2.findContours(
+        gray, cv2.RETR_LIST, cv2.CHAIN_APPROX_SIMPLE)[-2:]  # Finding the boxes
 
     for cnt in contours:
         x, y, w, h = cv2.boundingRect(cnt)  # Convert cnt to x,y,w,h
         if (
-            w > 250 and h > 250
+                w > 250 and h > 250
         ):  # Checking if the h and w of the image is higher than 175 so this will only get the card
             idx += 1
             cv2.rectangle(img, (x, y), (x + w, y + h), (200, 0, 0))
             img = cv2.imread(f"./Imgs/{file}")  # get the original image
-            crop_img = img[y : y + h, x : x + w]  # Cropping
+            crop_img = img[y:y + h, x:x + w]  # Cropping
             if f"./Imgs/{file}" in list(data.keys()):
                 data[f"{file}"]["X"].append(x)
                 data[f"{file}"]["Y"].append(y)
@@ -76,5 +76,5 @@ for key, val in zip(list(data.keys()), list(data.values())):
         f"./Preds/{file}.jpeg",
         cv2.rectangle(img, (X, Y), (X + W, Y + H), (200, 0, 0)),
     )  # Saving the corped image
-    crop_img = img[Y : Y + H, X : X + W]  # Cropping
+    crop_img = img[Y:Y + H, X:X + W]  # Cropping
     cv2.imwrite(f"./Imgs/{key}", crop_img)  # Saving the corped image
