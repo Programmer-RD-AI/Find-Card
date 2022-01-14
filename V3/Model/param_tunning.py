@@ -2,9 +2,7 @@ from Model import *
 
 
 class Param_Tunning:
-    def __init__(
-        self,
-    ) -> None:
+    def __init__(self, ) -> None:
         f"""
         initialize the Class
         params - dict like
@@ -45,7 +43,7 @@ class Param_Tunning:
         https://docs.ray.io/en/latest/tune/index.html
         """
         base_lr = config["BASE_LR"]
-        ims_per_batch = (config["IMS_PER_BATCH"],)
+        ims_per_batch = (config["IMS_PER_BATCH"], )
         batch_size_per_image = config["BATCH_SIZE_PER_IMAGE"]
         model = "COCO-Detection/" + config["MODEL"]
         model = Model(
@@ -63,10 +61,12 @@ class Param_Tunning:
         """
         https://docs.ray.io/en/latest/tune/user-guide.html
         """
-        analysis = tune.run(
-            self.ray_tune_func, config=params, resources_per_trial={
-                "gpu": 0, "cpu": 1}
-        )
+        analysis = tune.run(self.ray_tune_func,
+                            config=params,
+                            resources_per_trial={
+                                "gpu": 0,
+                                "cpu": 1
+                            })
         analysis.get_best_results(metrics="average_precisions", model="max")
         df = analysis.results_df
         df.to_csv("./Logs.csv")

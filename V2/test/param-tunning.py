@@ -47,7 +47,6 @@
 # cv2.rectangle(img, (x, y), (x+w, y+h), (200, 0, 0), 10)
 # # Loading Data
 
-
 # def load_data(data=data, test=False):
 #     if test is True:
 #         if "data.npy" in os.listdir("./"):
@@ -85,7 +84,6 @@
 #     np.random.shuffle(new_data)
 #     np.save("data.npy", new_data)
 #     return new_data
-
 
 # # Config
 # labels = ["Card"]
@@ -139,16 +137,21 @@
 #     os.remove(f"./output/{file_to_remove}")
 # setup_logger()
 # torch.cuda.empty_cache()
-wandb.init(entity='find-card', project="Find-Card", name=NAME, config={
-    'BASE_LR': BASE_LR,
-    'MAX_ITER': MAX_ITER,
-    'EVAL_PERIOD': EVAL_PERIOD,
-    'IMS_PER_BATCH': IMS_PER_BATCH,
-    'BATCH_SIZE_PER_IMAGE': BATCH_SIZE_PER_IMAGE,
-    'SCORE_THRESH_TEST': SCORE_THRESH_TEST,
-    'MODEL': model,
-    'NAME': NAME
-})
+wandb.init(
+    entity="find-card",
+    project="Find-Card",
+    name=NAME,
+    config={
+        "BASE_LR": BASE_LR,
+        "MAX_ITER": MAX_ITER,
+        "EVAL_PERIOD": EVAL_PERIOD,
+        "IMS_PER_BATCH": IMS_PER_BATCH,
+        "BATCH_SIZE_PER_IMAGE": BATCH_SIZE_PER_IMAGE,
+        "SCORE_THRESH_TEST": SCORE_THRESH_TEST,
+        "MODEL": model,
+        "NAME": NAME,
+    },
+)
 # torch.cuda.empty_cache()
 # cfg = get_cfg()
 # torch.cuda.empty_cache()
@@ -244,8 +247,8 @@ wandb.init(entity='find-card', project="Find-Card", name=NAME, config={
 #         lowest_rmse = r_mean_squared_error(pred.to("cpu"), target)
 lowest_mse = 0
 mean_squared_error = MeanSquaredError(squared=True)
-preds_new = preds["instances"].__dict__[
-    "_fields"]["pred_boxes"].__dict__["tensor"]
+preds_new = preds["instances"].__dict__["_fields"]["pred_boxes"].__dict__[
+    "tensor"]
 for pred_i in range(len(preds)):
     pred = preds_new[pred_i]
     if mean_squared_error(pred.to("cpu"), target) > lowest_mse:
