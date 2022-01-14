@@ -1,20 +1,27 @@
-from tqdm import tqdm
 import urllib.request
-import pandas as pd
 
-new_data = {"Path": [], "XMin": [], "YMin": [], "XMax": [], "YMax": [], "ImageID": []}
+import pandas as pd
+from tqdm import tqdm
+
+new_data = {
+    "Path": [],
+    "XMin": [],
+    "YMin": [],
+    "XMax": [],
+    "YMax": [],
+    "ImageID": []
+}
 idx = 0
 data = pd.read_csv("./data/Cleaned-Data.csv")
 for img_url, xmin, ymin, xmax, ymax, ourl in tqdm(
-    zip(
-        data["ImageID"],
-        data["XMin"],
-        data["YMin"],
-        data["XMax"],
-        data["YMax"],
-        data["OriginalURL"],
-    )
-):
+        zip(
+            data["ImageID"],
+            data["XMin"],
+            data["YMin"],
+            data["XMax"],
+            data["YMax"],
+            data["OriginalURL"],
+        )):
     try:
         idx += 1
         # print(img_url, xmin, ymin, xmax, ymax, ourl)
