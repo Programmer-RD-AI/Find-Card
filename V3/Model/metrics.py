@@ -237,8 +237,9 @@ class Metrics:
         except Exception as e:
             raise ValueError(f"Some error occured in Recall and Precision {e}")
 
+    @staticmethod
     def create_ap(
-        self, preds: torch.tensor, target: torch.tensor
+        preds: torch.tensor, target: torch.tensor
     ) -> float:
         """
         - create_ap - Create Average Precision(AP) 
@@ -251,8 +252,9 @@ class Metrics:
         except Exception as e:
             raise ValueError(f"Some error occured in Average Precision {e}")
 
+    @staticmethod
     def create_confusion_matrix(
-        self, preds: torch.tensor, target: torch.tensor
+        preds: torch.tensor, target: torch.tensor
     ) -> float:
         """
         - create_confusion_matrix - Create confusion_matrix
@@ -266,7 +268,8 @@ class Metrics:
         except Exception as e:
             raise ValueError(f"Some error occured in confusion matrix {e}")
 
-    def create_auc_curve(self, preds: torch.tensor, target: torch) -> float:
+    @staticmethod
+    def create_auc_curve(preds: torch.tensor, target: torch) -> float:
         """
         - create_auc_curve - Create auc_curve
         """

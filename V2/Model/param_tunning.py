@@ -7,7 +7,8 @@ class Param_Tunning:
         params - dict like {Model().test}
         """
 
-    def tune(self, params: dict) -> dict:
+    @staticmethod
+    def tune(params: dict) -> dict:
         """
         Tune all of the parameters
         """
@@ -37,7 +38,8 @@ class Param_Tunning:
                 torch.cuda.empty_cache()
         return final_metrics
 
-    def ray_tune_func(self, config):
+    @staticmethod
+    def ray_tune_func(config):
         """
         https://docs.ray.io/en/latest/tune/index.html
         """
