@@ -15,54 +15,15 @@ class Download:
         idx_1: int = 0,
         idx_2: int = 0,
         idx_3: int = 0,
-        data: dict = {
-            "ImageID": [],
-            "OriginalURL": [],
-            "OriginalLandingURL": [],
-            "XMin": [],
-            "YMin": [],
-            "XMax": [],
-            "YMax": []
-        },
-        labels: list = [
-            "Debit card",
-            "Credit card",
-            "Business card",
-            "Collectible card game",
-            "Telephone card",
-            "Payment card"
-        ],
-        labels_r: list = [
-            "/m/02h5d",
-            "/m/0d7pp",
-            "/m/01sdgj",
-            "/m/0216z",
-            "/m/066zr",
-            "/m/09vh0m"
-        ],
-        labels_and_imageids: list = [
-            "./open_images_data/validation-annotations-machine-imagelabels.csv",
-            "./open_images_data/test-annotations-machine-imagelabels.csv",
-            "./open_images_data/train-annotations-machine-imagelabels.csv",
-            "./open_images_data/oidv6-train-annotations-human-imagelabels.csv",
-            "./open_images_data/test-annotations-human-imagelabels-boxable.csv",
-            "./open_images_data/validation-annotations-human-imagelabels-boxable.csv",
-            "./open_images_data/train-annotations-human-imagelabels-boxable.csv"
-        ],
-        bboxs: list = [
-            "./open_images_data/oidv6-train-annotations-bbox.csv",
-            "./open_images_data/test-annotations-bbox.csv",
-            "./open_images_data/validation-annotations-bbox.csv"
-        ],
-        image_urls: list = [
-            "./open_images_data/oidv6-train-images-with-labels-with-rotation.csv",
-            "./open_images_data/validation-images-with-rotation.csv",
-            "./open_images_data/test-images-with-rotation.csv",
-            "./open_images_data/train-images-boxable-with-rotation.csv"
-        ],
-        init_imageids: list = [],
-        images_and_bbox_and_imgid_: list = [],
-        imgids: list = []
+        data: dict = None,
+        labels: list = None,
+        labels_r: list = None,
+        labels_and_imageids: list = None,
+        bboxs: list = None,
+        image_urls: list = None,
+        init_imageids: list = None,
+        images_and_bbox_and_imgid_: list = None,
+        imgids: list = None
     ) -> None:
         """summary_line
 
@@ -80,6 +41,63 @@ class Download:
             init imgids = init imgids
         Return: None
         """
+        if data is None:
+            data = {
+                    "ImageID": [],
+                    "OriginalURL": [],
+                    "OriginalLandingURL": [],
+                    "XMin": [],
+                    "YMin": [],
+                    "XMax": [],
+                    "YMax": []
+                }
+        if labels is None:
+            labels = [
+                    "Debit card",
+                    "Credit card",
+                    "Business card",
+                    "Collectible card game",
+                    "Telephone card",
+                    "Payment card"
+                ]
+        if labels_r is None:
+            labels_r = [
+                    "/m/02h5d",
+                    "/m/0d7pp",
+                    "/m/01sdgj",
+                    "/m/0216z",
+                    "/m/066zr",
+                    "/m/09vh0m"
+                ]
+        if labels_and_imageids is None:
+            labels_and_imageids = [
+                    "./open_images_data/validation-annotations-machine-imagelabels.csv",
+                    "./open_images_data/test-annotations-machine-imagelabels.csv",
+                    "./open_images_data/train-annotations-machine-imagelabels.csv",
+                    "./open_images_data/oidv6-train-annotations-human-imagelabels.csv",
+                    "./open_images_data/test-annotations-human-imagelabels-boxable.csv",
+                    "./open_images_data/validation-annotations-human-imagelabels-boxable.csv",
+                    "./open_images_data/train-annotations-human-imagelabels-boxable.csv"
+                ]
+        if bboxs is None:
+            bboxs = [
+                    "./open_images_data/oidv6-train-annotations-bbox.csv",
+                    "./open_images_data/test-annotations-bbox.csv",
+                    "./open_images_data/validation-annotations-bbox.csv"
+                ]
+        if image_urls is None:
+            image_urls = [
+                    "./open_images_data/oidv6-train-images-with-labels-with-rotation.csv",
+                    "./open_images_data/validation-images-with-rotation.csv",
+                    "./open_images_data/test-images-with-rotation.csv",
+                    "./open_images_data/train-images-boxable-with-rotation.csv"
+                ]
+        if init_imageids is None:
+            init_imageids = []
+        if images_and_bbox_and_imgid_ is None:
+            images_and_bbox_and_imgid_ = []
+        if imgids is None:
+            imgids = []
         try:
             # Indexing
             self.idx = idx
