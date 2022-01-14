@@ -113,7 +113,7 @@ class Model:
         }  # Tests for Param Tunning
         try:
             DatasetCatalog.register(
-                "data", lambda: self.load_data()
+                "data", self.load_data
             )  # Registering the training data
             MetadataCatalog.get("data").set(
                 thing_classes=self.labels

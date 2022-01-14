@@ -74,7 +74,7 @@ def load_data(data=data, test=False):
 # Config
 labels = ["Card"]
 # Adding the data
-DatasetCatalog.register("data", lambda: load_data())
+DatasetCatalog.register("data", load_data)
 MetadataCatalog.get("data").set(thing_classes=labels)
 metadata = MetadataCatalog.get("data")
 DatasetCatalog.register("test", lambda: load_data(test=True))
