@@ -1,5 +1,4 @@
 import urllib.request
-
 import numpy as np
 import pandas as pd
 
@@ -28,47 +27,38 @@ class Download:
             "YMax": [],
         },
         labels: list = [
-            "Debit card",
-            "Credit card",
+            "Person",
             "Business card",
-            "Collectible card game",
-            "Telephone card",
-            "Payment card",
         ],
         labels_r: list = [
-            "/m/02h5d",
-            "/m/0d7pp",
+            "/m/01g317",
             "/m/01sdgj",
-            "/m/0216z",
-            "/m/066zr",
-            "/m/09vh0m",
         ],
         labels_and_imageids: list = [
-            "./open_images_data/validation-annotations-machine-imagelabels.csv",
-            "./open_images_data/test-annotations-machine-imagelabels.csv",
-            "./open_images_data/train-annotations-machine-imagelabels.csv",
-            "./open_images_data/oidv6-train-annotations-human-imagelabels.csv",
-            "./open_images_data/test-annotations-human-imagelabels-boxable.csv",
-            "./open_images_data/validation-annotations-human-imagelabels-boxable.csv",
-            "./open_images_data/train-annotations-human-imagelabels-boxable.csv",
+            "./open_image_raw_data/validation-annotations-machine-imagelabels.csv",
+            "./open_image_raw_data/test-annotations-machine-imagelabels.csv",
+            "./open_image_raw_data/train-annotations-machine-imagelabels.csv",
+            "./open_image_raw_data/oidv6-train-annotations-human-imagelabels.csv",
+            "./open_image_raw_data/test-annotations-human-imagelabels-boxable.csv",
+            "./open_image_raw_data/validation-annotations-human-imagelabels-boxable.csv",
+            "./open_image_raw_data/train-annotations-human-imagelabels-boxable.csv",
         ],
         bboxs: list = [
-            "./open_images_data/oidv6-train-annotations-bbox.csv",
-            "./open_images_data/test-annotations-bbox.csv",
-            "./open_images_data/validation-annotations-bbox.csv",
+            "./open_image_raw_data/oidv6-train-annotations-bbox.csv",
+            "./open_image_raw_data/test-annotations-bbox.csv",
+            "./open_image_raw_data/validation-annotations-bbox.csv",
         ],
         image_urls: list = [
-            "./open_images_data/oidv6-train-images-with-labels-with-rotation.csv",
-            "./open_images_data/validation-images-with-rotation.csv",
-            "./open_images_data/test-images-with-rotation.csv",
-            "./open_images_data/train-images-boxable-with-rotation.csv",
+            "./open_image_raw_data/oidv6-train-images-with-labels-with-rotation.csv",
+            "./open_image_raw_data/validation-images-with-rotation.csv",
+            "./open_image_raw_data/test-images-with-rotation.csv",
+            "./open_image_raw_data/train-images-boxable-with-rotation.csv",
         ],
         init_imageids: list = [],
         images_and_bbox_and_imgid_: list = [],
         imgids: list = [],
     ) -> None:
         """summary_line
-
         Keyword arguments:
         argument
             idx,idx_1,idx_2,idx_3 = the init starting index
@@ -90,8 +80,7 @@ class Download:
             self.idx_2 = idx_2
             self.idx_3 = idx_3
         except Exception as e:
-            raise ValueError(
-                f"In the indexing parameters there was a error occurred {e}")
+            raise ValueError(f"In the indexing parameters there was a error occurred {e}")
         try:
             # Initinalizing Data Storage
             self.data = data
@@ -104,9 +93,7 @@ class Download:
             self.labels = labels
             self.labels_r = labels_r
         except Exception as e:
-            raise ValueError(
-                f"In the Labels of data parameters there was a error occurred {e}"
-            )
+            raise ValueError(f"In the Labels of data parameters there was a error occurred {e}")
         try:
             # Data Loading file paths
             self.labels_and_imageids = labels_and_imageids
@@ -122,24 +109,19 @@ class Download:
             self.images_and_bbox_and_imgid_ = images_and_bbox_and_imgid_
             self.imgids = imgids
         except Exception as e:
-            raise ValueError(
-                f"In the Collection of data parameters there was a error occurred {e}"
-            )
+            raise ValueError(f"In the Collection of data parameters there was a error occurred {e}")
 
     ## Loading data section ##
 
     def load_labels_and_imageid(self) -> pd.DataFrame:
         """summary_line
-
         Keyword arguments:
         argument load_labels_and_imageid
         Return: pd.DataFrame
         """
+        print("load_labels_and_imageid")
         try:
-            labels_and_imageid = pd.read_csv(self.labels_and_imageids[0])
-            for i in range(1, len(self.labels_and_imageids)):
-                labels_and_imageid.append(
-                    pd.read_csv(self.labels_and_imageids[i]))
+            labels_and_imageid = pd.read_csv("./data/Labels_and_Image_ID.csv")
             return labels_and_imageid
         except Exception as e:
             raise ValueError(
@@ -148,15 +130,13 @@ class Download:
 
     def load_bbox(self) -> pd.DataFrame:
         """summary_line
-
         Keyword arguments:
         argument load_bbox
         Return: pd.DataFrame
         """
+        print("load_bbox")
         try:
-            bboxs_df = pd.read_csv(self.bboxs[0])
-            for i in range(1, len(self.bboxs)):
-                bboxs_df.append(pd.read_csv(self.bboxs[i]))
+            bboxs_df = pd.read_csv("./data/BBOX.csv")
             return bboxs_df
         except Exception as e:
             raise ValueError(
@@ -165,15 +145,13 @@ class Download:
 
     def load_image_urls(self) -> pd.DataFrame:
         """summary_line
-
         Keyword arguments:
         argument load_image_urls
         Return: pd.DataFrame
         """
         try:
-            image_urls_df = pd.read_csv(self.image_urls[0])
-            for i in range(1, len(self.image_urls)):
-                image_urls_df.append(pd.read_csv(self.image_urls[i]))
+            print("load_image_urls")
+            image_urls_df = pd.read_csv("./data/Image_Urls.csv")
             return image_urls_df
         except Exception as e:
             raise ValueError(
@@ -184,20 +162,21 @@ class Download:
 
     def create_imageids(self) -> bool:
         """summary_line
-
         Keyword arguments:
         argument create_imageids
         Return: bool
         """
         try:
+            print("create_imageids")
             labels_and_imageid = self.load_labels_and_imageid()
-            print(len(labels_and_imageid))
             for labelname, imageid in tqdm(
-                    zip(labels_and_imageid["LabelName"],
-                        labels_and_imageid["ImageID"])):
+                zip(labels_and_imageid["LabelName"], labels_and_imageid["ImageID"])
+            ):
                 if labelname in self.labels_r:
                     self.idx_1 += 1
                     self.imageids.append(imageid)
+            del labels_and_imageid
+            print(f"Number of Images : {self.idx_1}")
             return True
         except Exception as e:
             raise ValueError(
@@ -206,32 +185,32 @@ class Download:
 
     def create_bbox(self) -> bool:
         """summary_line
-
         Keyword arguments:
         argument create_bbox
         Return: bool
         """
         try:
+            print("create_bbox")
             bboxs = self.load_bbox()
-            print(len(bboxs))
             for imgid in tqdm(
-                    zip(
-                        bboxs["ImageID"],
-                        bboxs["XMin"],
-                        bboxs["YMin"],
-                        bboxs["XMax"],
-                        bboxs["YMax"],
-                    )):
+                zip(
+                    bboxs["ImageID"],
+                    bboxs["XMin"],
+                    bboxs["YMin"],
+                    bboxs["XMax"],
+                    bboxs["YMax"],
+                )
+            ):
                 if imgid[0] in self.imageids:
                     self.idx_2 += 1
                     self.images_and_bbox_and_imgid_.append(imgid)
                     self.imgids.append(imgid[0])
             np.save("./imageids.npy", self.imgids)
+            del bboxs
             self.images_and_bbox_and_imgid_ = pd.DataFrame(
-                self.images_and_bbox_and_imgid_,
-                columns=["ImageID", "XMin", "YMin", "XMax", "YMax"],
+                self.images_and_bbox_and_imgid_, columns=["ImageID", "XMin", "YMin", "XMax", "YMax"]
             )
-            print(len(self.images_and_bbox_and_imgid_))
+            print(f"Number of Images : {self.idx_2}")
             return True
         except Exception as e:
             raise ValueError(
@@ -240,12 +219,12 @@ class Download:
 
     def create_image_urls(self) -> bool:
         """summary_line
-
         Keyword arguments:
         argument create_image_urls
         Return: bool
         """
         try:
+            print("create_image_urls")
             data = {
                 "ImageID": [],
                 "OriginalURL": [],
@@ -258,18 +237,20 @@ class Download:
             image_urls = self.load_image_urls()
             print(len(image_urls))
             for imgid in tqdm(
-                    zip(
-                        image_urls["ImageID"],
-                        image_urls["OriginalURL"],
-                        image_urls["OriginalLandingURL"],
-                    )):
+                zip(
+                    image_urls["ImageID"],
+                    image_urls["OriginalURL"],
+                    image_urls["OriginalLandingURL"],
+                )
+            ):
                 if imgid[0] in self.imgids:
                     imgid_of_iabaid = self.images_and_bbox_and_imgid_[
-                        self.images_and_bbox_and_imgid_["ImageID"] == imgid[0]]
+                        self.images_and_bbox_and_imgid_["ImageID"] == imgid[0]
+                    ]
                     for idx_3 in range(len(imgid_of_iabaid)):
                         imgid_of_iabaid_iter = self.images_and_bbox_and_imgid_[
-                            self.images_and_bbox_and_imgid_["ImageID"] ==
-                            imgid[0]].iloc[idx_3]
+                            self.images_and_bbox_and_imgid_["ImageID"] == imgid[0]
+                        ].iloc[idx_3]
                         data["ImageID"].append(imgid[0])
                         data["OriginalURL"].append(imgid[1])
                         data["OriginalLandingURL"].append(imgid[2])
@@ -280,6 +261,7 @@ class Download:
             del self.images_and_bbox_and_imgid_
             data = pd.DataFrame(data)
             self.download_url_data = data
+            print(f"Number of Images : {len(data)}")
         except Exception as e:
             raise ValueError(
                 f"The function self.create_image_urls() or Download().create_image_urls() is not working correctly. {e}"
@@ -289,29 +271,23 @@ class Download:
 
     def download_images(self) -> pd.DataFrame:
         """summary_line
-
         Keyword arguments:
         argument download images
         Return: pd.DataFrame
         """
         try:
-            new_data = {
-                "Path": [],
-                "XMin": [],
-                "YMin": [],
-                "XMax": [],
-                "YMax": [],
-                "ImageID": [],
-            }
+            print("download_images")
+            new_data = {"Path": [], "XMin": [], "YMin": [], "XMax": [], "YMax": [], "ImageID": []}
             for img_url, xmin, ymin, xmax, ymax, ourl in tqdm(
-                    zip(
-                        self.download_url_data["ImageID"],
-                        self.download_url_data["XMin"],
-                        self.download_url_data["YMin"],
-                        self.download_url_data["XMax"],
-                        self.download_url_data["YMax"],
-                        self.download_url_data["OriginalURL"],
-                    )):
+                zip(
+                    self.download_url_data["ImageID"],
+                    self.download_url_data["XMin"],
+                    self.download_url_data["YMin"],
+                    self.download_url_data["XMax"],
+                    self.download_url_data["YMax"],
+                    self.download_url_data["OriginalURL"],
+                )
+            ):
                 try:
                     self.idx += 1
                     urllib.request.urlretrieve(ourl, f"./Img/{self.idx}.png")
@@ -337,7 +313,6 @@ class Download:
 
     def download(self) -> bool:
         """summary_line
-
         Keyword arguments:
         argument: This is the funtion which uses
             all of the funtions of this class
@@ -346,6 +321,7 @@ class Download:
         Return: bool
         """
         try:
+            print("download")
             self.create_imageids()
             self.create_bbox()
             self.create_image_urls()
@@ -356,5 +332,5 @@ class Download:
             )
 
 
-d = Download()
-d.download()
+# d = Download()
+# d.download()
