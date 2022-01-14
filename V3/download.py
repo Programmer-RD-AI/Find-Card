@@ -197,7 +197,6 @@ class Download:
                 if labelname in self.labels_r:
                     self.idx_1 += 1
                     self.imageids.append(imageid)
-            del labels_and_imageid
             return True
         except Exception as e:
             raise ValueError(
@@ -227,7 +226,6 @@ class Download:
                     self.images_and_bbox_and_imgid_.append(imgid)
                     self.imgids.append(imgid[0])
             np.save("./imageids.npy", self.imgids)
-            del bboxs
             self.images_and_bbox_and_imgid_ = pd.DataFrame(
                 self.images_and_bbox_and_imgid_, columns=[
                     "ImageID", "XMin", "YMin", "XMax", "YMax"]
