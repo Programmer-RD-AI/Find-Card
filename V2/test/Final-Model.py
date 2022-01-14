@@ -11,14 +11,13 @@ from detectron2.data import build_detection_test_loader
 import torch
 import json
 import ast
-import os
 from detectron2.utils.logger import setup_logger
 
 setup_logger()
 import numpy as np
 import pandas as pd
 import wandb
-import os, cv2, random
+import cv2, random
 from detectron2 import model_zoo
 from detectron2.engine import DefaultPredictor, DefaultTrainer
 from detectron2.config import get_cfg
@@ -87,7 +86,6 @@ metadata_test = MetadataCatalog.get("test")
 files_to_remove = os.listdir("./output/")
 for file_to_remove in files_to_remove:
     os.remove(f"./output/{file_to_remove}")
-from detectron2.utils.logger import setup_logger
 
 setup_logger()
 model = f"COCO-Detection/" + "faster_rcnn_X_101_32x8d_FPN_3x.yaml"

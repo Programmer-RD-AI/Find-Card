@@ -10,14 +10,13 @@ from detectron2.data import build_detection_test_loader
 import torch
 import json
 import ast
-import os
 from detectron2.utils.logger import setup_logger
 
 setup_logger()
 import numpy as np
 import pandas as pd
 import wandb
-import os, cv2
+import cv2
 from detectron2 import model_zoo
 from detectron2.engine import DefaultPredictor, DefaultTrainer
 from detectron2.config import get_cfg
@@ -79,7 +78,6 @@ metadata = MetadataCatalog.get("data")
 DatasetCatalog.register("test", lambda: load_data(test=True))
 MetadataCatalog.get("test").set(thing_classes=labels)
 metadata_test = MetadataCatalog.get("test")
-from detectron2.utils.logger import setup_logger
 
 setup_logger()
 model = f"COCO-Detection/faster_rcnn_X_101_32x8d_FPN_3x.yaml"
