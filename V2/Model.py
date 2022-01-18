@@ -726,7 +726,7 @@ class Model:
 
 class Param_Tunning:
     def __init__(self, ) -> None:
-        f"""
+        """
         initialize the Class
         params - dict like {Model().test}
         """
