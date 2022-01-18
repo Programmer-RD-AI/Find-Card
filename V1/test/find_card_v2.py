@@ -49,10 +49,6 @@ for file in tqdm(os.listdir("./Imgs/")):
             img = cv2.imread(f"./Imgs/{file}")  # get the original image
             img = cv2.resize(img, (2000, 2000))
             crop_img = img[y:y + h, x:x + w]  # Cropping
-            # cv2.imwrite(
-            # f"./Preds/{file}-{idx}.jpeg",
-            # cv2.rectangle(img, (x, y), (x + w, y + h), (200, 0, 0)),
-            # )  # Saving the corped image
             if f"./Imgs/{file}" in list(data.keys()):
                 data[f"{file}"]["X"].append(x)
                 data[f"{file}"]["Y"].append(y)
