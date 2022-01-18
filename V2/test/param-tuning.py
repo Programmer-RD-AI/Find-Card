@@ -82,23 +82,6 @@ metadata = MetadataCatalog.get("data")
 DatasetCatalog.register("test", lambda: load_data(test=True))
 MetadataCatalog.get("test").set(thing_classes=labels)
 metadata_test = MetadataCatalog.get("test")
-# models = [
-# "fast_rcnn_R_50_FPN_1x.yaml",
-# "faster_rcnn_R_50_C4_1x.yaml",
-# "faster_rcnn_R_50_C4_3x.yaml",
-# "faster_rcnn_R_50_DC5_1x.yaml",
-# "faster_rcnn_R_50_DC5_3x.yaml",
-# "retinanet_R_50_FPN_1x.py",
-# "retinanet_R_50_FPN_1x.yaml",
-# "retinanet_R_50_FPN_3x.yaml",
-# "rpn_R_50_C4_1x.yaml",
-# "rpn_R_50_FPN_1x.yaml",
-# "faster_rcnn_R_50_FPN_1x.yaml",
-# "faster_rcnn_R_50_FPN_3x.yaml",
-# "faster_rcnn_R_101_DC5_3x.yaml",
-# "faster_rcnn_R_101_FPN_3x.yaml",
-# "faster_rcnn_X_101_32x8d_FPN_3x.yaml",
-# ]
 
 setup_logger()
 model = "COCO-Detection/faster_rcnn_X_101_32x8d_FPN_3x.yaml"
@@ -147,10 +130,6 @@ evaluator = COCOEvaluator("test", output_dir="./output/")
 val_loader = build_detection_test_loader(cfg, "test")
 metrics = inference_on_dataset(predictor.model, val_loader, evaluator)
 wandb.log(metrics)
-# evaluator = COCOEvaluator("data", output_dir="./output/")
-# val_loader = build_detection_test_loader(cfg, "data")
-# metrics = inference_on_dataset(predictor.model, val_loader, evaluator)
-# wandb.log(metrics)
 torch.cuda.empty_cache()
 logs = open("./output/metrics.json", "r").read().split("\n")
 for log in tqdm(range(len(logs))):

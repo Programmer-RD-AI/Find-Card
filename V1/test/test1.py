@@ -7,7 +7,6 @@ img = cv2.imread('./Imgs/WhatsApp Image 2021-09-28 at 09.45.58 (1).jpeg')
 hsv = cv2.cvtColor(img,cv2.COLOR_BGR2HSV)
 sat = hsv[:,:,1]
 
-# threshold and invert
 thresh = cv2.threshold(sat, 10, 255, cv2.THRESH_BINARY)[1]
 thresh = 255 - thresh
 
