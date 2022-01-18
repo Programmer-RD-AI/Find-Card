@@ -95,7 +95,7 @@ class Model:
         self,
         base_lr: float = 0.00025,
         data: pd.DataFrame = pd.read_csv("./Data.csv").sample(frac=1),
-        labels: list = ["Card"],
+        labels: list = None,
         max_iter: int = 500,
         eval_period: int = 500,
         ims_per_batch: int = 2,
@@ -122,6 +122,8 @@ class Model:
         - name = name of the wandb log
         - create_target_and_preds = testing image
         """
+        if labels is None:
+            labels = ["Card"]
         self.remove_files_in_output()
         self.data = data
         self.data_other = data
