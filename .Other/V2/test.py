@@ -1,4 +1,5 @@
 from collections import namedtuple
+
 import cv2
 
 Detection = namedtuple("Detection", ["image_path", "gt", "pred"])
@@ -10,8 +11,10 @@ def bb_intersection_over_union(true_box, pred_box):
     xB = min(true_box[2], pred_box[2])
     yB = min(true_box[3], pred_box[3])
     interArea = max(0, xB - xA + 1) * max(0, yB - yA + 1)
-    boxAArea = (true_box[2] - true_box[0] + 1) * (true_box[3] - true_box[1] + 1)
-    boxBArea = (pred_box[2] - pred_box[0] + 1) * (pred_box[3] - pred_box[1] + 1)
+    boxAArea = (true_box[2] - true_box[0] + 1) * (true_box[3] - true_box[1] +
+                                                  1)
+    boxBArea = (pred_box[2] - pred_box[0] + 1) * (pred_box[3] - pred_box[1] +
+                                                  1)
     iou = interArea / float(boxAArea + boxBArea - interArea)
     return iou
 
