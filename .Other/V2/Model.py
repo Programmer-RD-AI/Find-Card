@@ -4,7 +4,6 @@ try:
 except:
     tune = None
 
-
 # Setup Logger
 setup_logger()
 

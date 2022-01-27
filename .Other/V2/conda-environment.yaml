@@ -147,22 +147,22 @@ dependencies:
   - zlib=1.2.11=h7b6447c_3
   - zstd=1.4.9=haebb681_0
   - pip:
-    - black==21.4b2
-    - detectron2==0.5+cu111
-    - fvcore==0.1.5.post20211015
-    - hydra-core==1.1.1
-    - oauthlib==3.1.1
-    - omegaconf==2.1.1
-    - opencv-python==4.5.3.56
-    - pillow==8.4.0
-    - pip==21.3.1
-    - protobuf==3.9.0
-    - pycocotools==2.0.2
-    - tensorboard==2.7.0
-    - tensorboard-data-server==0.6.1
-    - torch==1.6.0
-    - torchaudio==0.9.1
-    - torchmetrics==0.5.1
-    - torchvision==0.10.1+cu111
-    - wandb==0.12.4
+      - black==21.4b2
+      - detectron2==0.5+cu111
+      - fvcore==0.1.5.post20211015
+      - hydra-core==1.1.1
+      - oauthlib==3.1.1
+      - omegaconf==2.1.1
+      - opencv-python==4.5.3.56
+      - pillow==8.4.0
+      - pip==21.3.1
+      - protobuf==3.9.0
+      - pycocotools==2.0.2
+      - tensorboard==2.7.0
+      - tensorboard-data-server==0.6.1
+      - torch==1.6.0
+      - torchaudio==0.9.1
+      - torchmetrics==0.5.1
+      - torchvision==0.10.1+cu111
+      - wandb==0.12.4
 prefix: /media/indika/Sync/anaconda3/envs/detectron2
