@@ -1,5 +1,6 @@
-# Find-Card
+## Land-On-Life
 
-Find-Card
-
-In this repo I am using object detection methods to detect cards.
+- [ ] DataSet
+- [ ] Data Collection, Data Pre Processing, Normalization
+- [ ] Modelling
+- [ ] Metrics
