@@ -468,10 +468,7 @@ class Download:
                 try:
                     threading.Thread(
                         target=urllib.request.urlretrieve,
-                        args=[
-                            ourl,
-                            f"/media/indika/Sync/Programming/Projects/Python/Rest-Api/Car-Object-Detection-REST-API/Find-Card/Model/dataset/Img/{self.idx}.png",
-                        ],
+                        args=[ourl, f"./Img/{self.idx}.png"],
                     ).start()
                 except ValueError as e:
                     break
@@ -504,10 +501,7 @@ class Download:
                     args=[img_url],
                 ).start()
             data = pd.DataFrame(new_data)
-            data.to_csv(
-                "/media/indika/Sync/Programming/Projects/Python/Rest-Api/Car-Object-Detection-REST-API/Find-Card/Model/dataset/Data.csv",
-                index=False,
-            )
+            data.to_csv("./Data.csv", index=False)
             return new_data
         except Exception as e:
             raise ValueError(

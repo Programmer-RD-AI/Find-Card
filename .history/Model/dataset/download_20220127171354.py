@@ -419,10 +419,7 @@ class Download:
             del self.images_and_bbox_and_imgid_
             gc.collect()
             data = pd.DataFrame(data)
-            data.to_csv(
-                "/media/indika/Sync/Programming/Projects/Python/Rest-Api/Car-Object-Detection-REST-API/Find-Card/Model/dataset/create_image_urls.csv",
-                index=False,
-            )
+            data.to_csv("./create_image_urls.csv", index=False)
             self.download_url_data = data
             print(f"Number of Images : {len(data)}")
         except Exception as e:
@@ -468,10 +465,7 @@ class Download:
                 try:
                     threading.Thread(
                         target=urllib.request.urlretrieve,
-                        args=[
-                            ourl,
-                            f"/media/indika/Sync/Programming/Projects/Python/Rest-Api/Car-Object-Detection-REST-API/Find-Card/Model/dataset/Img/{self.idx}.png",
-                        ],
+                        args=[ourl, f"./Img/{self.idx}.png"],
                     ).start()
                 except ValueError as e:
                     break
@@ -504,10 +498,7 @@ class Download:
                     args=[img_url],
                 ).start()
             data = pd.DataFrame(new_data)
-            data.to_csv(
-                "/media/indika/Sync/Programming/Projects/Python/Rest-Api/Car-Object-Detection-REST-API/Find-Card/Model/dataset/Data.csv",
-                index=False,
-            )
+            data.to_csv("./Data.csv", index=False)
             return new_data
         except Exception as e:
             raise ValueError(
