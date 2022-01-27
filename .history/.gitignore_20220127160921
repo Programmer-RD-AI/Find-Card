@@ -149,4 +149,3 @@ Model/dataset/data/Image_Urls.json
 Model/dataset/data/Labels_and_Image_ID.json
 Model/dataset/Img/
 .Other/V2/download/Img/
-.Other/V2/wandb/
