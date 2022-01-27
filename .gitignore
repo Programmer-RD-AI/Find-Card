@@ -127,67 +127,24 @@ dmypy.json
 
 # Pyre type checker
 .pyre/
-V2/detectron2/
-V2/download/data/oidv6-train-annotations-bbox.csv
-V2/download/data/oidv6-train-annotations-human-imagelabels.csv
-V2/download/data/oidv6-train-images-with-labels-with-rotation.csv
-V2/download/data/test-annotations-bbox.csv
-V2/download/data/test-annotations-human-imagelabels-boxable.csv
-V2/download/data/test-annotations-machine-imagelabels.csv
-V2/download/data/test-images-with-rotation.csv
-V2/download/data/train-annotations-human-imagelabels-boxable.csv
-V2/download/data/train-annotations-machine-imagelabels.csv
-V2/download/data/train-images-boxable-with-rotation.csv
-V2/download/data/validation-annotations-bbox.csv
-V2/download/data/validation-annotations-human-imagelabels-boxable.csv
-V2/download/data/validation-annotations-machine-imagelabels.csv
-V2/download/data/validation-images-with-rotation.csv
-V2/Img/
-V2/output/model_final.pth
-V2/Img
-V2/Img/
-V2/box.jpg
-V2/crop.jpg
-V2/output/coco_instances_results.json
-V2/output/instances_predictions.pth
-V2/output/test_coco_format.json
-V2/box.jpg
-V2/crop.jpg
-V2/output.png
-V2/test_imgs/WhatsApp Image 2021-10-19 at 21.27.06.jpeg
-V2/test_imgs/WhatsApp Image 2021-10-19 at 21.27.07 (1).jpeg
-V2/test_imgs/WhatsApp Image 2021-10-19 at 21.27.07.jpeg
-V2/test_imgs/WhatsApp Image 2021-10-19 at 21.27.08 (1).jpeg
-V2/test_imgs/WhatsApp Image 2021-10-19 at 21.27.08.jpeg
-V2/test_imgs/WhatsApp Image 2021-10-19 at 21.27.09 (1).jpeg
-V2/test_imgs/WhatsApp Image 2021-10-19 at 21.27.09 (2).jpeg
-V2/test_imgs/WhatsApp Image 2021-10-19 at 21.27.09.jpeg
-V2/preds/WhatsApp Image 2021-10-19 at 21.27.06.jpeg
-V2/preds/WhatsApp Image 2021-10-19 at 21.27.07 (1).jpeg
-V2/preds/WhatsApp Image 2021-10-19 at 21.27.07.jpeg
-V2/preds/WhatsApp Image 2021-10-19 at 21.27.08 (1).jpeg
-V2/preds/WhatsApp Image 2021-10-19 at 21.27.08.jpeg
-V2/preds/WhatsApp Image 2021-10-19 at 21.27.09 (1).jpeg
-V2/preds/WhatsApp Image 2021-10-19 at 21.27.09 (2).jpeg
-V2/preds/WhatsApp Image 2021-10-19 at 21.27.09.jpeg
-V2/download/Img/
-V2/model_final.pth
-V2/wandb/run-20211029_162502-11ac3naw/files/media/images/test_imgs/WhatsApp Image 2021-10-19 at 21.27.06.jpeg_14_902024322bf7812d3af8.png
-*.png
-V2/wandb
-V3/wandb
-V1/wandb
-V3/open_images_data/oidv6-train-annotations-bbox.csv
-V3/open_images_data/oidv6-train-annotations-human-imagelabels.csv
-V3/open_images_data/oidv6-train-images-with-labels-with-rotation.csv
-V3/open_images_data/test-annotations-bbox.csv
-V3/open_images_data/test-annotations-human-imagelabels-boxable.csv
-V3/open_images_data/test-annotations-machine-imagelabels.csv
-V3/open_images_data/test-images-with-rotation.csv
-V3/open_images_data/train-annotations-human-imagelabels-boxable.csv
-V3/open_images_data/train-annotations-machine-imagelabels.csv
-V3/open_images_data/train-images-boxable-with-rotation.csv
-V3/open_images_data/validation-annotations-bbox.csv
-V3/open_images_data/validation-annotations-human-imagelabels-boxable.csv
-V3/open_images_data/validation-annotations-machine-imagelabels.csv
-V3/open_images_data/validation-images-with-rotation.csv
+Model/dataset/open_image_raw_data/oidv6-train-annotations-bbox.csv
+Model/dataset/open_image_raw_data/oidv6-train-annotations-human-imagelabels.csv
+Model/dataset/open_image_raw_data/oidv6-train-images-with-labels-with-rotation.csv
+Model/dataset/open_image_raw_data/test-annotations-bbox.csv
+Model/dataset/open_image_raw_data/test-annotations-human-imagelabels-boxable.csv
+Model/dataset/open_image_raw_data/test-annotations-machine-imagelabels.csv
+Model/dataset/open_image_raw_data/test-images-with-rotation.csv
+Model/dataset/open_image_raw_data/train-annotations-human-imagelabels-boxable.csv
+Model/dataset/open_image_raw_data/train-annotations-machine-imagelabels.csv
+Model/dataset/open_image_raw_data/train-images-boxable-with-rotation.csv
+Model/dataset/open_image_raw_data/validation-annotations-bbox.csv
+Model/dataset/open_image_raw_data/validation-annotations-human-imagelabels-boxable.csv
+Model/dataset/open_image_raw_data/validation-annotations-machine-imagelabels.csv
+Model/dataset/open_image_raw_data/validation-images-with-rotation.csv
+Model/dataset/data/Labels_and_Image_ID.csv
+Model/dataset/data/BBOX.csv
+Model/dataset/data/BBOX.json
+Model/dataset/data/Image_Urls.csv
+Model/dataset/data/Image_Urls.json
+Model/dataset/data/Labels_and_Image_ID.json
+Model/dataset/Img/
