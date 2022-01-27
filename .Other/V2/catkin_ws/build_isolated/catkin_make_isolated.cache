@@ -1,0 +1,2 @@
+cartographer:cartographer_ros/cartographer_ros:cartographer_ros/cartographer_ros_msgs:cartographer_ros/cartographer_rviz
+-G Ninja -DCATKIN_DEVEL_PREFIX=/home/indika/Programming/Projects/Python/Artifical-Intelligence/PyTorch/Object-Detection/FInd-NCIS-Card/catkin_ws/devel_isolated -DCMAKE_INSTALL_PREFIX=/home/indika/Programming/Projects/Python/Artifical-Intelligence/PyTorch/Object-Detection/FInd-NCIS-Card/catkin_ws/install_isolated
