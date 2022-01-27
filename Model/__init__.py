@@ -1,9 +1,10 @@
 # Imports
-import gc
-import threading
 import ast
+import gc
 import os
+import threading
 import urllib.request
+
 import cv2
 import matplotlib.pyplot as plt
 import numpy as np
@@ -32,15 +33,13 @@ from torchmetrics import (
 try:
     from tqdm import tqdm
 except Exception as e:
-    raise ImportError(
-        f"""
+    raise ImportError(f"""
         Cannot Import Tqdm try installing it using 
         `pip3 install tqdm` 
         or 
         `conda install tqdm`.
         \n 
-        {e}"""
-    )
+        {e}""")
 try:
     from ray import tune
 except:
