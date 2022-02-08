@@ -76,26 +76,26 @@ class Download:
             ]
         if labels_and_imageids is None:
             labels_and_imageids = [
-                "/media/indika/Sync/Programming/Projects/Python/Rest-Api/Car-Object-Detection-REST-API/Find-Card/Model/dataset/open_image_raw_data/oidv6-train-annotations-human-imagelabels.csv",
-                "/media/indika/Sync/Programming/Projects/Python/Rest-Api/Car-Object-Detection-REST-API/Find-Card/Model/dataset/open_image_raw_data/test-annotations-human-imagelabels-boxable.csv",
-                "/media/indika/Sync/Programming/Projects/Python/Rest-Api/Car-Object-Detection-REST-API/Find-Card/Model/dataset/open_image_raw_data/test-annotations-machine-imagelabels.csv",
-                "/media/indika/Sync/Programming/Projects/Python/Rest-Api/Car-Object-Detection-REST-API/Find-Card/Model/dataset/open_image_raw_data/train-annotations-human-imagelabels-boxable.csv",
-                "/media/indika/Sync/Programming/Projects/Python/Rest-Api/Car-Object-Detection-REST-API/Find-Card/Model/dataset/open_image_raw_data/train-annotations-machine-imagelabels.csv",
-                "/media/indika/Sync/Programming/Projects/Python/Rest-Api/Car-Object-Detection-REST-API/Find-Card/Model/dataset/open_image_raw_data/validation-annotations-human-imagelabels-boxable.csv",
-                "/media/indika/Sync/Programming/Projects/Python/Rest-Api/Car-Object-Detection-REST-API/Find-Card/Model/dataset/open_image_raw_data/validation-annotations-machine-imagelabels.csv",
+                "/media/indika/Sync/Programmer-RD-AI/Programming/Projects/Python/Rest-Api/Car-Object-Detection-REST-API/Find-Card/Model/dataset/open_image_raw_data/oidv6-train-annotations-human-imagelabels.csv",
+                "/media/indika/Sync/Programmer-RD-AI/Programming/Projects/Python/Rest-Api/Car-Object-Detection-REST-API/Find-Card/Model/dataset/open_image_raw_data/test-annotations-human-imagelabels-boxable.csv",
+                "/media/indika/Sync/Programmer-RD-AI/Programming/Projects/Python/Rest-Api/Car-Object-Detection-REST-API/Find-Card/Model/dataset/open_image_raw_data/test-annotations-machine-imagelabels.csv",
+                "/media/indika/Sync/Programmer-RD-AI/Programming/Projects/Python/Rest-Api/Car-Object-Detection-REST-API/Find-Card/Model/dataset/open_image_raw_data/train-annotations-human-imagelabels-boxable.csv",
+                "/media/indika/Sync/Programmer-RD-AI/Programming/Projects/Python/Rest-Api/Car-Object-Detection-REST-API/Find-Card/Model/dataset/open_image_raw_data/train-annotations-machine-imagelabels.csv",
+                "/media/indika/Sync/Programmer-RD-AI/Programming/Projects/Python/Rest-Api/Car-Object-Detection-REST-API/Find-Card/Model/dataset/open_image_raw_data/validation-annotations-human-imagelabels-boxable.csv",
+                "/media/indika/Sync/Programmer-RD-AI/Programming/Projects/Python/Rest-Api/Car-Object-Detection-REST-API/Find-Card/Model/dataset/open_image_raw_data/validation-annotations-machine-imagelabels.csv",
             ]
         if bboxs is None:
             bboxs = [
-                "/media/indika/Sync/Programming/Projects/Python/Rest-Api/Car-Object-Detection-REST-API/Find-Card/Model/dataset/open_image_raw_data/oidv6-train-annotations-bbox.csv",
-                "/media/indika/Sync/Programming/Projects/Python/Rest-Api/Car-Object-Detection-REST-API/Find-Card/Model/dataset/open_image_raw_data/test-annotations-bbox.csv",
-                "/media/indika/Sync/Programming/Projects/Python/Rest-Api/Car-Object-Detection-REST-API/Find-Card/Model/dataset/open_image_raw_data/validation-annotations-bbox.csv",
+                "/media/indika/Sync/Programmer-RD-AI/Programming/Projects/Python/Rest-Api/Car-Object-Detection-REST-API/Find-Card/Model/dataset/open_image_raw_data/oidv6-train-annotations-bbox.csv",
+                "/media/indika/Sync/Programmer-RD-AI/Programming/Projects/Python/Rest-Api/Car-Object-Detection-REST-API/Find-Card/Model/dataset/open_image_raw_data/test-annotations-bbox.csv",
+                "/media/indika/Sync/Programmer-RD-AI/Programming/Projects/Python/Rest-Api/Car-Object-Detection-REST-API/Find-Card/Model/dataset/open_image_raw_data/validation-annotations-bbox.csv",
             ]
         if image_urls is None:
             image_urls = [
-                "/media/indika/Sync/Programming/Projects/Python/Rest-Api/Car-Object-Detection-REST-API/Find-Card/Model/dataset/open_image_raw_data/oidv6-train-images-with-labels-with-rotation.csv",
-                "/media/indika/Sync/Programming/Projects/Python/Rest-Api/Car-Object-Detection-REST-API/Find-Card/Model/dataset/open_image_raw_data/test-images-with-rotation.csv",
-                "/media/indika/Sync/Programming/Projects/Python/Rest-Api/Car-Object-Detection-REST-API/Find-Card/Model/dataset/open_image_raw_data/train-images-boxable-with-rotation.csv",
-                "/media/indika/Sync/Programming/Projects/Python/Rest-Api/Car-Object-Detection-REST-API/Find-Card/Model/dataset/open_image_raw_data/validation-images-with-rotation.csv",
+                "/media/indika/Sync/Programmer-RD-AI/Programming/Projects/Python/Rest-Api/Car-Object-Detection-REST-API/Find-Card/Model/dataset/open_image_raw_data/oidv6-train-images-with-labels-with-rotation.csv",
+                "/media/indika/Sync/Programmer-RD-AI/Programming/Projects/Python/Rest-Api/Car-Object-Detection-REST-API/Find-Card/Model/dataset/open_image_raw_data/test-images-with-rotation.csv",
+                "/media/indika/Sync/Programmer-RD-AI/Programming/Projects/Python/Rest-Api/Car-Object-Detection-REST-API/Find-Card/Model/dataset/open_image_raw_data/train-images-boxable-with-rotation.csv",
+                "/media/indika/Sync/Programmer-RD-AI/Programming/Projects/Python/Rest-Api/Car-Object-Detection-REST-API/Find-Card/Model/dataset/open_image_raw_data/validation-images-with-rotation.csv",
             ]
         if init_imageids is None:
             init_imageids = []
@@ -307,7 +307,7 @@ class Download:
                         args=[imgid[0]],
                     ).start()
             np.save(
-                "/media/indika/Sync/Programming/Projects/Python/Rest-Api/Car-Object-Detection-REST-API/Find-Card/Model/dataset/imageids.npy",
+                "/media/indika/Sync/Programmer-RD-AI/Programming/Projects/Python/Rest-Api/Car-Object-Detection-REST-API/Find-Card/Model/dataset/imageids.npy",
                 self.imgids,
             )
             del bboxs
@@ -317,7 +317,7 @@ class Download:
                 columns=["ImageID", "XMin", "YMin", "XMax", "YMax", "Labels"],
             )
             self.images_and_bbox_and_imgid_.to_csv(
-                "/media/indika/Sync/Programming/Projects/Python/Rest-Api/Car-Object-Detection-REST-API/Find-Card/Model/dataset/create_bbox.csv",
+                "/media/indika/Sync/Programmer-RD-AI/Programming/Projects/Python/Rest-Api/Car-Object-Detection-REST-API/Find-Card/Model/dataset/create_bbox.csv",
                 index=False,
             )
             print(f"Number of Images : {self.idx_2}")
@@ -399,7 +399,7 @@ class Download:
             gc.collect()
             data = pd.DataFrame(data)
             data.to_csv(
-                "/media/indika/Sync/Programming/Projects/Python/Rest-Api/Car-Object-Detection-REST-API/Find-Card/Model/dataset/create_image_urls.csv",
+                "/media/indika/Sync/Programmer-RD-AI/Programming/Projects/Python/Rest-Api/Car-Object-Detection-REST-API/Find-Card/Model/dataset/create_image_urls.csv",
                 index=False,
             )
             self.download_url_data = data
@@ -447,7 +447,7 @@ class Download:
                         target=urllib.request.urlretrieve,
                         args=[
                             ourl,
-                            f"/media/indika/Sync/Programming/Projects/Python/Rest-Api/Car-Object-Detection-REST-API/Find-Card/Model/dataset/Img/{self.idx}.png",
+                            f"/media/indika/Sync/Programmer-RD-AI/Programming/Projects/Python/Rest-Api/Car-Object-Detection-REST-API/Find-Card/Model/dataset/Img/{self.idx}.png",
                         ],
                     ).start()
                 except ValueError as e:
@@ -482,7 +482,7 @@ class Download:
                 ).start()
             data = pd.DataFrame(new_data)
             data.to_csv(
-                "/media/indika/Sync/Programming/Projects/Python/Rest-Api/Car-Object-Detection-REST-API/Find-Card/Model/dataset/Data.csv",
+                "/media/indika/Sync/Programmer-RD-AI/Programming/Projects/Python/Rest-Api/Car-Object-Detection-REST-API/Find-Card/Model/dataset/Data.csv",
                 index=False,
             )
             return new_data
