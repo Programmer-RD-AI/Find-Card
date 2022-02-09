@@ -181,11 +181,12 @@ class Download:
         try:
             print("load_labels_and_imageid")
             labels_and_imageid = pd.read_csv(self.labels_and_imageids[0])
-            for i in tqdm(range(1, len(self.labels_and_imageids))):
-                threading.Thread(
-                    target=labels_and_imageid.append,
-                    args=[pd.read_csv(self.labels_and_imageids[i])],
-                ).start()
+            loader_iter = tqdm(range(1, len(self.labels_and_imageids)))
+            for i in loader_iter:
+                labels_and_imageid = labels_and_imageid.append(
+                    pd.read_csv(self.labels_and_imageids[i])
+                )
+                loader_iter.set_description(str(len(labels_and_imageid)))
             labels_and_imageid.sample(frac=1)
             return labels_and_imageid
         except Exception as e:
@@ -209,11 +210,10 @@ class Download:
         try:
             print("load_bbox")
             bboxs_df = pd.read_csv(self.bboxs[0])
-            for i in tqdm(range(1, len(self.bboxs))):
-                threading.Thread(
-                    target=bboxs_df.append,
-                    args=[pd.read_csv(self.bboxs[i])],
-                ).start()
+            loader_iter = tqdm(range(1, len(self.bboxs)))
+            for i in loader_iter:
+                loader_iter.set_description(str(len(bboxs_df)))
+                bboxs_df = bboxs_df.append(pd.read_csv(self.bboxs[i]))
             bboxs_df.sample(frac=1)
             return bboxs_df
         except Exception as e:
@@ -237,11 +237,10 @@ class Download:
         try:
             print("load_image_urls")
             image_urls_df = pd.read_csv(self.image_urls[0])
-            for i in tqdm(range(1, len(self.image_urls))):
-                threading.Thread(
-                    target=image_urls_df.append,
-                    args=[pd.read_csv(self.image_urls[i])],
-                ).start()
+            loader_iter = tqdm(range(1, len(self.image_urls)))
+            for i in loader_iter:
+                loader_iter.set_description(str(len(image_urls_df)))
+                image_urls_df = image_urls_df.append(pd.read_csv(self.image_urls[i]))
             image_urls_df.sample(frac=1)
             return image_urls_df
         except Exception as e:
@@ -456,20 +455,22 @@ class Download:
                 "ImageID": [],
                 "Url": [],
             }
+            image_id_iter = tqdm((self.download_url_data["ImageID"]))
             for img_url, xmin, ymin, xmax, ymax, ourl in zip(
-                tqdm((self.download_url_data["ImageID"])),
+                image_id_iter,
                 self.download_url_data["XMin"],
                 self.download_url_data["YMin"],
                 self.download_url_data["XMax"],
                 self.download_url_data["YMax"],
                 self.download_url_data["OriginalURL"],
             ):
+                image_id_iter.set_description(f"{ourl} - {self.idx}")
                 self.idx += 1
                 try:
-                    urllib.request.urlretrieve(
+                    urlretrieve(
                         ourl,
                         f"/media/indika/Sync/Programmer-RD-AI/Programming/Projects/Python/Rest-Api/Car-Object-Detection-REST-API/Find-Card/Model/dataset/Img/{self.idx}.png",
-                    ),
+                    )
                 except Exception as e:
                     break
                 new_data["Path"].append(f"{self.idx}.png")
