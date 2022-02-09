@@ -3,7 +3,11 @@ import ast
 import gc
 import os
 import threading
-import urllib.request
+
+try:
+    from urllib.request import urlretrieve  # Python 3
+except ImportError:
+    from urllib import urlretrieve  # Python 2
 
 import cv2
 import matplotlib.pyplot as plt
@@ -33,13 +37,15 @@ from torchmetrics import (
 try:
     from tqdm import tqdm
 except Exception as e:
-    raise ImportError(f"""
+    raise ImportError(
+        f"""
         Cannot Import Tqdm try installing it using 
         `pip3 install tqdm` 
         or 
         `conda install tqdm`.
         \n 
-        {e}""")
+        {e}"""
+    )
 try:
     from ray import tune
 except:
