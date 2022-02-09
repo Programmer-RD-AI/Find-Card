@@ -402,7 +402,7 @@ watchdog==2.1.6
 wcwidth==0.2.5
 webencodings==0.5.1
 websocket-client==1.2.1
-websockets==8.1
+websockets==9.1
 Werkzeug==2.0.2
 wget==3.2
 widgetsnbextension==3.5.2
