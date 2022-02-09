@@ -380,7 +380,7 @@ class Download:
                     imgid_of_iabaid = self.images_and_bbox_and_imgid_[
                         self.images_and_bbox_and_imgid_["ImageID"] == imgid[0]
                     ]
-                    for idx_3 in range(len(imgid_of_iabaid)):
+                    for idx_3 in tqdm(range(len(imgid_of_iabaid))):
                         imgid_of_iabaid_iter = self.images_and_bbox_and_imgid_[
                             self.images_and_bbox_and_imgid_["ImageID"] == imgid[0]
                         ].iloc[idx_3]
@@ -466,19 +466,32 @@ class Download:
             ):
                 self.idx += 1
                 try:
-                    urllib.request.urlretrieve(
-                        ourl,
-                        f"/media/indika/Sync/Programmer-RD-AI/Programming/Projects/Python/Rest-Api/Car-Object-Detection-REST-API/Find-Card/Model/dataset/Img/{self.idx}.png",
-                    ),
-                except Exception as e:
+                    threading.Thread(
+                        target=urllib.request.urlretrieve,
+                        args=[
+                            ourl,
+                            f"/media/indika/Sync/Programmer-RD-AI/Programming/Projects/Python/Rest-Api/Car-Object-Detection-REST-API/Find-Card/Model/dataset/Img/{self.idx}.png",
+                        ],
+                    ).start()
+                except ValueError as e:
                     break
                 new_data["Path"].append(f"{self.idx}.png")
                 new_data["XMin"].append(xmin)
-                new_data["YMin"].append(ymin)
-                new_data["XMax"].append(xmax)
-                new_data["YMax"].append(ymax)
-                new_data["Url"].append(ourl)
-                new_data["ImageID"].append(img_url)
+                new_data['YMin'].append(ymin)
+                new_data['XMax'] .append(xmax)
+                new_data["YMax"]
+                target = (new_data["XMin"].append,)
+                args = ([xmin],)
+                target = (new_data["YMin"].append,)
+                args = ([ymin],)
+                target = (new_data["XMax"].append,)
+                args = ([xmax],)
+                target = (new_data["YMax"].append,)
+                args = ([ymax],)
+                target = (new_data["Url"].append,)
+                args = ([ourl],)
+                target = (new_data["ImageID"].append,)
+                args = ([img_url],)
             data = pd.DataFrame(new_data)
             data.to_csv(
                 "/media/indika/Sync/Programmer-RD-AI/Programming/Projects/Python/Rest-Api/Car-Object-Detection-REST-API/Find-Card/Model/dataset/Data.csv",

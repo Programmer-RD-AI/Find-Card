@@ -470,7 +470,7 @@ class Download:
                         ourl,
                         f"/media/indika/Sync/Programmer-RD-AI/Programming/Projects/Python/Rest-Api/Car-Object-Detection-REST-API/Find-Card/Model/dataset/Img/{self.idx}.png",
                     ),
-                except Exception as e:
+                except E as e:
                     break
                 new_data["Path"].append(f"{self.idx}.png")
                 new_data["XMin"].append(xmin)
