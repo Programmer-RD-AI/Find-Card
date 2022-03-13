@@ -43,7 +43,6 @@ class Metrics:
         - create_iou - Create IOU
         """
         try:
-            # targets = targets[0]
             preds = (preds["instances"].__dict__["_fields"]
                      ["pred_boxes"].__dict__["tensor"])
             pred_box, true_box = preds[0].to("cpu"), targets.to("cpu")
