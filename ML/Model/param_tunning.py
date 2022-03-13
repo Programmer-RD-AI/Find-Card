@@ -10,9 +10,7 @@ class Param_Tunning:
     """
 
     @staticmethod
-    def tune(
-        params: dict,
-    ) -> dict:
+    def tune(params: dict, ) -> dict:
         """
         Tune all of the parameters
         """
@@ -40,10 +38,12 @@ class Param_Tunning:
                     max_iter=param["max_iters"],
                 )
                 torch.cuda.empty_cache()
-                metrics = model.train("dangerous-animals-detection-bitbybit", param)
+                metrics = model.train("dangerous-animals-detection-bitbybit",
+                                      param)
                 torch.cuda.empty_cache()
                 information_dict["Name"].append(name)
-                information_dict["AP"].append(list(metrics["metrics_coco"].items())[0][1]["AP"])
+                information_dict["AP"].append(
+                    list(metrics["metrics_coco"].items())[0][1]["AP"])
                 torch.cuda.empty_cache()
             except:
                 continue
@@ -59,7 +59,7 @@ class Param_Tunning:
         """
         print(config)
         base_lr = config["base_lrs"]
-        ims_per_batch = (config["ims_per_batchs"],)
+        ims_per_batch = (config["ims_per_batchs"], )
         batch_size_per_image = config["batch_size_per_images"]
         model = "COCO-Detection/" + config["models"]
         name = f"{config['models']}-{batch_size_per_image}-{ims_per_batch}-{base_lr}"
@@ -81,9 +81,12 @@ class Param_Tunning:
         https://docs.ray.io/en/latest/tune/user-guide.html
         """
         ray.init()
-        analysis = tune.run(
-            self.ray_tune_func, config=params, resources_per_trial={"cpu": 0, "gpu": 1}
-        )
+        analysis = tune.run(self.ray_tune_func,
+                            config=params,
+                            resources_per_trial={
+                                "cpu": 0,
+                                "gpu": 1
+                            })
         analysis.get_best_results(metrics="average_precisions", model="max")
         df = analysis.results_df
         df.to_csv("./Logs.csv")
