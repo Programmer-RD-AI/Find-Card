@@ -259,7 +259,6 @@ def train(hyp, opt, device, callbacks):  # path/to/hyp.yaml or hyp dictionary
     LOGGER.info(
         f"{colorstr('optimizer:')} {type(optimizer).__name__} with parameter groups "
         f"{len(g0)} weight (no decay), {len(g1)} weight, {len(g2)} bias")
-    del g0, g1, g2
 
     # Scheduler
     if opt.linear_lr:
@@ -298,8 +297,6 @@ def train(hyp, opt, device, callbacks):  # path/to/hyp.yaml or hyp dictionary
                 f"{weights} has been trained for {ckpt['epoch']} epochs. Fine-tuning for {epochs} more epochs."
             )
             epochs += ckpt["epoch"]  # finetune additional epochs
-
-        del ckpt, csd
 
     # DP mode
     if cuda and RANK == -1 and torch.cuda.device_count() > 1:
@@ -588,7 +585,6 @@ def train(hyp, opt, device, callbacks):  # path/to/hyp.yaml or hyp dictionary
                 if ((epoch > 0) and (opt.save_period > 0)
                         and (epoch % opt.save_period == 0)):
                     torch.save(ckpt, w / f"epoch{epoch}.pt")
-                del ckpt
                 callbacks.run("on_model_save", last, epoch, final_epoch,
                               best_fitness, fi)
 
