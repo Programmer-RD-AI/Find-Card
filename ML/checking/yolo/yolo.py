@@ -165,10 +165,9 @@ def train(hyp, opt, device, callbacks):  # path/to/hyp.yaml or hyp dictionary
     nc = 1 if single_cls else int(data_dict["nc"])  # number of classes
     names = (["item"] if single_cls and len(data_dict["names"]) != 1 else
              data_dict["names"])  # class names
-    if (
-        len(names) != nc
-    ):
-        raise AssertionError(f"{len(names)} names found for nc={nc} dataset in {data}")
+    if len(names) != nc:
+        raise AssertionError(
+            f"{len(names)} names found for nc={nc} dataset in {data}")
     is_coco = isinstance(val_path, str) and val_path.endswith(
         "coco/val2017.txt")  # COCO dataset
 
@@ -291,10 +290,10 @@ def train(hyp, opt, device, callbacks):  # path/to/hyp.yaml or hyp dictionary
         # Epochs
         start_epoch = ckpt["epoch"] + 1
         if resume:
-            if (
-                start_epoch <= 0
-            ):
-                raise AssertionError(f"{weights} training to {epochs} epochs is finished, nothing to resume.")
+            if start_epoch <= 0:
+                raise AssertionError(
+                    f"{weights} training to {epochs} epochs is finished, nothing to resume."
+                )
         if epochs < start_epoch:
             LOGGER.info(
                 f"{weights} has been trained for {ckpt['epoch']} epochs. Fine-tuning for {epochs} more epochs."
@@ -336,10 +335,10 @@ def train(hyp, opt, device, callbacks):  # path/to/hyp.yaml or hyp dictionary
     )
     mlc = int(np.concatenate(dataset.labels, 0)[:, 0].max())  # max label class
     nb = len(train_loader)  # number of batches
-    if (
-        mlc >= nc
-    ):
-        raise AssertionError(f"Label class {mlc} exceeds nc={nc} in {data}. Possible class labels are 0-{nc - 1}")
+    if mlc >= nc:
+        raise AssertionError(
+            f"Label class {mlc} exceeds nc={nc} in {data}. Possible class labels are 0-{nc - 1}"
+        )
 
     # Process 0
     if RANK in [-1, 0]:
@@ -830,8 +829,7 @@ def main(opt, callbacks=Callbacks()):
         ckpt = (
             opt.resume if isinstance(opt.resume, str) else get_latest_run()
         )  # specified or most recent path
-        if not os.path.isfile(
-            ckpt):
+        if not os.path.isfile(ckpt):
             raise AssertionError("ERROR: --resume checkpoint does not exist")
         with open(Path(ckpt).parent.parent / "opt.yaml", errors="ignore") as f:
             opt = argparse.Namespace(**yaml.safe_load(f))  # replace
@@ -845,8 +843,7 @@ def main(opt, callbacks=Callbacks()):
             str(opt.weights),
             str(opt.project),
         )  # checks
-        if not (len(opt.cfg) or len(
-            opt.weights)):
+        if not (len(opt.cfg) or len(opt.weights)):
             raise AssertionError("either --cfg or --weights must be specified")
         if opt.evolve:
             if opt.project == str(
@@ -869,15 +866,15 @@ def main(opt, callbacks=Callbacks()):
             raise AssertionError(f"--image-weights {msg}")
         if opt.evolve:
             raise AssertionError(f"--evolve {msg}")
-        if (
-            opt.batch_size == -1
-        ):
-            raise AssertionError(f"AutoBatch with --batch-size -1 {msg}, please pass a valid --batch-size")
-        if (
-            opt.batch_size % WORLD_SIZE != 0
-        ):
-            raise AssertionError(f"--batch-size {opt.batch_size} must be multiple of WORLD_SIZE")
-        if (torch.cuda.device_count() <= LOCAL_RANK):
+        if opt.batch_size == -1:
+            raise AssertionError(
+                f"AutoBatch with --batch-size -1 {msg}, please pass a valid --batch-size"
+            )
+        if opt.batch_size % WORLD_SIZE != 0:
+            raise AssertionError(
+                f"--batch-size {opt.batch_size} must be multiple of WORLD_SIZE"
+            )
+        if torch.cuda.device_count() <= LOCAL_RANK:
             raise AssertionError("insufficient CUDA devices for DDP command")
         torch.cuda.set_device(LOCAL_RANK)
         device = torch.device("cuda", LOCAL_RANK)
