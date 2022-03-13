@@ -184,3 +184,4 @@ ML/Model/dataset/open_image_raw_data/train-annotations-human-imagelabels-boxable
 ML/Model/dataset/open_image_raw_data/train-annotations-machine-imagelabels.csv
 ML/Model/dataset/open_image_raw_data/test-images-with-rotation.csv
 ML/Model/dataset/open_image_raw_data/test-annotations-human-imagelabels-boxable.csv
+ML/Model/dataset/open_image_raw_data/oidv6-train-images-with-labels-with-rotation.csv
