@@ -1,7 +1,6 @@
-from PIL import Image
-
 from Model import *
 from Model.metrics import Metrics
+from PIL import Image
 
 models = [
     "fast_rcnn_R_50_FPN_1x.yaml",
