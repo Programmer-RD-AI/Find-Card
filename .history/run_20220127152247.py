@@ -1,2 +1,0 @@
-d = Download()
-d.download()
