@@ -176,3 +176,11 @@ ML/Model/dataset/open_image_raw_data/oidv6-train-annotations-bbox.csv
 ML/Model/dataset/open_image_raw_data/test-annotations-bbox.csv
 ML/Model/dataset/open_image_raw_data/test-annotations-machine-imagelabels.csv
 ML/Model/dataset/open_image_raw_data/validation-images-with-rotation.csv
+ML/Model/dataset/open_image_raw_data/validation-annotations-machine-imagelabels.csv
+ML/Model/dataset/open_image_raw_data/validation-annotations-human-imagelabels-boxable.csv
+ML/Model/dataset/open_image_raw_data/validation-annotations-bbox.csv
+ML/Model/dataset/open_image_raw_data/train-images-boxable-with-rotation.csv
+ML/Model/dataset/open_image_raw_data/train-annotations-human-imagelabels-boxable.csv
+ML/Model/dataset/open_image_raw_data/train-annotations-machine-imagelabels.csv
+ML/Model/dataset/open_image_raw_data/test-images-with-rotation.csv
+ML/Model/dataset/open_image_raw_data/test-annotations-human-imagelabels-boxable.csv
