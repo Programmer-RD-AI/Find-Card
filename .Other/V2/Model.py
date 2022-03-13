@@ -350,7 +350,8 @@ class Model:
         torch.cuda.empty_cache()
         return metrics
 
-    def metrics_file_to_dict(self) -> list:
+    @staticmethod
+    def metrics_file_to_dict() -> list:
         """
         - metrics_file_to_dict - in ./output/metrics.json it logs the metrics of the model
         """
@@ -422,7 +423,8 @@ class Model:
         return (preds, target, x, y, w, h, xmin, ymin, xmax, ymax, height,
                 width)
 
-    def create_rmse(self, preds: torch.tensor, target: torch.tensor) -> float:
+    @staticmethod
+    def create_rmse(preds: torch.tensor, target: torch.tensor) -> float:
         """
         - create_rmse - Create Root-mean-square deviation
         """
@@ -436,8 +438,8 @@ class Model:
                 lowest_rmse = r_mean_squared_error(pred.to("cpu"), target)
         return float(lowest_rmse)
 
-    def create_recall(self, preds: torch.tensor,
-                      target: torch.tensor) -> float:
+    @staticmethod
+    def create_recall(preds: torch.tensor, target: torch.tensor) -> float:
         lowest_recall = 0
         recall = Recall()
         preds_new = (preds["instances"].__dict__["_fields"]
@@ -448,7 +450,8 @@ class Model:
                 lowest_recall = recall(pred.to("cpu"), target)
         return float(lowest_recall)
 
-    def create_iou(self, preds: torch.tensor, targets: torch.tensor) -> float:
+    @staticmethod
+    def create_iou(preds: torch.tensor, targets: torch.tensor) -> float:
         ious = []
         for pred_box, true_box in zip(preds, targets):
             xA = max(true_box[0], pred_box[0])
@@ -465,7 +468,8 @@ class Model:
         iou = np.mean(ious)
         return iou
 
-    def create_mse(self, preds: torch.tensor, target: torch.tensor) -> float:
+    @staticmethod
+    def create_mse(preds: torch.tensor, target: torch.tensor) -> float:
         """
         - create_mse - Create Mean-square deviation
         """
@@ -523,7 +527,8 @@ class Model:
                 lowest_ssim = ssim(pred.to("cpu"), target)
         return lowest_ssim
 
-    def create_psnr(self, preds: torch.tensor, target: torch.tensor) -> float:
+    @staticmethod
+    def create_psnr(preds: torch.tensor, target: torch.tensor) -> float:
         """
         - create_psnr - Peak signal-to-noise ratio (how similar is a image)
         """
@@ -537,7 +542,8 @@ class Model:
                 lowest_psnr = psnr(pred.to("cpu"), target)
         return lowest_psnr
 
-    def create_mae(self, preds: torch.tensor, target: torch.tensor) -> float:
+    @staticmethod
+    def create_mae(preds: torch.tensor, target: torch.tensor) -> float:
         """
         - create_mae - Mean absolute error
         """
@@ -551,8 +557,8 @@ class Model:
                 lowest_mae = mae(pred.to("cpu"), target)
         return lowest_mae
 
-    def create_precision(self, preds: torch.tensor,
-                         target: torch.tensor) -> float:
+    @staticmethod
+    def create_precision(preds: torch.tensor, target: torch.tensor) -> float:
         lowest_precision = 0
         precision = Precision()
         preds_new = (preds["instances"].__dict__["_fields"]
@@ -703,7 +709,8 @@ class Param_Tunning:
         params - dict like {Model().test}
         """
 
-    def tune(self, params: dict) -> dict:
+    @staticmethod
+    def tune(params: dict) -> dict:
         """
         Tune all of the parameters
         """
@@ -733,7 +740,8 @@ class Param_Tunning:
                 torch.cuda.empty_cache()
         return final_metrics
 
-    def ray_tune_func(self, config):
+    @staticmethod
+    def ray_tune_func(config):
         """
         https://docs.ray.io/en/latest/tune/index.html
         """

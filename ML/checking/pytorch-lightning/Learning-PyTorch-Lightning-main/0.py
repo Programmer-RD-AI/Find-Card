@@ -43,7 +43,8 @@ class LitNeuralNet(pl.LightningModule):
         wandb.log({"loss": loss, "log": tensorboard_logs})
         return {"loss": loss, "log": tensorboard_logs}
 
-    def train_dataloader(self):
+    @staticmethod
+    def train_dataloader():
         train_dataset = torchvision.datasets.MNIST(
             root="./data",
             train=True,
@@ -55,7 +56,8 @@ class LitNeuralNet(pl.LightningModule):
                                                    shuffle=False)
         return train_loader
 
-    def val_dataloader(self):
+    @staticmethod
+    def val_dataloader():
         test_dataset = torchvision.datasets.MNIST(
             root="./data", train=False, transform=transforms.ToTensor())
 
@@ -73,7 +75,8 @@ class LitNeuralNet(pl.LightningModule):
         loss = F.cross_entropy(outputs, labels)
         return {"val_loss": loss}
 
-    def validation_epoch_end(self, outputs):
+    @staticmethod
+    def validation_epoch_end(outputs):
         avg_loss = torch.stack([x["val_loss"] for x in outputs]).mean()
         tensorboard_logs = {"avg_val_loss": avg_loss}
         return {"val_loss": avg_loss, "log": tensorboard_logs}

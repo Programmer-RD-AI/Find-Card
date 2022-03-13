@@ -373,7 +373,8 @@ class Detectron2:
         torch.cuda.empty_cache()
         return metrics
 
-    def metrics_file_to_dict_detectron2(self) -> list:
+    @staticmethod
+    def metrics_file_to_dict_detectron2() -> list:
         """
         - metrics_file_to_dict_detectron2 - in ./output/metrics.json it logs the metrics of the model
         """
