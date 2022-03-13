@@ -5,7 +5,8 @@ class Model(pl.LightningModule):
         self.criterion = MSELoss()
         # all_of_the_neurons_activation_etc
 
-    def forward(self, X):
+    @staticmethod
+    def forward(X):
         # iter over the neurons_activation_etc
         preds = X
         return preds
@@ -24,12 +25,14 @@ class Model(pl.LightningModule):
         wandb.log({"Val Loss": loss.item()})
         return {"valid_loss": loss.item()}
 
-    def valid_dataloaders(self):
+    @staticmethod
+    def valid_dataloaders():
         dataset = Dataset()
         dataloader = DataLoader(dataset)
         return dataloader
 
-    def train_dataloaders(self):
+    @staticmethod
+    def train_dataloaders():
         dataset = Dataset()
         dataloader = DataLoader(dataset)
         return dataloader
