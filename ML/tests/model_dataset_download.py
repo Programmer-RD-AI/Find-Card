@@ -1,6 +1,7 @@
 import unittest
 
 import pandas as pd
+
 from Model.dataset.download import *
 
 
@@ -53,8 +54,7 @@ class Test_Model_DataSet_Download(unittest.TestCase):
         loader_iter = range(1, len(self.labels_and_imageids))
         for i in loader_iter:
             labels_and_imageid = labels_and_imageid.append(
-                pd.read_csv(self.labels_and_imageids[i])
-            )
+                pd.read_csv(self.labels_and_imageids[i]))
         labels_and_imageid.sample(frac=1)
         gc.collect()
         self.assertEqual(
@@ -112,9 +112,8 @@ class Test_Model_DataSet_Download(unittest.TestCase):
             argument -- description
         Return: return_description
         """
-        self.assertEqual(
-            self.download.create_imageids(), True, "ImageIds wasnt created successfully"
-        )
+        self.assertEqual(self.download.create_imageids(), True,
+                         "ImageIds wasnt created successfully")
 
     def test_create_bbox(self):
         """sumary_line
@@ -123,9 +122,8 @@ class Test_Model_DataSet_Download(unittest.TestCase):
         argument -- description
         Return: return_description
         """
-        self.assertEqual(
-            self.download.create_bbox(), True, "Bbox wasnt created successfully"
-        )
+        self.assertEqual(self.download.create_bbox(), True,
+                         "Bbox wasnt created successfully")
 
     def test_create_image_urls(self):
         """sumary_line
