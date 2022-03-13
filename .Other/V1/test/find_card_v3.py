@@ -52,7 +52,7 @@ for file in tqdm(os.listdir("./Imgs/")):
             cv2.rectangle(img, (x, y), (x + w, y + h), (200, 0, 0))
             img = cv2.imread(f"./Imgs/{file}")  # get the original image
             crop_img = img[y:y + h, x:x + w]  # Cropping
-            if f"./Imgs/{file}" in list(data.keys()):
+            if f"./Imgs/{file}" in list(data):
                 data[f"{file}"]["X"].append(x)
                 data[f"{file}"]["Y"].append(y)
                 data[f"{file}"]["W"].append(w)

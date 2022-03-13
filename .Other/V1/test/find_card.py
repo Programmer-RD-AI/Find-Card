@@ -47,7 +47,7 @@ for file in os.listdir("./Imgs/"):
             crop_img = img[y:y + h, x:x + w]  # Cropping
             cv2.imwrite(f"./Preds/{file}-{idx}.jpeg",
                         crop_img)  # Saving the corped image
-            if f"./Imgs/{file}" in list(data.keys()):
+            if f"./Imgs/{file}" in list(data):
                 print(data)
                 data[f"./Imgs/{file}"]["X"].append(x)
                 data[f"./Imgs/{file}"]["Y"].append(y)
