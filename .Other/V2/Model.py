@@ -440,8 +440,7 @@ class Model:
         return float(lowest_rmse)
 
     @staticmethod
-    def create_recall(preds: torch.tensor,
-                      target: torch.tensor) -> float:
+    def create_recall(preds: torch.tensor, target: torch.tensor) -> float:
         lowest_recall = 0
         recall = Recall()
         preds_new = (preds["instances"].__dict__["_fields"]
@@ -560,8 +559,7 @@ class Model:
         return lowest_mae
 
     @staticmethod
-    def create_precision(preds: torch.tensor,
-                         target: torch.tensor) -> float:
+    def create_precision(preds: torch.tensor, target: torch.tensor) -> float:
         lowest_precision = 0
         precision = Precision()
         preds_new = (preds["instances"].__dict__["_fields"]
@@ -705,6 +703,7 @@ class Model:
 
 
 class Param_Tunning:
+
     def __init__(self, ) -> None:
         """
         initialize the Class
