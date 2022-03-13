@@ -175,3 +175,4 @@ ML/checking/torch_object_detection/PennFudanPed/
 ML/Model/dataset/open_image_raw_data/oidv6-train-annotations-bbox.csv
 ML/Model/dataset/open_image_raw_data/test-annotations-bbox.csv
 ML/Model/dataset/open_image_raw_data/test-annotations-machine-imagelabels.csv
+ML/Model/dataset/open_image_raw_data/validation-images-with-rotation.csv
