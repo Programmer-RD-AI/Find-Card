@@ -59,7 +59,7 @@ for file in os.listdir("./Imgs/"):
             )
             print(x + w, y + h)
 
-            if f"./Imgs/{file}" in list(data.keys()):
+            if f"./Imgs/{file}" in list(data):
                 print(data)
                 data[f"./Imgs/{file}"]["X"].append(x)
                 data[f"./Imgs/{file}"]["Y"].append(y)

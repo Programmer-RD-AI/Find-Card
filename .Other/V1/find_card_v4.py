@@ -55,7 +55,7 @@ for file in tqdm(os.listdir("./Imgs/")):
             img = cv2.imread(f"./Imgs/{file}")  # get the original image
             img = cv2.resize(img, (2000, 2000))
             crop_img = img[y:y + h, x:x + w]  # Cropping
-            if f"./Imgs/{file}" in list(data.keys()):
+            if f"./Imgs/{file}" in list(data):
                 data[f"{file}"]["X"].append(x)
                 data[f"{file}"]["Y"].append(y)
                 data[f"{file}"]["W"].append(w)
