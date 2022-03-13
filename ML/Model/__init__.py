@@ -1,9 +1,9 @@
 # Imports
 import ast
-from concurrent.futures.process import _ExceptionWithTraceback
 import gc
 import os
 import threading
+from concurrent.futures.process import _ExceptionWithTraceback
 
 try:
     from urllib.request import urlretrieve  # Python 3
@@ -32,15 +32,13 @@ from torchmetrics import PSNR, SSIM, AveragePrecision
 try:
     from tqdm import tqdm
 except Exception as e:
-    raise ImportError(
-        f"""
+    raise ImportError(f"""
         Cannot Import Tqdm try installing it using 
         `pip3 install tqdm` 
         or 
         `conda install tqdm`.
         \n 
-        {e}"""
-    )
+        {e}""")
 try:
     import ray
     from ray import tune
