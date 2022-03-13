@@ -12,7 +12,8 @@ execution_path = os.getcwd()
 
 detector = ObjectDetection()
 detector.setModelTypeAsRetinaNet()
-detector.setModelPath(os.path.join(execution_path, "./testing/resnet50_coco_best_v2.0.1.h5"))
+detector.setModelPath(
+    os.path.join(execution_path, "./testing/resnet50_coco_best_v2.0.1.h5"))
 detector.loadModel()
 custom_objects = detector.CustomObjects(
     person=True,
