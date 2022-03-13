@@ -218,13 +218,12 @@ class Model:
         - test - if the return is supposed to be a test sample or not
             - Defalt = False and type = bool
         """
-        if test is True:
-            if "data.npy" in os.listdir("./"):
-                self.data = np.load(
-                    "./data.npy", allow_pickle=True
-                )  # Loading already saved detectron2 format file
-                self.data = self.data[:self.test_sample_size]  # TODO
-                return self.data
+        if test is True and "data.npy" in os.listdir("./"):
+            self.data = np.load(
+                "./data.npy", allow_pickle=True
+            )  # Loading already saved detectron2 format file
+            self.data = self.data[:self.test_sample_size]  # TODO
+            return self.data
         if "data.npy" in os.listdir("./"):
             self.data = np.load("./data.npy", allow_pickle=True)
             return self.data

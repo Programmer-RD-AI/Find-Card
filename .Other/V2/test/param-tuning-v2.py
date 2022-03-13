@@ -35,12 +35,11 @@ idx = 0
 
 # Loading Data
 def load_data(data=data, test=False):
-    if test is True:
-        if "data.npy" in os.listdir("./"):
-            data = np.load("./data.npy", allow_pickle=True)
-            data = data[:125]
-            print(len(data))
-            return data
+    if test is True and "data.npy" in os.listdir("./"):
+        data = np.load("./data.npy", allow_pickle=True)
+        data = data[:125]
+        print(len(data))
+        return data
     if "data.npy" in os.listdir("./"):
         data = np.load("./data.npy", allow_pickle=True)
         print(len(data))
