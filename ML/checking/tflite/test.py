@@ -15,7 +15,8 @@ from PIL import Image
 from tflite_model_maker import model_spec, object_detector
 from tflite_model_maker.config import ExportFormat, QuantizationConfig
 
-assert tf.__version__.startswith("2")
+if not tf.__version__.startswith("2"):
+    raise AssertionError
 tf.get_logger().setLevel("ERROR")
 
 logging.set_verbosity(logging.ERROR)
