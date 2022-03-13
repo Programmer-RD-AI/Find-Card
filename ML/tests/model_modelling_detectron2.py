@@ -14,7 +14,6 @@ class Test_Model(unittest.TestCase):
         Keyword arguments:
         argument -- description
         Return: return_description"""
-
         self.assertEqual(type(model.test()[0]), np.ndarray,
                          "The Crop and Box Image is None")
         self.assertEqual(type(model.test()[1]), np.ndarray,
@@ -26,7 +25,6 @@ class Test_Model(unittest.TestCase):
         Keyword arguments:
         argument -- description
         Return: return_description"""
-
         self.assertEqual(
             len(model.load_data()),
             len(model.data),
@@ -39,7 +37,6 @@ class Test_Model(unittest.TestCase):
         Keyword arguments:
         argument -- description
         Return: return_description"""
-
         model.save(test="test")
         if f"test-{model.NAME}.pt" in os.listdir("./models/"):
             self.assertEqual(True, True)
@@ -52,7 +49,6 @@ class Test_Model(unittest.TestCase):
         Keyword arguments:
         argument -- description
         Return: return_description"""
-
         self.assertEqual(type(model.create_cfg()), CfgNode)
 
     def test_create_predictor(self):
@@ -61,7 +57,6 @@ class Test_Model(unittest.TestCase):
         Keyword arguments:
         argument -- description
         Return: return_description"""
-
         self.assertEqual(type(model.create_predictor()), DefaultPredictor)
 
     def test_create_coco_eval(self):
@@ -70,7 +65,6 @@ class Test_Model(unittest.TestCase):
         Keyword arguments:
         argument -- description
         Return: return_description"""
-
         self.assertEqual(
             type(model.create_coco_eval(model.create_predictor())),
             OrderedDict)
@@ -81,7 +75,6 @@ class Test_Model(unittest.TestCase):
         Keyword arguments:
         argument -- description
         Return: return_description"""
-
         self.assertEqual(type(model.metrics_file_to_dict()), list)
 
     def test_predict_test_images(self):
@@ -90,7 +83,6 @@ class Test_Model(unittest.TestCase):
         Keyword arguments:
         argument -- description
         Return: return_description"""
-
         self.assertEqual(
             type(model.predict_test_images(model.create_predictor())), list)
 
@@ -100,7 +92,6 @@ class Test_Model(unittest.TestCase):
         Keyword arguments:
         argument -- description
         Return: return_description"""
-
         self.assertEqual(
             type(model.create_target_and_preds(model.create_predictor())),
             tuple)
@@ -111,7 +102,6 @@ class Test_Model(unittest.TestCase):
         Keyword arguments:
         argument -- description
         Return: return_description"""
-
         (
             preds,
             target,
@@ -134,7 +124,6 @@ class Test_Model(unittest.TestCase):
         Keyword arguments:
         argument -- description
         Return: return_description"""
-
         (
             preds,
             target,
@@ -157,7 +146,6 @@ class Test_Model(unittest.TestCase):
         Keyword arguments:
         argument -- description
         Return: return_description"""
-
         self.assertEqual(type(model.create_x_y_w_h(59, 59, 89, 59)), list)
 
     def test_remove_files_in_output(self):
