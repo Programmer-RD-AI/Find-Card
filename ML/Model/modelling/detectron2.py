@@ -1,7 +1,6 @@
-from PIL import Image
-
 from Model import *
 from Model.metrics import Metrics
+from PIL import Image
 
 models = [
     "fast_rcnn_R_50_FPN_1x.yaml",
@@ -246,7 +245,6 @@ class Detectron2:
                 new_data.append(record)
             except OSError:
                 pil_issues_idx = pil_issues_idx + 1
-        # np.random.shuffle(new_data)  # Shuffling the data
         print(len(new_data))
         if test is True:
             return new_data[:self.test_sample_size]
@@ -489,11 +487,8 @@ class Detectron2:
         wandb.log(metrics["Metrics"])
         try:
             self.save(
-                # trainer=trainer,
-                # predictor=predictor,
                 metrics_coco=metrics["metrics_coco"],
                 metrics_file=metrics["metrics_file"],
-                # test_images=metrics["test_images"],
                 metrics=metrics["Metrics"],
             )
         except Exception as e:
