@@ -25,7 +25,8 @@ class Pre_Processing:
         argument -- description
         Return: return_description
         """
-        self.compose_list.append(torchvision.transforms.CenterCrop(center_crop_amount))
+        self.compose_list.append(
+            torchvision.transforms.CenterCrop(center_crop_amount))
         return torchvision.transforms.CenterCrop(center_crop_amount)
 
     def color_jitter(self, brightness, contrast, saturation):
@@ -35,9 +36,10 @@ class Pre_Processing:
         Return: return_description
         """
         self.compose_list.append(
-            torchvision.transforms.ColorJitter(brightness, contrast, saturation)
-        )
-        return torchvision.transforms.CenterCrop(brightness, contrast, saturation)
+            torchvision.transforms.ColorJitter(brightness, contrast,
+                                               saturation))
+        return torchvision.transforms.CenterCrop(brightness, contrast,
+                                                 saturation)
 
     def random_grayscale(self, p):
         """sumary_line
@@ -54,7 +56,8 @@ class Pre_Processing:
         argument -- description
         Return: return_description
         """
-        self.compose_list.append(torchvision.transforms.RandomHorizontalFlip(p))
+        self.compose_list.append(
+            torchvision.transforms.RandomHorizontalFlip(p))
         return torchvision.transforms.RandomHorizontalFlip(p)
 
     def random_rotation(self, p):
@@ -63,7 +66,8 @@ class Pre_Processing:
         argument -- description
         Return: return_description
         """
-        self.compose_list.append(torchvision.transforms.RandomHorizontalFlip(p))
+        self.compose_list.append(
+            torchvision.transforms.RandomHorizontalFlip(p))
         return torchvision.transforms.RandomHorizontalFlip(p)
 
     def random_vertical_flip(self, p):
