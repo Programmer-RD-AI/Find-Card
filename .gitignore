@@ -173,3 +173,4 @@ Model/test_imgs/WhatsApp Image 2021-10-19 at 21.27.07 (1).jpeg
 
 ML/checking/torch_object_detection/PennFudanPed/
 ML/Model/dataset/open_image_raw_data/oidv6-train-annotations-bbox.csv
+ML/Model/dataset/open_image_raw_data/test-annotations-bbox.csv
