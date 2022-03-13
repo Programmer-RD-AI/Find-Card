@@ -40,7 +40,7 @@ colorama==0.4.4
 configparser==5.0.2
 cryptography @ file:///tmp/build/80754af9/cryptography_1633520369403/work
 cycler==0.10.0
-Cython==0.29.23
+Cython==0.29.28
 debugpy==1.5.1
 decorator @ file:///home/conda/feedstock_root/build_artifacts/decorator_1631346842025/work
 defusedxml @ file:///home/conda/feedstock_root/build_artifacts/defusedxml_1615232257335/work
