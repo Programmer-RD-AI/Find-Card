@@ -288,11 +288,10 @@ def train(hyp, opt, device, callbacks):  # path/to/hyp.yaml or hyp dictionary
 
         # Epochs
         start_epoch = ckpt["epoch"] + 1
-        if resume:
-            if start_epoch <= 0:
-                raise AssertionError(
-                    f"{weights} training to {epochs} epochs is finished, nothing to resume."
-                )
+        if resume and start_epoch <= 0:
+            raise AssertionError(
+                f"{weights} training to {epochs} epochs is finished, nothing to resume."
+            )
         if epochs < start_epoch:
             LOGGER.info(
                 f"{weights} has been trained for {ckpt['epoch']} epochs. Fine-tuning for {epochs} more epochs."
