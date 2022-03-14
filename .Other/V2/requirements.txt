@@ -19,7 +19,7 @@ backcall @ file:///home/conda/feedstock_root/build_artifacts/backcall_1592338393
 backoff==1.11.1
 backports.functools-lru-cache @ file:///home/conda/feedstock_root/build_artifacts/backports.functools_lru_cache_1618230623929/work
 backports.zoneinfo==0.2.1
-base58==2.1.0
+base58==2.1.1
 black==21.11b1
 bleach @ file:///home/conda/feedstock_root/build_artifacts/bleach_1629908509068/work
 blessings==1.7
