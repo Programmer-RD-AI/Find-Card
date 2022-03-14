@@ -7,6 +7,7 @@ model = Model()
 
 
 class Test_Model(unittest.TestCase):
+
     def test_predict_test_imgs(self):
 
         self.assertEqual(type(model.test()[0]), np.ndarray,

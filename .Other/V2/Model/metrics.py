@@ -2,6 +2,7 @@ from Model import *
 
 
 class Metrics:
+
     def __init__(self):
         self.lowest_rmse = 0
         self.r_mean_squared_error = MeanSquaredError(squared=False)
