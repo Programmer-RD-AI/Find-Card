@@ -32,7 +32,7 @@ backports.shutil-get-terminal-size @ file:///tmp/build/80754af9/backports.shutil
 backports.tempfile @ file:///home/linux1/recipes/ci/backports.tempfile_1610991236607/work
 backports.weakref==1.0.post1
 backports.zoneinfo==0.2.1
-base58==2.1.0
+base58==2.1.1
 beautifulsoup4 @ file:///home/linux1/recipes/ci/beautifulsoup4_1610988766420/work
 bitarray @ file:///tmp/build/80754af9/bitarray_1620827551536/work
 bkcharts==0.2
