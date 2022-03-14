@@ -27,7 +27,7 @@ blinker==1.4
 boto3==1.18.55
 botocore==1.21.55
 brotlipy==0.7.0
-cachetools==4.2.1
+cachetools==4.2.4
 certifi==2021.5.30
 cffi @ file:///tmp/build/80754af9/cffi_1625807838443/work
 cfgv==3.3.1
