@@ -79,7 +79,7 @@ Deprecated==1.2.13
 -e /media/indika/Sync/anaconda3/lib/python3.8/site-packages
 diff-match-patch @ file:///tmp/build/80754af9/diff-match-patch_1594828741838/work
 dill==0.3.4
-distlib==0.3.2
+distlib==0.3.4
 distributed @ file:///tmp/build/80754af9/distributed_1620902833129/work
 distro==1.6.0
 dlib==19.22.0
