@@ -51,7 +51,7 @@ certifi==2021.5.30
 cffi @ file:///tmp/build/80754af9/cffi_1613246945912/work
 cfgv==3.3.1
 chardet @ file:///tmp/build/80754af9/chardet_1607706746162/work
-charset-normalizer==2.0.4
+charset-normalizer==2.0.12
 clearml==1.0.4
 click==8.0.1
 cloudpickle==1.6.0
