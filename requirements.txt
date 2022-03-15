@@ -178,7 +178,7 @@ jupyterlab-pygments==0.1.2
 jupyterlab-server==2.8.2
 jupyterlab-widgets==1.0.2
 kaggle==1.5.12
-kaleido==0.2.1
+kaleido==0.2.1.post1
 keras==2.8.0
 keras-nightly==2.5.0.dev2021032900
 Keras-Preprocessing==1.1.2
