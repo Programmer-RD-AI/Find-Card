@@ -160,7 +160,7 @@ jeepney @ file:///tmp/build/80754af9/jeepney_1606148855031/work
 Jinja2 @ file:///home/conda/feedstock_root/build_artifacts/jinja2_1633656206378/work
 jmespath==0.10.0
 joblib==1.0.1
-json5==0.9.5
+json5==0.9.6
 jsonschema @ file:///tmp/build/80754af9/jsonschema_1602607155483/work
 jupyter==1.0.0
 jupyter-client @ file:///tmp/build/80754af9/jupyter_client_1616770841739/work
