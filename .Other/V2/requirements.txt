@@ -134,7 +134,7 @@ mkl-random @ file:///tmp/build/80754af9/mkl_random_1626186064646/work
 mkl-service==2.4.0
 mongoengine==0.20.0
 motor==2.5.1
-msgpack==1.0.2
+msgpack==1.0.3
 multidict==5.1.0
 munkres==1.1.4
 mypy-extensions==0.4.3
