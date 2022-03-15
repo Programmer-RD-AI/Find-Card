@@ -125,7 +125,7 @@ gpustat==0.6.0
 greenlet==1.1.2
 grpcio==1.42.0
 grpcio-status==1.44.0
-gTTS==2.2.3
+gTTS==2.2.4
 gunicorn==20.1.0
 h11==0.9.0
 h5py==3.6.0
