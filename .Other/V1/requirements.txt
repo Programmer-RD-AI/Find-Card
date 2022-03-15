@@ -114,7 +114,7 @@ future==0.18.2
 fvcore==0.1.5.post20220305
 gast==0.3.3
 gevent @ file:///tmp/build/80754af9/gevent_1616770671827/work
-gitdb==4.0.7
+gitdb==4.0.9
 GitPython==3.1.27
 glob2==0.7
 gmpy2==2.0.8
