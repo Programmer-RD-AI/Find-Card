@@ -239,7 +239,7 @@ parso==0.7.0
 partd @ file:///tmp/build/80754af9/partd_1618000087440/work
 passlib==1.7.4
 path @ file:///tmp/build/80754af9/path_1614022220526/work
-pathlib2==2.3.5
+pathlib2==2.3.7.post1
 pathspec==0.9.0
 pathtools==0.1.2
 patool==1.12
