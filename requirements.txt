@@ -245,7 +245,7 @@ olefile==0.46
 onboard==1.4.1
 opencensus==0.8.0
 opencensus-context==0.1.2
-opencv-python==4.5.3.56
+opencv-python==4.5.5.64
 openpyxl==3.0.9
 opt-einsum==3.3.0
 orderedmultidict==1.0.1
