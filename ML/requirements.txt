@@ -231,7 +231,7 @@ olefile @ file:///Users/ktietz/demo/mc3/conda-bld/olefile_1629805411829/work
 omegaconf==2.1.1
 opencensus==0.8.0
 opencensus-context==0.1.2
-opencv-contrib-python==4.5.5.62
+opencv-contrib-python==4.5.5.64
 opencv-python==4.5.4.60
 opencv-python-headless==4.5.4.60
 openpyxl==3.0.9
