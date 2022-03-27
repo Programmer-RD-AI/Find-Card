@@ -164,7 +164,7 @@ jsonschema==4.2.1
 jupyter @ file:///home/conda/feedstock_root/build_artifacts/jupyter_1611871900135/work
 jupyter-client==7.1.2
 jupyter-console @ file:///home/conda/feedstock_root/build_artifacts/jupyter_console_1616560109969/work
-jupyter-core==4.9.1
+jupyter-core==4.9.2
 jupyter-server==1.12.0
 jupyterlab==3.2.4
 jupyterlab-pygments==0.1.2
