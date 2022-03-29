@@ -145,7 +145,7 @@ nbformat @ file:///home/conda/feedstock_root/build_artifacts/nbformat_1617383142
 ndjson==0.3.1
 nest-asyncio @ file:///home/conda/feedstock_root/build_artifacts/nest-asyncio_1617163391303/work
 networkx==2.6.3
-nltk==3.6.5
+nltk==3.6.6
 nodeenv==1.6.0
 notebook @ file:///home/conda/feedstock_root/build_artifacts/notebook_1631733685426/work
 numpy==1.21.1
