@@ -294,7 +294,7 @@ pytest==6.2.3
 python-dateutil==2.8.2
 python-jsonrpc-server @ file:///tmp/build/80754af9/python-jsonrpc-server_1600278539111/work
 python-language-server @ file:///tmp/build/80754af9/python-language-server_1607972495879/work
-pytorch-lightning==1.4.9
+pytorch-lightning==1.6.0
 pytz==2021.1
 PyWavelets==1.1.1
 pyxdg @ file:///tmp/build/80754af9/pyxdg_1603822279816/work
