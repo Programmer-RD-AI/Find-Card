@@ -246,7 +246,7 @@ patool==1.12
 patsy==0.5.1
 pep8==1.7.1
 pexpect @ file:///tmp/build/80754af9/pexpect_1605563209008/work
-phonenumbers==8.12.29
+phonenumbers==8.12.48
 pickleshare @ file:///tmp/build/80754af9/pickleshare_1606932040724/work
 Pillow==9.0.1
 pkginfo==1.7.0
