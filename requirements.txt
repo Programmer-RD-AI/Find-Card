@@ -46,7 +46,7 @@ bleach==4.1.0
 blessings==1.7
 blinker==1.4
 boto3==1.20.13
-breezy==3.2.1
+breezy==3.2.2
 Brlapi==0.7.0
 cachetools==4.2.4
 catfish==1.4.13
