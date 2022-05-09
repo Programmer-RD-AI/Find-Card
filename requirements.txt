@@ -260,7 +260,7 @@ pathtools==0.1.2
 patiencediff==0.2.2
 patool==1.12
 pexpect==4.8.0
-phonenumbers==8.12.37
+phonenumbers==8.12.48
 pickleshare==0.7.5
 Pillow==9.0.1
 pip-review==1.1.1
