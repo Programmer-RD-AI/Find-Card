@@ -186,3 +186,9 @@ ML/Model/dataset/open_image_raw_data/test-images-with-rotation.csv
 ML/Model/dataset/open_image_raw_data/test-annotations-human-imagelabels-boxable.csv
 ML/Model/dataset/open_image_raw_data/oidv6-train-images-with-labels-with-rotation.csv
 ML/Model/dataset/open_image_raw_data/oidv6-train-annotations-human-imagelabels.csv
+ML/Model/dataset/Img/
+.histroy
+ML/Model/dataset/save/Data.json
+ML/Model/dataset/save/Data.csv
+ML/Model/dataset/save/create_image_urls.csv
+ML/Model/dataset/save/create_bbox.csv
