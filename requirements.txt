@@ -149,7 +149,7 @@ humanfriendly==10.0
 identify==2.4.12
 idna==2.10
 imageai==2.1.6
-imageio-ffmpeg==0.4.5
+imageio-ffmpeg==0.4.7
 imbalanced-learn==0.8.1
 importlib-metadata==4.8.2
 importlib-resources==5.4.0
