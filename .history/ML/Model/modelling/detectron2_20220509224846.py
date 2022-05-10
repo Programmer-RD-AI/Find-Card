@@ -97,17 +97,25 @@ class Detectron2:
             "batch_size_per_images": [8, 16, 32, 64, 128, 256, 512],
         }  # Tests for Param Tunning
         try:
-            DatasetCatalog.register("data", self.load_data)  # Registering the training data
-            MetadataCatalog.get("data").set(thing_classes=self.labels)  # Adding the labels
+            DatasetCatalog.register(
+                "data", self.load_data
+            )  # Registering the training data
+            MetadataCatalog.get("data").set(
+                thing_classes=self.labels
+            )  # Adding the labels
             self.metadata = MetadataCatalog.get("data")  # Getting the metadata
             DatasetCatalog.register(
                 "test", lambda: self.load_data(test=True)
             )  # Registering the test data
-            MetadataCatalog.get("test").set(thing_classes=self.labels)  # Adding the labels
-            self.metadata_test = MetadataCatalog.get("test")  # Getting the metadata
+            MetadataCatalog.get("test").set(
+                thing_classes=self.labels
+            )  # Adding the labels
+            self.metadata_test = MetadataCatalog.get(
+                "test")  # Getting the metadata
         except Exception as e:
             self.metadata = MetadataCatalog.get("data")  # Getting the metadata
-            self.metadata_test = MetadataCatalog.get("test")  # Getting the metadata
+            self.metadata_test = MetadataCatalog.get(
+                "test")  # Getting the metadata
         self.BASE_LR = base_lr
         self.MAX_ITER = max_iter
         self.EVAL_PERIOD = eval_period
@@ -145,7 +153,9 @@ class Detectron2:
             files_to_remove.remove("test_coco_format.json")
         except Exception as e:
             print(e)
-        for file_to_remove in tqdm(files_to_remove):  # Iter over the files in the directory
+        for file_to_remove in tqdm(
+            files_to_remove
+        ):  # Iter over the files in the directory
             os.remove(
                 f"/media/indika/Sync/Programmer-RD-AI/Programming/Projects/Python/Rest-Api/Car-Object-Detection-REST-API/Find-Card/ML/Model/output/{file_to_remove}"
             )  # Delete the iter file
@@ -182,8 +192,10 @@ class Detectron2:
         w = xmax - xmin
         h = ymax - ymin
         x, y, w, h = round(x), round(y), round(w), round(h)
-        roi = img[y : y + h, x : x + w]  # crop the image
-        cv2.rectangle(img, (x, y), (x + w, y + h), (200, 0, 0), 10)  # draw box around the bbox
+        roi = img[y: y + h, x: x + w]  # crop the image
+        cv2.rectangle(
+            img, (x, y), (x + w, y + h), (200, 0, 0), 10
+        )  # draw box around the bbox
         return [img, roi]
 
     def load_data(self, test: bool = False) -> list:
@@ -279,16 +291,20 @@ class Detectron2:
         """
         torch.cuda.empty_cache()
         cfg = get_cfg()  # Creating a new cfg
-        cfg.merge_from_file(model_zoo.get_config_file(self.model))  # Add the model
+        cfg.merge_from_file(model_zoo.get_config_file(
+            self.model))  # Add the model
         cfg.DATASETS.TRAIN = ("data",)  # adding train DataSet
         cfg.DATASETS.TEST = ()
-        cfg.MODEL.WEIGHTS = model_zoo.get_checkpoint_url(self.model)  # Adding the weights
+        cfg.MODEL.WEIGHTS = model_zoo.get_checkpoint_url(
+            self.model
+        )  # Adding the weights
         cfg.SOLVER.MAX_ITER = self.MAX_ITER  # Set Max iter
         cfg.TEST.EVAL_PERIOD = self.EVAL_PERIOD  # Set Eval Period
         cfg.SOLVER.BASE_LR = self.BASE_LR  # Set Base LR
         cfg.SOLVER.STEPS = []  # Set Steps
         cfg.SOLVER.IMS_PER_BATCH = self.IMS_PER_BATCH  # Set IMS_PER_BATCH
-        cfg.MODEL.ROI_HEADS.NUM_CLASSES = len(self.labels)  # Set len(self.labels)
+        cfg.MODEL.ROI_HEADS.NUM_CLASSES = len(
+            self.labels)  # Set len(self.labels)
         cfg.MODEL.ROI_HEADS.BATCH_SIZE_PER_IMAGE = (
             self.BATCH_SIZE_PER_IMAGE
         )  # Set Batch_Size_Per_Image
@@ -321,7 +337,9 @@ class Detectron2:
         self.cfg.MODEL.ROI_HEADS.SCORE_THRESH_TEST = (
             self.SCORE_THRESH_TEST
         )  # Setting SCORE_THRESH_TEST
-        self.cfg.MODEL.WEIGHTS = "./Model/output/model_final.pth"  # The saved weights of the model
+        self.cfg.MODEL.WEIGHTS = (
+            "./Model/output/model_final.pth"  # The saved weights of the model
+        )
         predictor = DefaultPredictor(self.cfg)  # Creating predictor
         torch.cuda.empty_cache()
         return predictor
@@ -363,8 +381,12 @@ class Detectron2:
         - predictor - to create the evaluator
         """
         torch.cuda.empty_cache()
-        evaluator = COCOEvaluator(metadata, output_dir="./Model/output/")  # Create evaluator
-        val_loader = build_detection_test_loader(self.cfg, metadata)  # Create data loader
+        evaluator = COCOEvaluator(
+            metadata, output_dir="./Model/output/"
+        )  # Create evaluator
+        val_loader = build_detection_test_loader(
+            self.cfg, metadata
+        )  # Create data loader
         metrics = inference_on_dataset(
             predictor.model, val_loader, evaluator
         )  # Test the data with the evaluator
@@ -459,11 +481,18 @@ class Detectron2:
         w = xmax - xmin
         h = ymax - ymin
         preds = predictor(img)
-        if len(preds["instances"].__dict__["_fields"]["pred_boxes"].__dict__["tensor"]) <= 0:
-            print(preds["instances"].__dict__["_fields"]["pred_boxes"].__dict__["tensor"])
-            preds["instances"].__dict__["_fields"]["pred_boxes"].__dict__["tensor"] = torch.tensor(
-                [[1, 1, 1, 1]]
+        if (
+            len(preds["instances"].__dict__["_fields"]
+                ["pred_boxes"].__dict__["tensor"])
+            <= 0
+        ):
+            print(
+                preds["instances"].__dict__[
+                    "_fields"]["pred_boxes"].__dict__["tensor"]
             )
+            preds["instances"].__dict__["_fields"]["pred_boxes"].__dict__[
+                "tensor"
+            ] = torch.tensor([[1, 1, 1, 1]])
         target = torch.tensor([xmin, ymin, xmax, ymax])
         return (preds, target, x, y, w, h, xmin, ymin, xmax, ymax, height, width)
 
