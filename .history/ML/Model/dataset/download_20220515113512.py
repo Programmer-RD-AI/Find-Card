@@ -72,7 +72,7 @@ class Download:
                 "/m/04lmyz",
                 "/m/09141t",
                 "/m/0cqdf",
-                "/m/0jbk"
+                "/m/0jbk",
             ]
         if labels_r is None:
             labels_r = [
@@ -252,7 +252,8 @@ class Download:
             loader_iter = tqdm(range(1, len(self.image_urls)))
             for i in loader_iter:
                 loader_iter.set_description(str(len(image_urls_df)))
-                image_urls_df = image_urls_df.append(pd.read_csv(self.image_urls[i]))
+                image_urls_df = image_urls_df.append(
+                    pd.read_csv(self.image_urls[i]))
             image_urls_df.sample(frac=1)
 
             print("Loaded Image Urls")
@@ -282,7 +283,8 @@ class Download:
             print("Creating imageids")
             labels_and_imageid = self.load_labels_and_imageid()
             for labelname, imageid in zip(
-                tqdm(labels_and_imageid["LabelName"]), labels_and_imageid["ImageID"]
+                tqdm(labels_and_imageid["LabelName"]
+                     ), labels_and_imageid["ImageID"]
             ):
                 if labelname in self.labels_r:
                     self.idx_1 += 1
@@ -423,7 +425,8 @@ class Download:
                     ]
                     for idx_3 in range(len(imgid_of_iabaid)):
                         imgid_of_iabaid_iter = self.images_and_bbox_and_imgid_[
-                            self.images_and_bbox_and_imgid_["ImageID"] == imgid[0]
+                            self.images_and_bbox_and_imgid_[
+                                "ImageID"] == imgid[0]
                         ].iloc[idx_3]
                         threading.Thread(
                             target=data["ImageID"].append,
