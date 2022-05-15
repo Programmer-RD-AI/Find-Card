@@ -63,28 +63,11 @@ class Download:
         if download_url_data is None:
             self.download_url_data = []
         if labels is None:
-            labels = [
-                "/m/01h44",
-                "/m/01m0p1",
-                "/m/02hhhb",
-                "/m/0449p",
-                "/m/0464z4",
-                "/m/04lmyz",
-                "/m/09141t",
-                "/m/0cqdf",
-                "/m/0jbk",
-            ]
+            labels = ["/m/01h44", "/m/01m0p1", "/m/02hhhb", "/m/0449p", "/m/0464z4"]
         if labels_r is None:
             labels_r = [
-                "/m/01h44",
-                "/m/01m0p1",
-                "/m/02hhhb",
-                "/m/0449p",
-                "/m/0464z4",
-                "/m/04lmyz",
-                "/m/09141t",
-                "/m/0cqdf",
-                "/m/0jbk",
+                "/m/0r3vbqy",
+                "/m/025rxrz",
             ]
         if labels_and_imageids is None:
             labels_and_imageids = [

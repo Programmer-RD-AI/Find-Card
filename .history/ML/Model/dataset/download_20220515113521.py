@@ -75,7 +75,7 @@ class Download:
                 "/m/0jbk",
             ]
         if labels_r is None:
-            labels_r = [
+            labels = [
                 "/m/01h44",
                 "/m/01m0p1",
                 "/m/02hhhb",
