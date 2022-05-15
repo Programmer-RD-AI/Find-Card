@@ -510,10 +510,10 @@ class Download:
                         old_ourl = ourl
                         image_id_iter.set_description(f"{self.idx}")
                         self.idx += 1
-                        urlretrieve(
-                            ourl,
-                            f"/media/indika/Sync/Programmer-RD-AI/Programming/Projects/Python/Rest-Api/Car-Object-Detection-REST-API/Find-Card/ML/Model/dataset/Img/{self.idx}.png",
-                        )
+                        # urlretrieve(
+                        #     ourl,
+                        #     f"/media/indika/Sync/Programmer-RD-AI/Programming/Projects/Python/Rest-Api/Car-Object-Detection-REST-API/Find-Card/ML/Model/dataset/Img/{self.idx}.png",
+                        # )
                         new_data["Path"].append(f"{self.idx}.png")
                         new_data["XMin"].append(xmin)
                         new_data["YMin"].append(ymin)
@@ -530,7 +530,6 @@ class Download:
             )
             data.to_json(
                 "/media/indika/Sync/Programmer-RD-AI/Programming/Projects/Python/Rest-Api/Car-Object-Detection-REST-API/Find-Card/ML/Model/dataset/save/Data.json",
-               
             )
             print("Downloaded Images")
             return new_data
