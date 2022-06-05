@@ -530,7 +530,7 @@ class Download:
             )
             data.to_json(
                 "/media/indika/Sync/Programmer-RD-AI/Programming/Projects/Python/Rest-Api/Car-Object-Detection-REST-API/Find-Card/ML/Model/dataset/save/Data.json",
-               
+
             )
             print("Downloaded Images")
             return new_data
