@@ -91,17 +91,22 @@ class Detectron2:
             "batch_size_per_images": [8, 16, 32, 64, 128, 256, 512],
         }  # Tests for Param Tunning
         try:
-            DatasetCatalog.register("data", self.load_data)  # Registering the training data
-            MetadataCatalog.get("data").set(thing_classes=self.labels)  # Adding the labels
+            DatasetCatalog.register(
+                "data", self.load_data)  # Registering the training data
+            MetadataCatalog.get("data").set(
+                thing_classes=self.labels)  # Adding the labels
             self.metadata = MetadataCatalog.get("data")  # Getting the metadata
             DatasetCatalog.register(
-                "test", lambda: self.load_data(test=True)
-            )  # Registering the test data
-            MetadataCatalog.get("test").set(thing_classes=self.labels)  # Adding the labels
-            self.metadata_test = MetadataCatalog.get("test")  # Getting the metadata
+                "test",
+                lambda: self.load_data(test=True))  # Registering the test data
+            MetadataCatalog.get("test").set(
+                thing_classes=self.labels)  # Adding the labels
+            self.metadata_test = MetadataCatalog.get(
+                "test")  # Getting the metadata
         except Exception as e:
             self.metadata = MetadataCatalog.get("data")  # Getting the metadata
-            self.metadata_test = MetadataCatalog.get("test")  # Getting the metadata
+            self.metadata_test = MetadataCatalog.get(
+                "test")  # Getting the metadata
         self.BASE_LR = base_lr
         self.MAX_ITER = max_iter
         self.EVAL_PERIOD = eval_period
@@ -113,18 +118,16 @@ class Detectron2:
         self.cfg = self.create_cfg()  # Creating the model config
         self.create_target_and_preds_iter = create_target_and_preds
         self.test_sample_size = test_sample_size
-        self.config = (
-            {
-                "BASE_LR": self.BASE_LR,
-                "MAX_ITER": self.MAX_ITER,
-                "EVAL_PERIOD": self.EVAL_PERIOD,
-                "IMS_PER_BATCH": self.IMS_PER_BATCH,
-                "BATCH_SIZE_PER_IMAGE": self.BATCH_SIZE_PER_IMAGE,
-                "SCORE_THRESH_TEST": self.SCORE_THRESH_TEST,
-                "MODEL": self.model,
-                "NAME": self.NAME,
-            },
-        )
+        self.config = ({
+            "BASE_LR": self.BASE_LR,
+            "MAX_ITER": self.MAX_ITER,
+            "EVAL_PERIOD": self.EVAL_PERIOD,
+            "IMS_PER_BATCH": self.IMS_PER_BATCH,
+            "BATCH_SIZE_PER_IMAGE": self.BATCH_SIZE_PER_IMAGE,
+            "SCORE_THRESH_TEST": self.SCORE_THRESH_TEST,
+            "MODEL": self.model,
+            "NAME": self.NAME,
+        }, )
         self.remove_files_in_output()
 
     @staticmethod
@@ -139,7 +142,8 @@ class Detectron2:
             files_to_remove.remove("test_coco_format.json")
         except Exception as e:
             print(e)
-        for file_to_remove in tqdm(files_to_remove):  # Iter over the files in the directory
+        for file_to_remove in tqdm(
+                files_to_remove):  # Iter over the files in the directory
             os.remove(
                 f"/media/indika/Sync/Programmer-RD-AI/Programming/Projects/Python/Rest-Api/Car-Object-Detection-REST-API/Find-Card/ML/Model/output/{file_to_remove}"
             )  # Delete the iter file
@@ -156,10 +160,9 @@ class Detectron2:
         )  # reading the img
         height, width = cv2.imread(
             "/media/indika/Sync/Programmer-RD-AI/Programming/Projects/Python/Rest-Api/Car-Object-Detection-REST-API/Find-Card/ML/Model/dataset/Img/"
-            + info["Path"]
-        ).shape[
-            :2
-        ]  # getting the height and width of the image
+            +
+            info["Path"]).shape[:
+                                2]  # getting the height and width of the image
         xmin, ymin, xmax, ymax = (
             info["XMin"],
             info["YMin"],
@@ -176,8 +179,9 @@ class Detectron2:
         w = xmax - xmin
         h = ymax - ymin
         x, y, w, h = round(x), round(y), round(w), round(h)
-        roi = img[y : y + h, x : x + w]  # crop the image
-        cv2.rectangle(img, (x, y), (x + w, y + h), (200, 0, 0), 10)  # draw box around the bbox
+        roi = img[y:y + h, x:x + w]  # crop the image
+        cv2.rectangle(img, (x, y), (x + w, y + h), (200, 0, 0),
+                      10)  # draw box around the bbox
         return [img, roi]
 
     def load_data(self, test: bool = False) -> list:
@@ -191,7 +195,7 @@ class Detectron2:
             self.data = np.load(
                 "./Model/save/data.npy", allow_pickle=True
             )  # Loading already saved detectron2 format file
-            self.data = self.data[: self.test_sample_size]
+            self.data = self.data[:self.test_sample_size]
             return self.data
         # if "data.npy" in os.listdir("./Model/save/"):
         #     self.data = np.load("./Model/save/data.npy", allow_pickle=True)
@@ -206,12 +210,10 @@ class Detectron2:
                 info = self.data.iloc[idx]
                 Image.open(
                     "/media/indika/Sync/Programmer-RD-AI/Programming/Projects/Python/Rest-Api/Car-Object-Detection-REST-API/Find-Card/ML/Model/dataset/Img/"
-                    + info["Path"]
-                )
+                    + info["Path"])
                 height, width = cv2.imread(
                     "/media/indika/Sync/Programmer-RD-AI/Programming/Projects/Python/Rest-Api/Car-Object-Detection-REST-API/Find-Card/ML/Model/dataset/Img/"
-                    + info["Path"]
-                ).shape[:2]
+                    + info["Path"]).shape[:2]
                 xmin, ymin, xmax, ymax = (
                     info["XMin"],
                     info["YMin"],
@@ -224,17 +226,14 @@ class Detectron2:
                 ymax = round(ymax * height)
                 record["file_name"] = (
                     "/media/indika/Sync/Programmer-RD-AI/Programming/Projects/Python/Rest-Api/Car-Object-Detection-REST-API/Find-Card/ML/Model/dataset/Img/"
-                    + info["Path"]
-                )
+                    + info["Path"])
                 record["height"] = height
                 record["width"] = width
-                objs = [
-                    {
-                        "bbox": [xmin, ymin, xmax, ymax],
-                        "bbox_mode": BoxMode.XYXY_ABS,
-                        "category_id": 0,
-                    }
-                ]
+                objs = [{
+                    "bbox": [xmin, ymin, xmax, ymax],
+                    "bbox_mode": BoxMode.XYXY_ABS,
+                    "category_id": 0,
+                }]
                 record["image_id"] = idx
                 record["annotations"] = objs
                 new_data.append(record)
@@ -242,7 +241,7 @@ class Detectron2:
                 pil_issues_idx = pil_issues_idx + 1
         print(len(new_data))
         if test is True:
-            return new_data[: self.test_sample_size]
+            return new_data[:self.test_sample_size]
         return new_data
 
     def save(self, **kwargs: dict) -> None:
@@ -254,7 +253,7 @@ class Detectron2:
         torch.cuda.empty_cache()
         files_and_object = kwargs
         for files_and_object_key, files_and_object_val in tqdm(
-            zip(files_and_object.keys(), files_and_object.values())
+                zip(files_and_object.keys(), files_and_object.values())
         ):  # iterate over the file and object
             torch.save(
                 files_and_object_val,
@@ -273,26 +272,26 @@ class Detectron2:
         """
         torch.cuda.empty_cache()
         cfg = get_cfg()  # Creating a new cfg
-        cfg.merge_from_file(model_zoo.get_config_file(self.model))  # Add the model
-        cfg.DATASETS.TRAIN = ("data",)  # adding train DataSet
+        cfg.merge_from_file(model_zoo.get_config_file(
+            self.model))  # Add the model
+        cfg.DATASETS.TRAIN = ("data", )  # adding train DataSet
         cfg.DATASETS.TEST = ()
-        cfg.MODEL.WEIGHTS = model_zoo.get_checkpoint_url(self.model)  # Adding the weights
+        cfg.MODEL.WEIGHTS = model_zoo.get_checkpoint_url(
+            self.model)  # Adding the weights
         cfg.SOLVER.MAX_ITER = self.MAX_ITER  # Set Max iter
         cfg.TEST.EVAL_PERIOD = self.EVAL_PERIOD  # Set Eval Period
         cfg.SOLVER.BASE_LR = self.BASE_LR  # Set Base LR
         cfg.SOLVER.STEPS = []  # Set Steps
         cfg.SOLVER.IMS_PER_BATCH = self.IMS_PER_BATCH  # Set IMS_PER_BATCH
-        cfg.MODEL.ROI_HEADS.NUM_CLASSES = len(self.labels)  # Set len(self.labels)
+        cfg.MODEL.ROI_HEADS.NUM_CLASSES = len(
+            self.labels)  # Set len(self.labels)
         cfg.MODEL.ROI_HEADS.BATCH_SIZE_PER_IMAGE = (
-            self.BATCH_SIZE_PER_IMAGE
-        )  # Set Batch_Size_Per_Image
+            self.BATCH_SIZE_PER_IMAGE)  # Set Batch_Size_Per_Image
         cfg.OUTPUT_DIR = "./Model/output"
         torch.cuda.empty_cache()
         return cfg
 
-    def __train(
-        self,
-    ) -> DefaultTrainer:
+    def __train(self, ) -> DefaultTrainer:
         """
         - __train - trains the cfg
             this is used by Model.train() this is kind of the under function
@@ -313,9 +312,10 @@ class Detectron2:
         """
         torch.cuda.empty_cache()
         self.cfg.MODEL.ROI_HEADS.SCORE_THRESH_TEST = (
-            self.SCORE_THRESH_TEST
-        )  # Setting SCORE_THRESH_TEST
-        self.cfg.MODEL.WEIGHTS = "./Model/output/model_final.pth"  # The saved weights of the model
+            self.SCORE_THRESH_TEST)  # Setting SCORE_THRESH_TEST
+        self.cfg.MODEL.WEIGHTS = (
+            "./Model/output/model_final.pth"  # The saved weights of the model
+        )
         predictor = DefaultPredictor(self.cfg)  # Creating predictor
         torch.cuda.empty_cache()
         return predictor
@@ -348,20 +348,22 @@ class Detectron2:
             "test_images": test_images,
         }
 
-    def create_coco_eval_detectron2(
-        self, predictor: DefaultPredictor, metadata: str = "test"
-    ) -> dict:
+    def create_coco_eval_detectron2(self,
+                                    predictor: DefaultPredictor,
+                                    metadata: str = "test") -> dict:
         """
         - create_coco_eval_detectron2 - create COCO Evaluator and tests it
         -------------------------------
         - predictor - to create the evaluator
         """
         torch.cuda.empty_cache()
-        evaluator = COCOEvaluator(metadata, output_dir="./Model/output/")  # Create evaluator
-        val_loader = build_detection_test_loader(self.cfg, metadata)  # Create data loader
+        evaluator = COCOEvaluator(
+            metadata, output_dir="./Model/output/")  # Create evaluator
+        val_loader = build_detection_test_loader(
+            self.cfg, metadata)  # Create data loader
         metrics = inference_on_dataset(
-            predictor.model, val_loader, evaluator
-        )  # Test the data with the evaluator
+            predictor.model, val_loader,
+            evaluator)  # Test the data with the evaluator
         torch.cuda.empty_cache()
         return metrics
 
@@ -385,17 +387,17 @@ class Detectron2:
         except:
             return new_logs
 
-    def predict_test_images_detectron2(self, predictor: DefaultPredictor) -> list:
+    def predict_test_images_detectron2(self,
+                                       predictor: DefaultPredictor) -> list:
         """
         - predict_test_images_detectron2 - predict test images
         """
         imgs = []
         torch.cuda.empty_cache()
         for img in tqdm(
-            os.listdir(
-                "/media/indika/Sync/Programmer-RD-AI/Programming/Projects/Python/Rest-Api/Car-Object-Detection-REST-API/Find-Card/ML/Model/test_images/"
-            )[:5]
-        ):  # iterate over the test images
+                os.listdir(
+                    "/media/indika/Sync/Programmer-RD-AI/Programming/Projects/Python/Rest-Api/Car-Object-Detection-REST-API/Find-Card/ML/Model/test_images/"
+                )[:5]):  # iterate over the test images
             v = Visualizer(
                 cv2.imread(
                     f"/media/indika/Sync/Programmer-RD-AI/Programming/Projects/Python/Rest-Api/Car-Object-Detection-REST-API/Find-Card/ML/Model/test_images/{img}"
@@ -406,9 +408,7 @@ class Detectron2:
                 predictor(
                     cv2.imread(
                         f"/media/indika/Sync/Programmer-RD-AI/Programming/Projects/Python/Rest-Api/Car-Object-Detection-REST-API/Find-Card/ML/Model/test_images/{img}"
-                    )
-                )["instances"].to("cpu")
-            )  # Draw pred boxes
+                    ))["instances"].to("cpu"))  # Draw pred boxes
             v = v.get_image()[:, :, ::-1]
             plt.figure(figsize=(24, 12))
             plt.imshow(v)  # plot the image
@@ -416,28 +416,25 @@ class Detectron2:
                 f"/media/indika/Sync/Programmer-RD-AI/Programming/Projects/Python/Rest-Api/Car-Object-Detection-REST-API/Find-Card/ML/Model/preds/{img}"
             )
             plt.close()
-            imgs.append(
-                [
-                    f"/media/indika/Sync/Programmer-RD-AI/Programming/Projects/Python/Rest-Api/Car-Object-Detection-REST-API/Find-Card/ML/Model/test_images/{img}",
-                    v,
-                ]
-            )
+            imgs.append([
+                f"/media/indika/Sync/Programmer-RD-AI/Programming/Projects/Python/Rest-Api/Car-Object-Detection-REST-API/Find-Card/ML/Model/test_images/{img}",
+                v,
+            ])
         torch.cuda.empty_cache()
         return imgs
 
-    def create_target_and_preds_detectron2(self, predictor: DefaultPredictor) -> tuple:
+    def create_target_and_preds_detectron2(
+            self, predictor: DefaultPredictor) -> tuple:
         """
         - create_target_and_preds_detectron2 - create the target and predictions
         """
         info = self.data.iloc[self.create_target_and_preds_iter]
         img = cv2.imread(
             "/media/indika/Sync/Programmer-RD-AI/Programming/Projects/Python/Rest-Api/Car-Object-Detection-REST-API/Find-Card/ML/Model/dataset/Img/"
-            + info["Path"]
-        )
+            + info["Path"])
         height, width = cv2.imread(
             "/media/indika/Sync/Programmer-RD-AI/Programming/Projects/Python/Rest-Api/Car-Object-Detection-REST-API/Find-Card/ML/Model/dataset/Img/"
-            + info["Path"]
-        ).shape[:2]
+            + info["Path"]).shape[:2]
         xmin, ymin, xmax, ymax = (
             info["XMin"],
             info["YMin"],
@@ -453,13 +450,15 @@ class Detectron2:
         w = xmax - xmin
         h = ymax - ymin
         preds = predictor(img)
-        if len(preds["instances"].__dict__["_fields"]["pred_boxes"].__dict__["tensor"]) <= 0:
-            print(preds["instances"].__dict__["_fields"]["pred_boxes"].__dict__["tensor"])
-            preds["instances"].__dict__["_fields"]["pred_boxes"].__dict__["tensor"] = torch.tensor(
-                [[1, 1, 1, 1]]
-            )
+        if (len(preds["instances"].__dict__["_fields"]
+                ["pred_boxes"].__dict__["tensor"]) <= 0):
+            print(preds["instances"].__dict__["_fields"]
+                  ["pred_boxes"].__dict__["tensor"])
+            preds["instances"].__dict__["_fields"]["pred_boxes"].__dict__[
+                "tensor"] = torch.tensor([[1, 1, 1, 1]])
         target = torch.tensor([xmin, ymin, xmax, ymax])
-        return (preds, target, x, y, w, h, xmin, ymin, xmax, ymax, height, width)
+        return (preds, target, x, y, w, h, xmin, ymin, xmax, ymax, height,
+                width)
 
     def train(self, PROJECT_NAME, param) -> dict:
         """

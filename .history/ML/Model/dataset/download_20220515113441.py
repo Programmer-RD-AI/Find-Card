@@ -63,7 +63,15 @@ class Download:
         if download_url_data is None:
             self.download_url_data = []
         if labels is None:
-            labels = ["/m/01h44", "/m/01m0p1", "/m/02hhhb", "/m/0449p", "/m/0464z4","/m/04lmyz",""]
+            labels = [
+                "/m/01h44",
+                "/m/01m0p1",
+                "/m/02hhhb",
+                "/m/0449p",
+                "/m/0464z4",
+                "/m/04lmyz",
+                "",
+            ]
         if labels_r is None:
             labels_r = [
                 "/m/0r3vbqy",
@@ -109,65 +117,55 @@ class Download:
             self.idx_2 = idx_2
             self.idx_3 = idx_3
         except Exception as e:
-            raise ValueError(
-                f"""
+            raise ValueError(f"""
             In the indexing parameters 
             there was a error occurred 
             \n 
-            {e}"""
-            )
+            {e}""")
         try:
             # Initinalizing Data Storage
             self.data = data
         except Exception as e:
-            raise ValueError(
-                f"""
+            raise ValueError(f"""
                 In the Initinalizing Data Storage
                 parameters there was a error occurred.
                 \n
-                {e}"""
-            )
+                {e}""")
         try:
             # Labels of data
             self.labels = labels
             self.labels_r = labels_r
         except Exception as e:
-            raise ValueError(
-                f"""
+            raise ValueError(f"""
             In the Labels of data 
             parameters there was a error occurred 
             \n 
             {e}
-            """
-            )
+            """)
         try:
             # Data Loading file paths
             self.labels_and_imageids = labels_and_imageids
             self.bboxs = bboxs
             self.image_urls = image_urls
         except Exception as e:
-            raise ValueError(
-                f"""
+            raise ValueError(f"""
                 In the Data Loading
                 file paths parameters there 
                 was a error occurred.
                 \n
-                {e}"""
-            )
+                {e}""")
         try:
             # Collection of data
             self.imageids = init_imageids
             self.images_and_bbox_and_imgid_ = images_and_bbox_and_imgid_
             self.imgids = imgids
         except Exception as e:
-            raise ValueError(
-                f"""
+            raise ValueError(f"""
             In the Collection of data 
             parameters there was a error occurred 
             \n 
             {e}
-            """
-            )
+            """)
 
     # Loading data section
 
@@ -183,22 +181,19 @@ class Download:
             loader_iter = tqdm(range(1, len(self.labels_and_imageids)))
             for i in loader_iter:
                 labels_and_imageid = labels_and_imageid.append(
-                    pd.read_csv(self.labels_and_imageids[i])
-                )
+                    pd.read_csv(self.labels_and_imageids[i]))
                 loader_iter.set_description(str(len(labels_and_imageid)))
             labels_and_imageid.sample(frac=1)
             return labels_and_imageid
         except Exception as e:
-            raise ValueError(
-                f"""
+            raise ValueError(f"""
                 The function 
                 self.load_labels_and_imageid()
                 or 
                 Download().load_labels_and_imageid() 
                 is not working correctly. 
                 \n
-                {e}"""
-            )
+                {e}""")
 
     def load_bbox(self) -> pd.DataFrame:
         """summary_line
@@ -218,16 +213,14 @@ class Download:
 
             return bboxs_df
         except Exception as e:
-            raise ValueError(
-                f"""
+            raise ValueError(f"""
                 The function 
                 self.load_bbox() 
                 or 
                 Download().load_bbox() 
                 is not working correctly. 
                 \n
-                {e}"""
-            )
+                {e}""")
 
     def load_image_urls(self) -> pd.DataFrame:
         """summary_line
@@ -242,22 +235,21 @@ class Download:
             loader_iter = tqdm(range(1, len(self.image_urls)))
             for i in loader_iter:
                 loader_iter.set_description(str(len(image_urls_df)))
-                image_urls_df = image_urls_df.append(pd.read_csv(self.image_urls[i]))
+                image_urls_df = image_urls_df.append(
+                    pd.read_csv(self.image_urls[i]))
             image_urls_df.sample(frac=1)
 
             print("Loaded Image Urls")
             return image_urls_df
         except Exception as e:
-            raise ValueError(
-                f"""
+            raise ValueError(f"""
                 The function
                 self.load_image_urls() 
                 or 
                 Download().load_image_urls() 
                 is not working correctly.
                 \n
-                {e}"""
-            )
+                {e}""")
 
     # Creating data section
 
@@ -272,8 +264,8 @@ class Download:
             print("Creating imageids")
             labels_and_imageid = self.load_labels_and_imageid()
             for labelname, imageid in zip(
-                tqdm(labels_and_imageid["LabelName"]), labels_and_imageid["ImageID"]
-            ):
+                    tqdm(labels_and_imageid["LabelName"]),
+                    labels_and_imageid["ImageID"]):
                 if labelname in self.labels_r:
                     self.idx_1 += 1
                     threading.Thread(
@@ -288,16 +280,14 @@ class Download:
 
             return True
         except Exception as e:
-            raise ValueError(
-                f"""
+            raise ValueError(f"""
                 The function 
                 self.create_imageids() 
                 or 
                 Download().create_imageids() 
                 is not working correctly. 
                 \n 
-                {e}"""
-            )
+                {e}""")
 
     def create_bbox(self) -> bool:
         """summary_line
@@ -307,12 +297,9 @@ class Download:
         """
         try:
 
-            if self.recover is True and (
-                os.path.exists(
+            if self.recover is True and (os.path.exists(
                     "/media/indika/Sync/Programmer-RD-AI/Programming/Projects/Python/Rest-Api/Car-Object-Detection-REST-API/Find-Card/ML/Model/dataset/save/create_bbox.csv"
-                )
-                is True
-            ):
+            ) is True):
                 self.images_and_bbox_and_imgid_ = pd.read_csv(
                     "/media/indika/Sync/Programmer-RD-AI/Programming/Projects/Python/Rest-Api/Car-Object-Detection-REST-API/Find-Card/ML/Model/dataset/save/create_bbox.csv"
                 )
@@ -320,11 +307,11 @@ class Download:
             print("Creating Box")
             bboxs = self.load_bbox()
             for imgid in zip(
-                tqdm(bboxs["ImageID"]),
-                bboxs["XMin"],
-                bboxs["YMin"],
-                bboxs["XMax"],
-                bboxs["YMax"],
+                    tqdm(bboxs["ImageID"]),
+                    bboxs["XMin"],
+                    bboxs["YMin"],
+                    bboxs["XMax"],
+                    bboxs["YMax"],
             ):
                 imgid = list(imgid)
                 if str(imgid[0]) in self.imageids:
@@ -360,16 +347,14 @@ class Download:
 
             return True
         except Exception as e:
-            raise ValueError(
-                f"""
+            raise ValueError(f"""
                 The function 
                 self.create_bbox() 
                 or 
                 Download().create_bbox() 
                 is not working correctly. 
                 \n 
-                {e}"""
-            )
+                {e}""")
 
     def create_image_urls(self) -> bool:
         """summary_line
@@ -379,16 +364,14 @@ class Download:
         """
         try:
 
-            if self.recover is True and (
-                os.path.exists(
+            if self.recover is True and (os.path.exists(
                     "/media/indika/Sync/Programmer-RD-AI/Programming/Projects/Python/Rest-Api/Car-Object-Detection-REST-API/Find-Card/ML/Model/dataset/save/create_image_urls.csv"
-                )
-                is True
-            ):
+            ) is True):
                 self.download_url_data = pd.read_csv(
                     "/media/indika/Sync/Programmer-RD-AI/Programming/Projects/Python/Rest-Api/Car-Object-Detection-REST-API/Find-Card/ML/Model/dataset/save/create_image_urls.csv"
                 )  # [: self.number_of_split]
-                self.download_url_data = self.download_url_data.drop_duplicates()
+                self.download_url_data = self.download_url_data.drop_duplicates(
+                )
                 return True
             print("Creating Image Urls")
             data = {
@@ -403,18 +386,17 @@ class Download:
             }
             image_urls = self.load_image_urls()
             for imgid in zip(
-                tqdm((image_urls["ImageID"])),
-                image_urls["OriginalURL"],
-                image_urls["OriginalLandingURL"],
+                    tqdm((image_urls["ImageID"])),
+                    image_urls["OriginalURL"],
+                    image_urls["OriginalLandingURL"],
             ):
                 if imgid[0] in self.imgids:
                     imgid_of_iabaid = self.images_and_bbox_and_imgid_[
-                        self.images_and_bbox_and_imgid_["ImageID"] == imgid[0]
-                    ]
+                        self.images_and_bbox_and_imgid_["ImageID"] == imgid[0]]
                     for idx_3 in range(len(imgid_of_iabaid)):
                         imgid_of_iabaid_iter = self.images_and_bbox_and_imgid_[
-                            self.images_and_bbox_and_imgid_["ImageID"] == imgid[0]
-                        ].iloc[idx_3]
+                            self.images_and_bbox_and_imgid_["ImageID"] ==
+                            imgid[0]].iloc[idx_3]
                         threading.Thread(
                             target=data["ImageID"].append,
                             args=[imgid[0]],
@@ -461,16 +443,14 @@ class Download:
 
             return True
         except Exception as e:
-            raise ValueError(
-                f"""
+            raise ValueError(f"""
                 The function 
                 self.create_image_urls()
                 or 
                 Download().create_image_urls()
                 is not working correctly.
                 \n
-                {e}"""
-            )
+                {e}""")
 
     # Downloading data section
 
@@ -495,12 +475,12 @@ class Download:
             image_id_iter = tqdm((self.download_url_data["ImageID"]))
             old_ourl = ""
             for img_url, xmin, ymin, xmax, ymax, ourl in zip(
-                image_id_iter,
-                self.download_url_data["XMin"],
-                self.download_url_data["YMin"],
-                self.download_url_data["XMax"],
-                self.download_url_data["YMax"],
-                self.download_url_data["OriginalURL"],
+                    image_id_iter,
+                    self.download_url_data["XMin"],
+                    self.download_url_data["YMin"],
+                    self.download_url_data["XMax"],
+                    self.download_url_data["YMax"],
+                    self.download_url_data["OriginalURL"],
             ):
                 try:
                     if ourl != old_ourl:
@@ -527,16 +507,14 @@ class Download:
             print("Downloaded Images")
             return new_data
         except Exception as e:
-            raise ValueError(
-                f"""
+            raise ValueError(f"""
                 The function
                 self.download_images()
                 or 
                 Download().download_images() 
                 is not working correctly.
                 \n
-                {e}"""
-            )
+                {e}""")
 
     def download(self) -> bool:
         """summary_line
@@ -557,12 +535,10 @@ class Download:
 
             print("Finished Download Process")
         except Exception as e:
-            raise ValueError(
-                f"""
+            raise ValueError(f"""
                 The function self.download()
                 or
                 Download().download()
                 is not working correctly.
                 \n
-                {e}"""
-            )
+                {e}""")
