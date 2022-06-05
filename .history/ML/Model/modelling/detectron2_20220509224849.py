@@ -43,9 +43,6 @@ class Detectron2:
         name: str = "baseline",
         create_target_and_preds: int = 29,
         test_sample_size=625,
-        # data=pd.read_csv(
-        #     "/media/indika/Sync/Programmer-RD-AI/Programming/Projects/Python/Rest-Api/Car-Object-Detection-REST-API/Find-Card/ML/Model/dataset/save/Data.csv"
-        # ),
     ) -> None:
         """
         - __init__ = initialize and get all of the params need
@@ -68,9 +65,6 @@ class Detectron2:
             labels = ["Find-Card"]
         self.remove_files_in_output()
         self.data = data
-        # self.data_other = pd.read_csv(
-        # "/media/indika/Sync/Programmer-RD-AI/Programming/Projects/Python/Rest-Api/Car-Object-Detection-REST-API/Find-Card/ML/Model/dataset/save/Data.csv"
-        # )
         self.labels = labels
         self.devices = ["cpu", "cuda"]
         self.tests = {

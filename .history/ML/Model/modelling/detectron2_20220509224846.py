@@ -68,9 +68,6 @@ class Detectron2:
             labels = ["Find-Card"]
         self.remove_files_in_output()
         self.data = data
-        # self.data_other = pd.read_csv(
-        # "/media/indika/Sync/Programmer-RD-AI/Programming/Projects/Python/Rest-Api/Car-Object-Detection-REST-API/Find-Card/ML/Model/dataset/save/Data.csv"
-        # )
         self.labels = labels
         self.devices = ["cpu", "cuda"]
         self.tests = {
