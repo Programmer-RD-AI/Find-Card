@@ -114,7 +114,7 @@ jupyter @ file:///home/conda/feedstock_root/build_artifacts/jupyter_161187190013
 jupyter-client @ file:///home/conda/feedstock_root/build_artifacts/jupyter_client_1633454794268/work
 jupyter-console @ file:///home/conda/feedstock_root/build_artifacts/jupyter_console_1616560109969/work
 jupyter-core @ file:///home/conda/feedstock_root/build_artifacts/jupyter_core_1631852756538/work
-jupyter-server==1.15.4
+jupyter-server==1.17.0
 jupyterlab==3.3.1
 jupyterlab-server==2.6.0
 jupyterlab-widgets @ file:///home/conda/feedstock_root/build_artifacts/jupyterlab_widgets_1631590465624/work
