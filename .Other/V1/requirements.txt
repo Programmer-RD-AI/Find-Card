@@ -185,7 +185,7 @@ lightning-bolts==0.4.0
 livereload==2.6.3
 llvmlite==0.36.0
 locket==0.2.1
-lxml==4.6.5
+lxml==4.9.1
 Markdown==3.3.6
 MarkupSafe @ file:///home/conda/feedstock_root/build_artifacts/markupsafe_1621455677251/work
 matplotlib==3.4.3
