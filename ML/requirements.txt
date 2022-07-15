@@ -185,7 +185,7 @@ livereload==2.6.3
 lockfile==0.12.2
 lxml==4.6.5
 Mako==1.1.6
-Markdown==3.3.6
+Markdown==3.4.1
 MarkupSafe @ file:///tmp/build/80754af9/markupsafe_1621528148836/work
 marshmallow==3.14.1
 marshmallow-enum==1.5.1
