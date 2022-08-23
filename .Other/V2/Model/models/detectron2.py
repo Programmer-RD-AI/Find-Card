@@ -1,7 +1,5 @@
 class Model:
-    """
-    This class helps anyone to train a detectron2 model for this project easily so anyone can train this model.
-    """
+    """This class helps anyone to train a detectron2 model for this project easily so anyone can train this model."""
 
     def __init__(
         self,
@@ -106,9 +104,7 @@ class Model:
 
     @staticmethod
     def remove_files_in_output() -> None:
-        """
-        - remove_files_in_output - remove all of the file in ./output/
-        """
+        """- remove_files_in_output - remove all of the file in ./output/"""
         files_to_remove = os.listdir(
             "./output/")  # Get the files in the directory
         try:
@@ -259,9 +255,7 @@ class Model:
         return trainer
 
     def create_predictor(self) -> DefaultPredictor:
-        """
-        - create_predictor - create the predictor to predict images
-        """
+        """- create_predictor - create the predictor to predict images"""
         torch.cuda.empty_cache()
         self.cfg.MODEL.ROI_HEADS.SCORE_THRESH_TEST = (
             self.SCORE_THRESH_TEST)  # Setting SCORE_THRESH_TEST
@@ -293,9 +287,7 @@ class Model:
 
     @staticmethod
     def metrics_file_to_dict() -> list:
-        """
-        - metrics_file_to_dict - in ./output/metrics.json it logs the metrics of the model
-        """
+        """- metrics_file_to_dict - in ./output/metrics.json it logs the metrics of the model"""
         new_logs = []
         try:
             logs = open("./output/metrics.json", "r").read().split("\n")
@@ -312,9 +304,7 @@ class Model:
             return new_logs
 
     def predict_test_images(self, predictor: DefaultPredictor) -> list:
-        """
-        - predict_test_images - predict test images
-        """
+        """- predict_test_images - predict test images"""
         imgs = []
         torch.cuda.empty_cache()
         for img in tqdm(
@@ -334,9 +324,7 @@ class Model:
         return imgs
 
     def create_target_and_preds(self, predictor: DefaultPredictor) -> tuple:
-        """
-        - create_target_and_preds - create the target and predictions
-        """
+        """- create_target_and_preds - create the target and predictions"""
         info = self.data.iloc[self.create_target_and_preds_iter]
         img = cv2.imread("./Img/" + info["Path"])
         height, width = cv2.imread("./Img/" + info["Path"]).shape[:2]
@@ -365,9 +353,7 @@ class Model:
 
     @staticmethod
     def create_x_y_w_h(xmin: int, ymin: int, xmax: int, ymax: int) -> list:
-        """
-        - create_x_y_w_h - Conver xmin,ymin, xmax, ymax to x,y,w,h
-        """
+        """- create_x_y_w_h - Conver xmin,ymin, xmax, ymax to x,y,w,h"""
         x = xmin
         y = ymin
         w = xmax - xmin
@@ -376,9 +362,7 @@ class Model:
 
     @staticmethod
     def crop_img(x: int, y: int, w: int, h: int, img: np.array) -> np.array:
-        """
-        - crop_img - cropping the image using x,y,w,h
-        """
+        """- crop_img - cropping the image using x,y,w,h"""
         crop = img[y:y + h, x:x + w]
         cv2.imwrite("./test.png", crop)
         return crop
@@ -421,9 +405,7 @@ class Model:
         }
 
     def train(self) -> dict:
-        """
-        - train - trains the model
-        """
+        """- train - trains the model"""
         torch.cuda.empty_cache()
         wandb.init(
             project=PROJECT_NAME,
