@@ -15,9 +15,7 @@ class Metrics:
         init_ssim=0,
         init_psnr=0,
     ) -> None:
-        """
-        Initialize
-        """
+        """Initialize"""
         if init_ious is None:
             init_ious = []
         # IOU
@@ -39,9 +37,7 @@ class Metrics:
             raise ValueError(f"RMSE Not working {e}")
 
     def create_iou(self, preds: torch.tensor, targets: torch.tensor) -> float:
-        """
-        - create_iou - Create IOU
-        """
+        """- create_iou - Create IOU"""
         try:
             preds = (preds["instances"].__dict__["_fields"]
                      ["pred_boxes"].__dict__["tensor"])
@@ -67,9 +63,7 @@ class Metrics:
         preds: torch.tensor,
         target: torch.tensor,
     ) -> float:
-        """
-        - create_ssim - create SSIM # TODO it is not done yet
-        """
+        """- create_ssim - create SSIM # TODO it is not done yet"""
         try:
             preds_new = (preds["instances"].__dict__["_fields"]
                          ["pred_boxes"].__dict__["tensor"])
@@ -88,9 +82,7 @@ class Metrics:
         preds: torch.tensor,
         target: torch.tensor,
     ) -> float:
-        """
-        - create_ssim - create SSIM # TODO it is not done yet
-        """
+        """- create_ssim - create SSIM # TODO it is not done yet"""
         try:
             preds_new = (preds["instances"].__dict__["_fields"]
                          ["pred_boxes"].__dict__["tensor"])
@@ -114,9 +106,7 @@ class Metrics:
             raise ValueError(f"Some error occured in SSIM {e}")
 
     def create_psnr(self, preds: torch.tensor, target: torch.tensor) -> float:
-        """
-        - create_psnr - Peak signal-to-noise ratio (how similar is a image)
-        """
+        """- create_psnr - Peak signal-to-noise ratio (how similar is a image)"""
         try:
             preds_new = (preds["instances"].__dict__["_fields"]
                          ["pred_boxes"].__dict__["tensor"])
@@ -130,9 +120,7 @@ class Metrics:
 
     @staticmethod
     def create_ap(preds: torch.tensor, target: torch.tensor) -> float:
-        """
-        - create_ap - Create Average Precision(AP)
-        """
+        """- create_ap - Create Average Precision(AP)"""
         try:
             preds = (preds["instances"].__dict__["_fields"]
                      ["pred_boxes"].__dict__["tensor"])
@@ -145,9 +133,7 @@ class Metrics:
             raise ValueError(f"Some error occured in Average Precision {e}")
 
     def metrics(self, preds: torch.tensor, target: torch.tensor) -> dict:
-        """
-        - combines all metrics and easily return all of the metrics
-        """
+        """- combines all metrics and easily return all of the metrics"""
         metrics = {
             "IOU": self.create_iou(preds, target),
             "PSNR": self.create_psnr(preds, target),

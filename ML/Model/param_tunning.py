@@ -11,9 +11,7 @@ class Param_Tunning:
 
     @staticmethod
     def tune(params: dict, ) -> dict:
-        """
-        Tune all of the parameters
-        """
+        """Tune all of the parameters"""
         torch.cuda.empty_cache()
         torch.cuda.empty_cache()
         information_dict = {"Name": [], "AP": []}
@@ -54,9 +52,7 @@ class Param_Tunning:
 
     @staticmethod
     def ray_tune_func(config, detectron2=True):
-        """
-        https://docs.ray.io/en/latest/tune/index.html
-        """
+        """https://docs.ray.io/en/latest/tune/index.html"""
         print(config)
         base_lr = config["base_lrs"]
         ims_per_batch = (config["ims_per_batchs"], )
@@ -77,9 +73,7 @@ class Param_Tunning:
         return tune.report(average_precisions=ap)
 
     def ray_tune(self, params):
-        """
-        https://docs.ray.io/en/latest/tune/user-guide.html
-        """
+        """https://docs.ray.io/en/latest/tune/user-guide.html"""
         ray.init()
         analysis = tune.run(self.ray_tune_func,
                             config=params,

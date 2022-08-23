@@ -26,9 +26,7 @@ batch_size_per_images = [8, 16, 32, 64, 128, 256, 512]
 
 
 class Detectron2:
-    """
-    This class helps anyone to train a detectron2 model for this project easily so anyone can train this model.
-    """
+    """This class helps anyone to train a detectron2 model for this project easily so anyone can train this model."""
 
     def __init__(
         self,
@@ -138,9 +136,7 @@ class Detectron2:
 
     @staticmethod
     def remove_files_in_output() -> None:
-        """
-        - remove_files_in_output - remove all of the file in ./output/
-        """
+        """- remove_files_in_output - remove all of the file in ./output/"""
         files_to_remove = os.listdir(
             "/media/indika/Sync/Programmer-RD-AI/Programming/Projects/Python/Rest-Api/Car-Object-Detection-REST-API/Find-Card/ML/Model/output/"
         )  # Get the files in the directory
@@ -313,9 +309,7 @@ class Detectron2:
         return trainer
 
     def create_predictor(self) -> DefaultPredictor:
-        """
-        - create_predictor - create the predictor to predict images
-        """
+        """- create_predictor - create the predictor to predict images"""
         torch.cuda.empty_cache()
         self.cfg.MODEL.ROI_HEADS.SCORE_THRESH_TEST = (
             self.SCORE_THRESH_TEST)  # Setting SCORE_THRESH_TEST
@@ -375,9 +369,7 @@ class Detectron2:
 
     @staticmethod
     def metrics_file_to_dict_detectron2() -> list:
-        """
-        - metrics_file_to_dict_detectron2 - in ./output/metrics.json it logs the metrics of the model
-        """
+        """- metrics_file_to_dict_detectron2 - in ./output/metrics.json it logs the metrics of the model"""
         new_logs = []
         try:
             logs = open("./Model/output/metrics.json", "r").read().split("\n")
@@ -395,9 +387,7 @@ class Detectron2:
 
     def predict_test_images_detectron2(self,
                                        predictor: DefaultPredictor) -> list:
-        """
-        - predict_test_images_detectron2 - predict test images
-        """
+        """- predict_test_images_detectron2 - predict test images"""
         imgs = []
         torch.cuda.empty_cache()
         for img in tqdm(
@@ -431,9 +421,7 @@ class Detectron2:
 
     def create_target_and_preds_detectron2(
             self, predictor: DefaultPredictor) -> tuple:
-        """
-        - create_target_and_preds_detectron2 - create the target and predictions
-        """
+        """- create_target_and_preds_detectron2 - create the target and predictions"""
         info = self.data.iloc[self.create_target_and_preds_iter]
         img = cv2.imread(
             "/media/indika/Sync/Programmer-RD-AI/Programming/Projects/Python/Rest-Api/Car-Object-Detection-REST-API/Find-Card/ML/Model/dataset/Img/"
@@ -467,9 +455,7 @@ class Detectron2:
                 width)
 
     def train(self, PROJECT_NAME, param) -> dict:
-        """
-        - train - trains the model
-        """
+        """- train - trains the model"""
         torch.cuda.empty_cache()
         wandb.init(
             project=PROJECT_NAME,
