@@ -44,7 +44,7 @@ bokeh @ file:///tmp/build/80754af9/bokeh_1620779595936/work
 boto==2.49.0
 boto3==1.18.55
 botocore==1.21.55
-Bottleneck==1.3.4
+Bottleneck==1.3.5
 brotlipy==0.7.0
 cachetools==4.2.4
 certifi==2021.5.30
