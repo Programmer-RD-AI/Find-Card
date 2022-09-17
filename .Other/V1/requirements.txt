@@ -68,7 +68,7 @@ configparser==5.0.2
 contextlib2==0.6.0.post1
 cryptography @ file:///tmp/build/80754af9/cryptography_1616769286105/work
 cycler==0.10.0
-Cython==0.29.28
+Cython==0.29.32
 cytoolz==0.11.2
 dask @ file:///tmp/build/80754af9/dask-core_1617390489108/work
 debugpy==1.5.1

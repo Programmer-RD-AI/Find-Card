@@ -68,7 +68,7 @@ configparser==5.1.0
 cryptography==3.3.2
 cupshelpers==1.0
 cycler==0.10.0
-Cython==0.29.28
+Cython==0.29.32
 dataclasses==0.6
 dataclasses-json==0.5.7
 dbus-python==1.2.18
