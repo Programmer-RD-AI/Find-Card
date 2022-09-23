@@ -265,7 +265,7 @@ prometheus-client==0.12.0
 promise==2.3
 prompt-toolkit==3.0.22
 proto-plus==1.19.8
-protobuf==3.19.1
+protobuf==3.19.5
 psutil==5.8.0
 ptyprocess @ file:///home/conda/feedstock_root/build_artifacts/ptyprocess_1609419310487/work/dist/ptyprocess-0.7.0-py2.py3-none-any.whl
 py==1.11.0
