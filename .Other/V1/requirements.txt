@@ -260,7 +260,7 @@ pre-commit==2.13.0
 prometheus-client @ file:///tmp/build/80754af9/prometheus_client_1618088486455/work
 promise==2.3
 prompt-toolkit @ file:///tmp/build/80754af9/prompt-toolkit_1616415428029/work
-protobuf==3.19.0
+protobuf==3.19.5
 psutil==5.8.0
 ptyprocess @ file:///tmp/build/80754af9/ptyprocess_1609355006118/work/dist/ptyprocess-0.7.0-py2.py3-none-any.whl
 py==1.10.0
