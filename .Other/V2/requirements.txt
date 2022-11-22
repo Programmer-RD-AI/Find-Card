@@ -173,7 +173,7 @@ patool==1.12
 pexpect @ file:///home/conda/feedstock_root/build_artifacts/pexpect_1602535608087/work
 phonenumbers==8.12.48
 pickleshare @ file:///home/conda/feedstock_root/build_artifacts/pickleshare_1602536217715/work
-Pillow==9.0.1
+Pillow==9.3.0
 platformdirs==2.3.0
 plotly==5.2.1
 pluggy==0.13.1
