@@ -248,7 +248,7 @@ pep8==1.7.1
 pexpect @ file:///tmp/build/80754af9/pexpect_1605563209008/work
 phonenumbers==8.12.48
 pickleshare @ file:///tmp/build/80754af9/pickleshare_1606932040724/work
-Pillow==9.0.1
+Pillow==9.3.0
 pkginfo==1.7.0
 platformdirs==2.3.0
 plotly==5.2.1
