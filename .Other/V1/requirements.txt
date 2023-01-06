@@ -21,7 +21,7 @@ astropy @ file:///tmp/build/80754af9/astropy_1617745353437/work
 astunparse==1.6.3
 async-generator @ file:///home/ktietz/src/ci/async_generator_1611927993394/work
 async-timeout==3.0.1
-atomicwrites==1.4.0
+atomicwrites==1.4.1
 attrs @ file:///tmp/build/80754af9/attrs_1604765588209/work
 autopep8 @ file:///tmp/build/80754af9/autopep8_1615918855173/work
 Babel==2.9.1
