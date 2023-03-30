@@ -61,7 +61,7 @@ charset-normalizer==2.0.12
 clearml==1.1.4
 click==7.1.2
 cloudpickle==2.0.0
-colorama==0.4.4
+colorama==0.4.6
 configobj==5.0.6
 configparser==5.1.0
 cryptography @ file:///tmp/build/80754af9/cryptography_1633520369403/work
