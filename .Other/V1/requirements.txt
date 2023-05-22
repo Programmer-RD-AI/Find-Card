@@ -348,7 +348,7 @@ sphinxcontrib-websupport @ file:///tmp/build/80754af9/sphinxcontrib-websupport_1
 spyder @ file:///tmp/build/80754af9/spyder_1616775618138/work
 spyder-kernels @ file:///tmp/build/80754af9/spyder-kernels_1614030590686/work
 SQLAlchemy @ file:///tmp/build/80754af9/sqlalchemy_1620712430742/work
-starlette==0.16.0
+starlette==0.27.0
 statsmodels @ file:///tmp/build/80754af9/statsmodels_1614023746358/work
 streamlit==0.88.0
 stripe==2.60.0
