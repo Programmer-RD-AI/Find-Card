@@ -107,7 +107,7 @@ itsdangerous==2.0.1
 jedi @ file:///home/conda/feedstock_root/build_artifacts/jedi_1610146791023/work
 Jinja2 @ file:///tmp/build/80754af9/jinja2_1624781299557/work
 jmespath==0.10.0
-joblib==1.0.1
+joblib==1.2.0
 json5==0.9.6
 jsonschema @ file:///home/conda/feedstock_root/build_artifacts/jsonschema_1633875207482/work
 jupyter @ file:///home/conda/feedstock_root/build_artifacts/jupyter_1611871900135/work
