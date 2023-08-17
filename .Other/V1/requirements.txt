@@ -47,7 +47,7 @@ botocore==1.21.55
 Bottleneck==1.3.4
 brotlipy==0.7.0
 cachetools==4.2.4
-certifi==2021.5.30
+certifi==2023.7.22
 cffi @ file:///tmp/build/80754af9/cffi_1613246945912/work
 cfgv==3.3.1
 chardet @ file:///tmp/build/80754af9/chardet_1607706746162/work
