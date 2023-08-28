@@ -311,7 +311,7 @@ QtPy @ file:///home/conda/feedstock_root/build_artifacts/qtpy_1632440819550/work
 ray==1.8.0
 redis==4.0.2
 regex==2021.11.10
-reportlab==3.5.55
+reportlab==3.6.13
 requests==2.26.0
 requests-oauthlib==1.3.0
 requests-toolbelt==0.9.1
