@@ -103,7 +103,7 @@ Flask-BabelEx==0.9.4
 Flask-Login==0.5.0
 Flask-Mail==0.9.1
 Flask-Principal==0.4.0
-Flask-RESTful==0.3.9
+Flask-RESTful==0.3.10
 Flask-Security==3.0.0
 Flask-Simple-GeoIP==0.2.4
 Flask-WTF==0.15.1
