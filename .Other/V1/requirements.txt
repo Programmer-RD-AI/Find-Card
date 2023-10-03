@@ -394,7 +394,7 @@ ujson @ file:///tmp/build/80754af9/ujson_1611259522456/work
 unicodecsv==0.14.1
 jupyterlab==3.3.1
 universal-analytics-python3==1.1.1
-urllib3==1.26.6
+urllib3==1.26.17
 validators==0.18.2
 virtualenv==20.4.7
 voxel51-eta==0.5.3
