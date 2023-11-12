@@ -283,7 +283,7 @@ ptyprocess==0.7.0
 py==1.11.0
 py-cpuinfo==8.0.0
 py-spy==0.3.11
-pyarrow==6.0.1
+pyarrow==14.0.1
 pyasn1==0.4.8
 pyasn1-modules==0.2.8
 PyAudio==0.2.11

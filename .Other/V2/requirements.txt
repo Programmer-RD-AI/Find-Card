@@ -188,7 +188,7 @@ psutil==5.8.0
 ptyprocess @ file:///home/conda/feedstock_root/build_artifacts/ptyprocess_1609419310487/work/dist/ptyprocess-0.7.0-py2.py3-none-any.whl
 py==1.10.0
 py-spy==0.3.7
-pyarrow==5.0.0
+pyarrow==14.0.1
 pyasn1==0.4.8
 pyasn1-modules==0.2.8
 pycocotools==2.0.2
