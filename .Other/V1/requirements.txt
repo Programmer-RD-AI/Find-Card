@@ -169,7 +169,7 @@ jupyter-core @ file:///tmp/build/80754af9/jupyter_core_1612213311222/work
 jupyter-kite==1.2.0
 jupyter-packaging @ file:///tmp/build/80754af9/jupyter-packaging_1613502826984/work
 jupyter-server==1.15.4
-jupyterlab==3.3.1
+jupyterlab==3.6.7
 jupyterlab-kite==2.0.2
 jupyterlab-pygments @ file:///tmp/build/80754af9/jupyterlab_pygments_1601490720602/work
 jupyterlab-server==2.6.0
@@ -392,7 +392,7 @@ typing-extensions==3.10.0.0
 tzlocal==3.0
 ujson @ file:///tmp/build/80754af9/ujson_1611259522456/work
 unicodecsv==0.14.1
-jupyterlab==3.3.1
+jupyterlab==3.6.7
 universal-analytics-python3==1.1.1
 urllib3==1.26.6
 validators==0.18.2

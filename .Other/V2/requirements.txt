@@ -115,7 +115,7 @@ jupyter-client @ file:///home/conda/feedstock_root/build_artifacts/jupyter_clien
 jupyter-console @ file:///home/conda/feedstock_root/build_artifacts/jupyter_console_1616560109969/work
 jupyter-core @ file:///home/conda/feedstock_root/build_artifacts/jupyter_core_1631852756538/work
 jupyter-server==1.15.4
-jupyterlab==3.3.1
+jupyterlab==3.6.7
 jupyterlab-server==2.6.0
 jupyterlab-widgets @ file:///home/conda/feedstock_root/build_artifacts/jupyterlab_widgets_1631590465624/work
 kaleido==0.2.1.post1

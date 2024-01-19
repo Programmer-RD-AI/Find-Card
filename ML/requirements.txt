@@ -166,7 +166,7 @@ jupyter-client==7.1.2
 jupyter-console @ file:///home/conda/feedstock_root/build_artifacts/jupyter_console_1616560109969/work
 jupyter-core==4.9.2
 jupyter-server==1.15.4
-jupyterlab==3.2.4
+jupyterlab==3.6.7
 jupyterlab-pygments==0.1.2
 jupyterlab-server==2.8.2
 jupyterlab-widgets==1.0.2
