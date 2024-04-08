@@ -284,7 +284,7 @@ Pygments @ file:///tmp/build/80754af9/pygments_1615143339740/work
 pylint @ file:///tmp/build/80754af9/pylint_1617135829881/work
 pyls-black @ file:///tmp/build/80754af9/pyls-black_1607553132291/work
 pyls-spyder @ file:///tmp/build/80754af9/pyls-spyder_1613849700860/work
-pymongo==3.12.1
+pymongo==4.6.3
 pyodbc===4.0.0-unsupported
 pyOpenSSL @ file:///tmp/build/80754af9/pyopenssl_1608057966937/work
 pyparsing==2.4.7
