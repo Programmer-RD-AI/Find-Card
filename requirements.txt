@@ -83,7 +83,7 @@ distro==1.6.0
 distro-info==1.0
 dlib==19.22.1
 dm-tree==0.1.6
-dnspython==2.1.0
+dnspython==2.6.1
 docker-pycreds==0.4.0
 docutils==0.16
 dparse==0.5.1

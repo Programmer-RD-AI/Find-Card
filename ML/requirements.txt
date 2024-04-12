@@ -79,7 +79,7 @@ distlib==0.3.4
 distro==1.6.0
 distro-info==1.0
 dlib==19.22.1
-dnspython==2.1.0
+dnspython==2.6.1
 docker-pycreds==0.4.0
 docutils==0.18.1
 dparse==0.5.1
