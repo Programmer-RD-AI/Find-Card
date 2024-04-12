@@ -147,7 +147,7 @@ httplib2==0.20.4
 httpx==0.21.1
 humanfriendly==10.0
 identify==2.4.12
-idna==2.10
+idna==3.7
 imageai==2.1.6
 imageio-ffmpeg==0.4.5
 imbalanced-learn==0.8.1

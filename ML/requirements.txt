@@ -138,7 +138,7 @@ httpx==0.21.1
 humanfriendly==10.0
 hydra-core==1.1.1
 identify==2.4.12
-idna==2.10
+idna==3.7
 imageai @ https://github.com/OlafenwaMoses/ImageAI/releases/download/2.0.1/imageai-2.0.1-py3-none-any.whl
 imageio==2.12.0
 imageio-ffmpeg==0.4.5

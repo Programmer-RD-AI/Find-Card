@@ -138,7 +138,7 @@ httpx==0.19.0
 humanfriendly==9.2
 hydra-core==1.1.1
 identify==2.4.12
-idna==3.2
+idna==3.7
 imageio==2.9.0
 imagesize @ file:///home/ktietz/src/ci/imagesize_1611921604382/work
 importlib-metadata==4.6.4
