@@ -273,7 +273,7 @@ pycodestyle @ file:///home/ktietz/src/ci_mi/pycodestyle_1612807597675/work
 pycosat==0.6.3
 pycparser @ file:///tmp/build/80754af9/pycparser_1594388511720/work
 pycurl==7.43.0.6
-pydantic==1.8.2
+pydantic==1.10.13
 pydeck==0.7.0
 pyDeprecate==0.3.1
 pydocstyle @ file:///tmp/build/80754af9/pydocstyle_1616182067796/work
