@@ -383,7 +383,7 @@ torchmetrics==0.5.1
 torchvision==0.10.1
 tornado @ file:///tmp/build/80754af9/tornado_1606942300299/work
 tox==3.23.1
-tqdm==4.62.0
+tqdm==4.66.3
 traitlets @ file:///home/ktietz/src/ci/traitlets_1611929699868/work
 translate==3.5.0
 twilio==6.63.0
