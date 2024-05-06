@@ -163,7 +163,7 @@ isodate==0.6.1
 itsdangerous==2.0.1
 jedi==0.18.1
 jeepney==0.7.1
-Jinja2==3.0.3
+Jinja2==3.1.4
 jmespath==0.10.0
 joblib==1.1.0
 json5==0.9.6
