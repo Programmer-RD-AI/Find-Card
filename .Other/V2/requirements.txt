@@ -278,7 +278,7 @@ watchdog==2.1.5
 wcwidth @ file:///home/conda/feedstock_root/build_artifacts/wcwidth_1600965781394/work
 webencodings==0.5.1
 websocket-client==1.0.1
-Werkzeug==2.0.3
+Werkzeug==3.0.3
 widgetsnbextension @ file:///home/conda/feedstock_root/build_artifacts/widgetsnbextension_1605475534911/work
 wrapt==1.12.1
 xeus-python==0.13.5
