@@ -199,7 +199,7 @@ mongoengine==0.23.1
 monotonic==1.6
 motor==2.5.1
 moviepy==1.0.3
-msal==1.16.0
+msal==1.28.0
 msal-extensions==0.2.2
 msgpack==1.0.3
 msrest==0.6.21
