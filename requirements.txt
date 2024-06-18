@@ -434,7 +434,7 @@ ufw==0.36
 unattended-upgrades==0.1
 universal-analytics-python3==1.1.1
 uritemplate==4.1.1
-urllib3==1.26.6
+urllib3==1.26.19
 usb-creator==0.3.7
 uvicorn==0.11.7
 validators==0.18.2
