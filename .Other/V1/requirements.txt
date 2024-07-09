@@ -419,6 +419,6 @@ yapf @ file:///tmp/build/80754af9/yapf_1615749224965/work
 yarl==1.6.3
 yaspin==2.1.0
 zict==2.0.0
-zipp==3.5.0
+zipp==3.19.1
 zope.event==4.5.0
 zope.interface @ file:///tmp/build/80754af9/zope.interface_1616357211867/work

@@ -464,4 +464,4 @@ yacs==0.1.8
 yarl==1.7.2
 yaspin==2.1.0
 yfinance==0.1.69
-zipp==3.6.0
+zipp==3.19.1
