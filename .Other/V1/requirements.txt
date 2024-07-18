@@ -322,7 +322,7 @@ scipy==1.6.2
 seaborn==0.11.1
 SecretStorage @ file:///tmp/build/80754af9/secretstorage_1614022784285/work
 Send2Trash @ file:///tmp/build/80754af9/send2trash_1607525499227/work
-sentry-sdk==1.0.0
+sentry-sdk==2.8.0
 shortuuid==1.0.1
 simple-geoip==0.1.1
 simplegeneric==0.8.1
