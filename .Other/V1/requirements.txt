@@ -376,7 +376,7 @@ tifffile==2021.8.30
 toml==0.10.2
 tomli==1.2.1
 toolz==0.11.1
-torch==1.9.1
+torch==2.2.0
 torch-tb-profiler==0.2.0
 torchaudio==0.9.0a0+a85b239
 torchmetrics==0.5.1
