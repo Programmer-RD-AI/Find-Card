@@ -279,7 +279,7 @@ pycparser==2.21
 pydantic==1.8.2
 pydot==1.4.2
 Pygments==2.9.0
-PyJWT==1.7.1
+PyJWT==2.4.0
 pymacaroons==0.13.0
 pymongo==3.12.1
 Pympler==0.9
