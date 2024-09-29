@@ -77,7 +77,7 @@ decorator==5.0.9
 defer==1.0.6
 defusedxml==0.7.1
 Deprecated==1.2.13
-dill==0.3.4
+dill==0.3.9
 distlib==0.3.4
 distro==1.6.0
 distro-info==1.0
