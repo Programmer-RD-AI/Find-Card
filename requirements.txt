@@ -88,7 +88,7 @@ docker-pycreds==0.4.0
 docutils==0.16
 dparse==0.5.1
 dulwich==0.20.35
-duplicity==0.8.22
+duplicity==0.8.23
 empy==3.3.4
 entrypoints==0.3
 et-xmlfile==1.1.0
