@@ -48,7 +48,7 @@ Deprecated==1.2.13
 # Editable install with no version control (detectron2==0.5+cu111)
 -e /media/indika/Sync/anaconda3/envs/detectron2/lib/python3.8/site-packages
 dill==0.3.4
-distlib==0.3.4
+distlib==0.3.9
 distro==1.6.0
 dlib==19.22.0
 dnspython==1.16.0
