@@ -101,7 +101,7 @@ fin-news==0.1.2
 Flask==2.0.3
 Flask-RESTful==0.3.9
 Flask-Simple-GeoIP==0.2.4
-flatbuffers==2.0
+flatbuffers==2.0.7
 fonttools==4.28.2
 frozenlist==1.2.0
 furl==2.1.3
