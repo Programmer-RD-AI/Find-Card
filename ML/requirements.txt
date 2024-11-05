@@ -15,7 +15,7 @@ argon2-cffi==21.1.0
 astor==0.8.1
 astunparse==1.6.3
 async-generator==1.10
-async-timeout==4.0.2
+async-timeout==4.0.3
 attrs @ file:///tmp/build/80754af9/attrs_1620827162558/work
 autopep8==1.6.0
 awscli==1.22.82
