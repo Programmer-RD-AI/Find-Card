@@ -153,7 +153,7 @@ imageio-ffmpeg==0.4.5
 imbalanced-learn==0.8.1
 importlib-metadata==4.8.2
 importlib-resources==5.4.0
-iopath==0.1.9
+iopath==0.1.10
 ipaddress==1.0.23
 ipykernel==6.5.1
 ipython==7.31.1
