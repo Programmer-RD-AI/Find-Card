@@ -1,8 +1,8 @@
 info = data_other.iloc[data_idx]  # getting the info of the index
 img = cv2.imread(f'./Img/{info["Path"]}')  # reading the img
-height, width = cv2.imread(
-    "./Img/" +
-    info["Path"]).shape[:2]  # getting the height and width of the image
+height, width = cv2.imread("./Img/" + info["Path"]).shape[
+    :2
+]  # getting the height and width of the image
 xmin, ymin, xmax, ymax = (
     info["XMin"],
     info["YMin"],
@@ -19,6 +19,5 @@ y = ymin
 w = xmax - xmin
 h = ymax - ymin
 x, y, w, h = round(x), round(y), round(w), round(h)
-roi = img[y:y + h, x:x + w]  # crop the image
-cv2.rectangle(img, (x, y), (x + w, y + h), (200, 0, 0),
-              10)  # draw box around the bbox
+roi = img[y : y + h, x : x + w]  # crop the image
+cv2.rectangle(img, (x, y), (x + w, y + h), (200, 0, 0), 10)  # draw box around the bbox

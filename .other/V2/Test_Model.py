@@ -10,10 +10,12 @@ class Test_Model(unittest.TestCase):
 
     def test_predict_test_imgs(self):
 
-        self.assertEqual(type(model.test()[0]), np.ndarray,
-                         "The Crop and Box Image is None")
-        self.assertEqual(type(model.test()[1]), np.ndarray,
-                         "The Crop and Box Image is None")
+        self.assertEqual(
+            type(model.test()[0]), np.ndarray, "The Crop and Box Image is None"
+        )
+        self.assertEqual(
+            type(model.test()[1]), np.ndarray, "The Crop and Box Image is None"
+        )
 
     def test_load_data(self):
         self.assertEqual(
@@ -37,20 +39,21 @@ class Test_Model(unittest.TestCase):
 
     def test_create_coco_eval(self):
         self.assertEqual(
-            type(model.create_coco_eval(model.create_predictor())),
-            OrderedDict)
+            type(model.create_coco_eval(model.create_predictor())), OrderedDict
+        )
 
     def test_metrics_file_to_dict(self):
         self.assertEqual(type(model.metrics_file_to_dict()), list)
 
     def test_predict_test_images(self):
         self.assertEqual(
-            type(model.predict_test_images(model.create_predictor())), list)
+            type(model.predict_test_images(model.create_predictor())), list
+        )
 
     def test_create_target_and_preds(self):
         self.assertEqual(
-            type(model.create_target_and_preds(model.create_predictor())),
-            tuple)
+            type(model.create_target_and_preds(model.create_predictor())), tuple
+        )
 
     def test_create_rmse(self):
         (

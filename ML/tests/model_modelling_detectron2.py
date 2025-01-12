@@ -14,10 +14,12 @@ class Test_Model(unittest.TestCase):
         Keyword arguments:
         argument -- description
         Return: return_description"""
-        self.assertEqual(type(model.test()[0]), np.ndarray,
-                         "The Crop and Box Image is None")
-        self.assertEqual(type(model.test()[1]), np.ndarray,
-                         "The Crop and Box Image is None")
+        self.assertEqual(
+            type(model.test()[0]), np.ndarray, "The Crop and Box Image is None"
+        )
+        self.assertEqual(
+            type(model.test()[1]), np.ndarray, "The Crop and Box Image is None"
+        )
 
     def test_load_data(self):
         """sumary_line
@@ -66,8 +68,8 @@ class Test_Model(unittest.TestCase):
         argument -- description
         Return: return_description"""
         self.assertEqual(
-            type(model.create_coco_eval(model.create_predictor())),
-            OrderedDict)
+            type(model.create_coco_eval(model.create_predictor())), OrderedDict
+        )
 
     def test_metrics_file_to_dict(self):
         """sumary_line
@@ -84,7 +86,8 @@ class Test_Model(unittest.TestCase):
         argument -- description
         Return: return_description"""
         self.assertEqual(
-            type(model.predict_test_images(model.create_predictor())), list)
+            type(model.predict_test_images(model.create_predictor())), list
+        )
 
     def test_create_target_and_preds(self):
         """sumary_line
@@ -93,8 +96,8 @@ class Test_Model(unittest.TestCase):
         argument -- description
         Return: return_description"""
         self.assertEqual(
-            type(model.create_target_and_preds(model.create_predictor())),
-            tuple)
+            type(model.create_target_and_preds(model.create_predictor())), tuple
+        )
 
     def test_create_rmse(self):
         """sumary_line

@@ -123,21 +123,22 @@ class Model:
         }  # Tests for Param Tunning
         try:
             DatasetCatalog.register(
-                "data", self.load_data)  # Registering the training data
+                "data", self.load_data
+            )  # Registering the training data
             MetadataCatalog.get("data").set(
-                thing_classes=self.labels)  # Adding the labels
+                thing_classes=self.labels
+            )  # Adding the labels
             self.metadata = MetadataCatalog.get("data")  # Getting the metadata
             DatasetCatalog.register(
-                "test",
-                lambda: self.load_data(test=True))  # Registering the test data
+                "test", lambda: self.load_data(test=True)
+            )  # Registering the test data
             MetadataCatalog.get("test").set(
-                thing_classes=self.labels)  # Adding the labels
-            self.metadata_test = MetadataCatalog.get(
-                "test")  # Getting the metadata
+                thing_classes=self.labels
+            )  # Adding the labels
+            self.metadata_test = MetadataCatalog.get("test")  # Getting the metadata
         except:
             self.metadata = MetadataCatalog.get("data")  # Getting the metadata
-            self.metadata_test = MetadataCatalog.get(
-                "test")  # Getting the metadata
+            self.metadata_test = MetadataCatalog.get("test")  # Getting the metadata
         self.BASE_LR = base_lr
         self.MAX_ITER = max_iter
         self.EVAL_PERIOD = eval_period
@@ -149,29 +150,31 @@ class Model:
         self.cfg = self.create_cfg()  # Creating the model config
         self.create_target_and_preds_iter = create_target_and_preds
         self.test_sample_size = test_sample_size
-        self.config = ({
-            "BASE_LR": self.BASE_LR,
-            "MAX_ITER": self.MAX_ITER,
-            "EVAL_PERIOD": self.EVAL_PERIOD,
-            "IMS_PER_BATCH": self.IMS_PER_BATCH,
-            "BATCH_SIZE_PER_IMAGE": self.BATCH_SIZE_PER_IMAGE,
-            "SCORE_THRESH_TEST": self.SCORE_THRESH_TEST,
-            "MODEL": self.model,
-            "NAME": self.NAME,
-        }, )
+        self.config = (
+            {
+                "BASE_LR": self.BASE_LR,
+                "MAX_ITER": self.MAX_ITER,
+                "EVAL_PERIOD": self.EVAL_PERIOD,
+                "IMS_PER_BATCH": self.IMS_PER_BATCH,
+                "BATCH_SIZE_PER_IMAGE": self.BATCH_SIZE_PER_IMAGE,
+                "SCORE_THRESH_TEST": self.SCORE_THRESH_TEST,
+                "MODEL": self.model,
+                "NAME": self.NAME,
+            },
+        )
         self.remove_files_in_output()
 
     @staticmethod
     def remove_files_in_output() -> None:
         """- remove_files_in_output - remove all of the file in ./output/"""
-        files_to_remove = os.listdir(
-            "./output/")  # Get the files in the directory
+        files_to_remove = os.listdir("./output/")  # Get the files in the directory
         try:
             files_to_remove.remove("test_coco_format.json")
         except:
             pass
         for file_to_remove in tqdm(
-                files_to_remove):  # Iter over the files in the directory
+            files_to_remove
+        ):  # Iter over the files in the directory
             os.remove(f"./output/{file_to_remove}")  # Delete the iter file
 
     def test(self, data_idx: int = 50) -> list:
@@ -182,10 +185,9 @@ class Model:
         """
         info = self.data_other.iloc[data_idx]  # getting the info of the index
         img = cv2.imread(f'./Img/{info["Path"]}')  # reading the img
-        height, width = cv2.imread(
-            "./Img/" +
-            info["Path"]).shape[:
-                                2]  # getting the height and width of the image
+        height, width = cv2.imread("./Img/" + info["Path"]).shape[
+            :2
+        ]  # getting the height and width of the image
         xmin, ymin, xmax, ymax = (
             info["XMin"],
             info["YMin"],
@@ -202,9 +204,10 @@ class Model:
         w = xmax - xmin
         h = ymax - ymin
         x, y, w, h = round(x), round(y), round(w), round(h)
-        roi = img[y:y + h, x:x + w]  # crop the image
-        cv2.rectangle(img, (x, y), (x + w, y + h), (200, 0, 0),
-                      10)  # draw box around the bbox
+        roi = img[y : y + h, x : x + w]  # crop the image
+        cv2.rectangle(
+            img, (x, y), (x + w, y + h), (200, 0, 0), 10
+        )  # draw box around the bbox
         return [img, roi]
 
     def load_data(self, test: bool = False) -> list:
@@ -218,7 +221,7 @@ class Model:
             self.data = np.load(
                 "./data.npy", allow_pickle=True
             )  # Loading already saved detectron2 format file
-            self.data = self.data[:self.test_sample_size]  # TODO
+            self.data = self.data[: self.test_sample_size]  # TODO
             return self.data
         if "data.npy" in os.listdir("./"):
             self.data = np.load("./data.npy", allow_pickle=True)
@@ -241,17 +244,19 @@ class Model:
             record["file_name"] = "./Img/" + info["Path"]
             record["height"] = height
             record["width"] = width
-            objs = [{
-                "bbox": [xmin, ymin, xmax, ymax],
-                "bbox_mode": BoxMode.XYXY_ABS,
-                "category_id": 0,
-            }]
+            objs = [
+                {
+                    "bbox": [xmin, ymin, xmax, ymax],
+                    "bbox_mode": BoxMode.XYXY_ABS,
+                    "category_id": 0,
+                }
+            ]
             record["image_id"] = idx
             record["annotations"] = objs
             new_data.append(record)
         np.random.shuffle(new_data)  # Shuffling the data
         if test is True:
-            return new_data[:self.test_sample_size]
+            return new_data[: self.test_sample_size]
         return new_data
 
     def save(self, **kwargs: dict) -> None:
@@ -263,14 +268,14 @@ class Model:
         torch.cuda.empty_cache()
         files_and_object = kwargs
         for files_and_object_key, files_and_object_val in tqdm(
-                zip(files_and_object.keys(), files_and_object.values())
+            zip(files_and_object.keys(), files_and_object.values())
         ):  # iterate over the file and object
-            torch.save(files_and_object_val,
-                       f"./models/{files_and_object_key}-{self.NAME}.pt"
-                       )  # Save the file in .pt
-            torch.save(files_and_object_val,
-                       f"./models/{files_and_object_key}-{self.NAME}.pth"
-                       )  # Save the file in .pth
+            torch.save(
+                files_and_object_val, f"./models/{files_and_object_key}-{self.NAME}.pt"
+            )  # Save the file in .pt
+            torch.save(
+                files_and_object_val, f"./models/{files_and_object_key}-{self.NAME}.pth"
+            )  # Save the file in .pth
         torch.cuda.empty_cache()
 
     def create_cfg(self) -> CfgNode:
@@ -280,25 +285,27 @@ class Model:
         """
         torch.cuda.empty_cache()
         cfg = get_cfg()  # Creating a new cfg
-        cfg.merge_from_file(model_zoo.get_config_file(
-            self.model))  # Add the model
-        cfg.DATASETS.TRAIN = ("data", )  # adding train DataSet
+        cfg.merge_from_file(model_zoo.get_config_file(self.model))  # Add the model
+        cfg.DATASETS.TRAIN = ("data",)  # adding train DataSet
         cfg.DATASETS.TEST = ()
         cfg.MODEL.WEIGHTS = model_zoo.get_checkpoint_url(
-            self.model)  # Adding the weights
+            self.model
+        )  # Adding the weights
         cfg.SOLVER.MAX_ITER = self.MAX_ITER  # Set Max iter
         cfg.TEST.EVAL_PERIOD = self.EVAL_PERIOD  # Set Eval Period
         cfg.SOLVER.BASE_LR = self.BASE_LR  # Set Base LR
         cfg.SOLVER.STEPS = []  # Set Steps
         cfg.SOLVER.IMS_PER_BATCH = self.IMS_PER_BATCH  # Set IMS_PER_BATCH
-        cfg.MODEL.ROI_HEADS.NUM_CLASSES = len(
-            self.labels)  # Set len(self.labels)
+        cfg.MODEL.ROI_HEADS.NUM_CLASSES = len(self.labels)  # Set len(self.labels)
         cfg.MODEL.ROI_HEADS.BATCH_SIZE_PER_IMAGE = (
-            self.BATCH_SIZE_PER_IMAGE)  # Set Batch_Size_Per_Image
+            self.BATCH_SIZE_PER_IMAGE
+        )  # Set Batch_Size_Per_Image
         torch.cuda.empty_cache()
         return cfg
 
-    def __train(self, ) -> DefaultTrainer:
+    def __train(
+        self,
+    ) -> DefaultTrainer:
         """
         - __train - trains the cfg
             this is used by Model.train() this is kind of the under function
@@ -317,7 +324,8 @@ class Model:
         """- create_predictor - create the predictor to predict images"""
         torch.cuda.empty_cache()
         self.cfg.MODEL.ROI_HEADS.SCORE_THRESH_TEST = (
-            self.SCORE_THRESH_TEST)  # Setting SCORE_THRESH_TEST
+            self.SCORE_THRESH_TEST
+        )  # Setting SCORE_THRESH_TEST
         self.cfg.MODEL.WEIGHTS = (
             "./output/model_final.pth"  # The saved weights of the model
         )
@@ -325,22 +333,22 @@ class Model:
         torch.cuda.empty_cache()
         return predictor
 
-    def create_coco_eval(self,
-                         predictor: DefaultPredictor,
-                         metadata: str = "test") -> dict:
+    def create_coco_eval(
+        self, predictor: DefaultPredictor, metadata: str = "test"
+    ) -> dict:
         """
         - create_coco_eval - create COCO Evaluator and tests it
         -------------------------------
         - predictor - to create the evaluator
         """
         torch.cuda.empty_cache()
-        evaluator = COCOEvaluator(metadata,
-                                  output_dir="./output/")  # Create evaluator
+        evaluator = COCOEvaluator(metadata, output_dir="./output/")  # Create evaluator
         val_loader = build_detection_test_loader(
-            self.cfg, metadata)  # Create data loader
+            self.cfg, metadata
+        )  # Create data loader
         metrics = inference_on_dataset(
-            predictor.model, val_loader,
-            evaluator)  # Test the data with the evaluator
+            predictor.model, val_loader, evaluator
+        )  # Test the data with the evaluator
         torch.cuda.empty_cache()
         return metrics
 
@@ -366,13 +374,13 @@ class Model:
         """- predict_test_images - predict test images"""
         imgs = []
         torch.cuda.empty_cache()
-        for img in tqdm(
-                os.listdir("./test_imgs/")):  # iterate over the test images
-            v = Visualizer(cv2.imread(f"./test_imgs/{img}")[:, :, ::-1],
-                           metadata=self.metadata)
+        for img in tqdm(os.listdir("./test_imgs/")):  # iterate over the test images
+            v = Visualizer(
+                cv2.imread(f"./test_imgs/{img}")[:, :, ::-1], metadata=self.metadata
+            )
             v = v.draw_instance_predictions(
-                predictor(cv2.imread(f"./test_imgs/{img}"))["instances"].to(
-                    "cpu"))  # Draw pred boxes
+                predictor(cv2.imread(f"./test_imgs/{img}"))["instances"].to("cpu")
+            )  # Draw pred boxes
             v = v.get_image()[:, :, ::-1]
             plt.figure(figsize=(24, 12))
             plt.imshow(v)  # plot the image
@@ -402,22 +410,25 @@ class Model:
         w = xmax - xmin
         h = ymax - ymin
         preds = predictor(img)
-        if (len(preds["instances"].__dict__["_fields"]
-                ["pred_boxes"].__dict__["tensor"]) <= 0):
-            preds["instances"].__dict__["_fields"]["pred_boxes"].__dict__[
-                "tensor"] = torch.tensor([[1, 1, 1, 1]])
+        if (
+            len(preds["instances"].__dict__["_fields"]["pred_boxes"].__dict__["tensor"])
+            <= 0
+        ):
+            preds["instances"].__dict__["_fields"]["pred_boxes"].__dict__["tensor"] = (
+                torch.tensor([[1, 1, 1, 1]])
+            )
         target = torch.tensor([xmin, ymin, xmax, ymax])
 
-        return (preds, target, x, y, w, h, xmin, ymin, xmax, ymax, height,
-                width)
+        return (preds, target, x, y, w, h, xmin, ymin, xmax, ymax, height, width)
 
     @staticmethod
     def create_rmse(preds: torch.tensor, target: torch.tensor) -> float:
         """- create_rmse - Create Root-mean-square deviation"""
         lowest_rmse = 0
         r_mean_squared_error = MeanSquaredError(squared=False)
-        preds_new = (preds["instances"].__dict__["_fields"]
-                     ["pred_boxes"].__dict__["tensor"])
+        preds_new = (
+            preds["instances"].__dict__["_fields"]["pred_boxes"].__dict__["tensor"]
+        )
         for pred_i in tqdm(range(len(preds))):
             pred = preds_new[pred_i]
             if r_mean_squared_error(pred.to("cpu"), target) > lowest_rmse:
@@ -428,8 +439,9 @@ class Model:
     def create_recall(preds: torch.tensor, target: torch.tensor) -> float:
         lowest_recall = 0
         recall = Recall()
-        preds_new = (preds["instances"].__dict__["_fields"]
-                     ["pred_boxes"].__dict__["tensor"])
+        preds_new = (
+            preds["instances"].__dict__["_fields"]["pred_boxes"].__dict__["tensor"]
+        )
         for pred_i in tqdm(range(len(preds))):
             pred = preds_new[pred_i]
             if recall(pred.to("cpu"), target) > lowest_recall:
@@ -445,10 +457,8 @@ class Model:
             xB = min(true_box[2], pred_box[2])
             yB = min(true_box[3], pred_box[3])
             interArea = max(0, xB - xA + 1) * max(0, yB - yA + 1)
-            boxAArea = (true_box[2] - true_box[0] + 1) * (true_box[3] -
-                                                          true_box[1] + 1)
-            boxBArea = (pred_box[2] - pred_box[0] + 1) * (pred_box[3] -
-                                                          pred_box[1] + 1)
+            boxAArea = (true_box[2] - true_box[0] + 1) * (true_box[3] - true_box[1] + 1)
+            boxBArea = (pred_box[2] - pred_box[0] + 1) * (pred_box[3] - pred_box[1] + 1)
             iou = interArea / float(boxAArea + boxBArea - interArea)
             ious.append(iou)
         iou = np.mean(ious)
@@ -459,8 +469,9 @@ class Model:
         """- create_mse - Create Mean-square deviation"""
         lowest_mse = 0
         mean_squared_error = MeanSquaredError(squared=True)
-        preds_new = (preds["instances"].__dict__["_fields"]
-                     ["pred_boxes"].__dict__["tensor"])
+        preds_new = (
+            preds["instances"].__dict__["_fields"]["pred_boxes"].__dict__["tensor"]
+        )
         for pred_i in tqdm(range(len(preds))):
             pred = preds_new[pred_i]
             if mean_squared_error(pred.to("cpu"), target) > lowest_mse:
@@ -479,28 +490,27 @@ class Model:
     @staticmethod
     def crop_img(x: int, y: int, w: int, h: int, img: np.array) -> np.array:
         """- crop_img - cropping the image using x,y,w,h"""
-        crop = img[y:y + h, x:x + w]
+        crop = img[y : y + h, x : x + w]
         cv2.imwrite("./test.png", crop)
         return crop
 
-    def create_ssim(self, preds: torch.tensor, target: torch.tensor,
-                    height: int, width: int) -> float:
+    def create_ssim(
+        self, preds: torch.tensor, target: torch.tensor, height: int, width: int
+    ) -> float:
         """- create_ssim - create SSIM # TODO it is not done yet"""
         lowest_ssim = 0
         ssim = SSIM()
-        preds_new = (preds["instances"].__dict__["_fields"]
-                     ["pred_boxes"].__dict__["tensor"])
+        preds_new = (
+            preds["instances"].__dict__["_fields"]["pred_boxes"].__dict__["tensor"]
+        )
         for pred_i in tqdm(range(len(preds))):
             pred = preds_new[pred_i]
             info = self.data[self.create_target_and_preds_iter]
             img = cv2.imread(info["Path"])
-            x, y, w, h = self.create_x_y_w_h(target[0], target[1], target[2],
-                                             target[3])
+            x, y, w, h = self.create_x_y_w_h(target[0], target[1], target[2], target[3])
             crop_img_target = torch.from_numpy(self.crop_img(x, y, w, h, img))
-            x, y, w, h = self.create_x_y_w_h(pred[0], pred[1], pred[2],
-                                             pred[3])
-            crop_img_pred = torch.from_numpy(
-                np.array(self.crop_img(x, y, w, h, img)))
+            x, y, w, h = self.create_x_y_w_h(pred[0], pred[1], pred[2], pred[3])
+            crop_img_pred = torch.from_numpy(np.array(self.crop_img(x, y, w, h, img)))
             if ssim(crop_img_pred, crop_img_target) > lowest_ssim:
                 lowest_ssim = ssim(pred.to("cpu"), target)
         return lowest_ssim
@@ -510,8 +520,9 @@ class Model:
         """- create_psnr - Peak signal-to-noise ratio (how similar is a image)"""
         lowest_psnr = 0
         psnr = PSNR()
-        preds_new = (preds["instances"].__dict__["_fields"]
-                     ["pred_boxes"].__dict__["tensor"])
+        preds_new = (
+            preds["instances"].__dict__["_fields"]["pred_boxes"].__dict__["tensor"]
+        )
         for pred_i in tqdm(range(len(preds))):
             pred = preds_new[pred_i]
             if psnr(pred.to("cpu"), target) > lowest_psnr:
@@ -523,8 +534,9 @@ class Model:
         """- create_mae - Mean absolute error"""
         lowest_mae = 0
         mae = MeanAbsoluteError()
-        preds_new = (preds["instances"].__dict__["_fields"]
-                     ["pred_boxes"].__dict__["tensor"])
+        preds_new = (
+            preds["instances"].__dict__["_fields"]["pred_boxes"].__dict__["tensor"]
+        )
         for pred_i in tqdm(range(len(preds))):
             pred = preds_new[pred_i]
             if mae(pred.to("cpu"), target) > lowest_mae:
@@ -535,16 +547,18 @@ class Model:
     def create_precision(preds: torch.tensor, target: torch.tensor) -> float:
         lowest_precision = 0
         precision = Precision()
-        preds_new = (preds["instances"].__dict__["_fields"]
-                     ["pred_boxes"].__dict__["tensor"])
+        preds_new = (
+            preds["instances"].__dict__["_fields"]["pred_boxes"].__dict__["tensor"]
+        )
         for pred_i in tqdm(range(len(preds))):
             pred = preds_new[pred_i]
             if precision(pred.to("cpu"), target) > lowest_precision:
                 lowest_precision = precision(pred.to("cpu"), target)
         return lowest_precision
 
-    def create_precision_and_recall(self, preds: torch.tensor,
-                                    target: torch.tensor) -> float:
+    def create_precision_and_recall(
+        self, preds: torch.tensor, target: torch.tensor
+    ) -> float:
         recall = self.create_recall(preds, target)
         precision = self.create_precision(preds, target)
         if recall > precision:
@@ -675,7 +689,9 @@ class Model:
 
 class Param_Tunning:
 
-    def __init__(self, ) -> None:
+    def __init__(
+        self,
+    ) -> None:
         """
         initialize the Class
         params - dict like {Model().test}
@@ -714,7 +730,7 @@ class Param_Tunning:
     def ray_tune_func(config):
         """https://docs.ray.io/en/latest/tune/index.html"""
         base_lr = config["BASE_LR"]
-        ims_per_batch = (config["IMS_PER_BATCH"], )
+        ims_per_batch = (config["IMS_PER_BATCH"],)
         batch_size_per_image = config["BATCH_SIZE_PER_IMAGE"]
         model = "COCO-Detection/" + config["MODEL"]
         model = Model(
@@ -730,12 +746,9 @@ class Param_Tunning:
 
     def ray_tune(self):
         """https://docs.ray.io/en/latest/tune/user-guide.html"""
-        analysis = tune.run(self.ray_tune_func,
-                            config=params,
-                            resources_per_trial={
-                                "gpu": 0,
-                                "cpu": 1
-                            })
+        analysis = tune.run(
+            self.ray_tune_func, config=params, resources_per_trial={"gpu": 0, "cpu": 1}
+        )
         analysis.get_best_results(metrics="average_precisions", model="max")
         df = analysis.results_df
         df.to_csv("./Logs.csv")

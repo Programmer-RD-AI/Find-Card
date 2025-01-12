@@ -44,8 +44,7 @@ def load_data(data=data, test=False):
         record = {}
         info = data.iloc[idx]
         height, width = cv2.imread("./download/Img/" + info["Path"]).shape[:2]
-        xmin, ymin, xmax, ymax = info["XMin"], info["YMin"], info[
-            "XMax"], info["YMax"]
+        xmin, ymin, xmax, ymax = info["XMin"], info["YMin"], info["XMax"], info["YMax"]
         xmin = round(xmin * width)
         xmax = round(xmax * width)
         ymin = round(ymin * height)
@@ -54,11 +53,13 @@ def load_data(data=data, test=False):
         record["height"] = height
         record["width"] = width
         record["cateogry_id"] = 0
-        objs = [{
-            "bbox": [xmin, ymin, xmax, ymax],
-            "bbox_mode": BoxMode.XYXY_ABS,
-            "category_id": 0,
-        }]
+        objs = [
+            {
+                "bbox": [xmin, ymin, xmax, ymax],
+                "bbox_mode": BoxMode.XYXY_ABS,
+                "category_id": 0,
+            }
+        ]
         record["image_id"] = idx
         record["annotations"] = objs
         new_data.append(record)
@@ -86,7 +87,7 @@ cfg = get_cfg()
 torch.cuda.empty_cache()
 cfg.merge_from_file(model_zoo.get_config_file(model))
 torch.cuda.empty_cache()
-cfg.DATASETS.TRAIN = ("data", )
+cfg.DATASETS.TRAIN = ("data",)
 torch.cuda.empty_cache()
 cfg.DATASETS.TEST = ()
 torch.cuda.empty_cache()
@@ -133,11 +134,11 @@ for log in tqdm(range(len(logs))):
         pass
 for img in os.listdir("./test_imgs/"):
     torch.cuda.empty_cache()
-    v = Visualizer(cv2.imread(f"./test_imgs/{img}")[:, :, ::-1],
-                   metadata=metadata)
+    v = Visualizer(cv2.imread(f"./test_imgs/{img}")[:, :, ::-1], metadata=metadata)
     torch.cuda.empty_cache()
     v = v.draw_instance_predictions(
-        predictor(cv2.imread(f"./test_imgs/{img}"))["instances"].to("cpu"))
+        predictor(cv2.imread(f"./test_imgs/{img}"))["instances"].to("cpu")
+    )
     torch.cuda.empty_cache()
     v = v.get_image()[:, :, ::-1]
     torch.cuda.empty_cache()

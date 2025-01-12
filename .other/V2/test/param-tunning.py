@@ -17,8 +17,7 @@ wandb.init(
 )
 lowest_mse = 0
 mean_squared_error = MeanSquaredError(squared=True)
-preds_new = preds["instances"].__dict__["_fields"]["pred_boxes"].__dict__[
-    "tensor"]
+preds_new = preds["instances"].__dict__["_fields"]["pred_boxes"].__dict__["tensor"]
 for pred_i in range(len(preds)):
     pred = preds_new[pred_i]
     if mean_squared_error(pred.to("cpu"), target) > lowest_mse:
