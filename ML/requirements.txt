@@ -183,7 +183,7 @@ libcst==0.3.23
 libretranslatepy==2.1.1
 livereload==2.6.3
 lockfile==0.12.2
-lxml==4.6.5
+lxml==4.9.1
 Mako==1.1.6
 Markdown==3.3.6
 MarkupSafe @ file:///tmp/build/80754af9/markupsafe_1621528148836/work
