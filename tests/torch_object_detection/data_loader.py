@@ -68,13 +68,13 @@ class PennFudanDataset(torch.utils.data.Dataset):
         # convert everything into a torch.Tensor
         boxes = torch.as_tensor(boxes, dtype=torch.float32)
         # there is only one class
-        labels = torch.ones((num_objs, ), dtype=torch.int64)
+        labels = torch.ones((num_objs,), dtype=torch.int64)
         masks = torch.as_tensor(masks, dtype=torch.uint8)
 
         image_id = torch.tensor([idx])
         area = (boxes[:, 3] - boxes[:, 1]) * (boxes[:, 2] - boxes[:, 0])
         # suppose all instances are not crowd
-        iscrowd = torch.zeros((num_objs, ), dtype=torch.int64)
+        iscrowd = torch.zeros((num_objs,), dtype=torch.int64)
 
         target = {
             "boxes": boxes,
@@ -95,7 +95,6 @@ class PennFudanDataset(torch.utils.data.Dataset):
         return len(self.imgs)
 
 
-dl = torch.utils.data.DataLoader(PennFudanDataset(),
-                                 batch_size=32,
-                                 shuffle=True,
-                                 num_workers=2)
+dl = torch.utils.data.DataLoader(
+    PennFudanDataset(), batch_size=32, shuffle=True, num_workers=2
+)
