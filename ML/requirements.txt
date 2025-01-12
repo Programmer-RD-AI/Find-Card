@@ -184,7 +184,7 @@ libretranslatepy==2.1.1
 livereload==2.6.3
 lockfile==0.12.2
 lxml==4.6.5
-Mako==1.1.6
+Mako==1.2.2
 Markdown==3.3.6
 MarkupSafe @ file:///tmp/build/80754af9/markupsafe_1621528148836/work
 marshmallow==3.14.1
