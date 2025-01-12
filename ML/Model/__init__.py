@@ -32,13 +32,15 @@ from torchmetrics import PSNR, SSIM, AveragePrecision
 try:
     from tqdm import tqdm
 except Exception as e:
-    raise ImportError(f"""
+    raise ImportError(
+        f"""
         Cannot Import Tqdm try installing it using 
         `pip3 install tqdm` 
         or 
         `conda install tqdm`.
         \n 
-        {e}""")
+        {e}"""
+    )
 try:
     import ray
     from ray import tune

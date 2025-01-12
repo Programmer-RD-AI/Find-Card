@@ -8,8 +8,7 @@ from PIL import Image
 from tflite_model_maker import model_spec, object_detector
 from tflite_model_maker.config import ExportFormat, QuantizationConfig
 
-print("Num GPUs Available: ",
-      len(tf.config.experimental.list_physical_devices("GPU")))
+print("Num GPUs Available: ", len(tf.config.experimental.list_physical_devices("GPU")))
 
 
 class TFLite:
@@ -29,8 +28,7 @@ class TFLite:
         train_whole_model: bool = True,
         export_dir: str = ".",
         model_path: str = "model.tflite",
-        data_loading_csv:
-        str = "gs://cloud-ml-data/img/openimage/csv/salads_ml_use.csv",
+        data_loading_csv: str = "gs://cloud-ml-data/img/openimage/csv/salads_ml_use.csv",
     ) -> None:
         """sumary_line
         Keyword arguments:
@@ -43,8 +41,7 @@ class TFLite:
         self.train_whole_model = train_whole_model
         self.export_dir = export_dir
         self.data_loading_csv = data_loading_csv
-        self.log_dir = "logs/fit/" + datetime.datetime.now().strftime(
-            "%Y%m%d-%H%M%S")
+        self.log_dir = "logs/fit/" + datetime.datetime.now().strftime("%Y%m%d-%H%M%S")
         self.epochs = epochs
         self.threshold = 0.125
         self.model_path = model_path
@@ -136,21 +133,26 @@ class TFLite:
         """
         with tf.device("/GPU:0"):
             print("Creating test images")
-            _, input_height, input_width, _ = self.interpreter.get_input_details(
-            )[0]["shape"]
-            img = tf.io.read_file(
-                image_path)  # Read image in tf encoded format
+            _, input_height, input_width, _ = self.interpreter.get_input_details()[0][
+                "shape"
+            ]
+            img = tf.io.read_file(image_path)  # Read image in tf encoded format
             img = tf.io.decode_image(
-                img, channels=3)  # Decode the image (Load the image)
+                img, channels=3
+            )  # Decode the image (Load the image)
             img = tf.image.convert_image_dtype(
-                img, tf.uint8)  # Convert to Data Type Unit8
+                img, tf.uint8
+            )  # Convert to Data Type Unit8
             self.original_image = img
             self.resized_img = tf.image.resize(
-                img, (input_height, input_width))  # Resize Image
+                img, (input_height, input_width)
+            )  # Resize Image
             self.resized_img = self.resized_img[
-                tf.newaxis, :]  # Add 1 dimension to the image
+                tf.newaxis, :
+            ]  # Add 1 dimension to the image
             self.resized_img = tf.cast(
-                self.resized_img, dtype=tf.uint8)  # Convert to Data Type Unit8
+                self.resized_img, dtype=tf.uint8
+            )  # Convert to Data Type Unit8
 
     def predict_test_image(self):
         """sumary_line

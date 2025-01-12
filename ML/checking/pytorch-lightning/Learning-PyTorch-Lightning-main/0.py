@@ -46,25 +46,22 @@ class LitNeuralNet(pl.LightningModule):
     @staticmethod
     def train_dataloader():
         train_dataset = torchvision.datasets.MNIST(
-            root="./data",
-            train=True,
-            transform=transforms.ToTensor(),
-            download=True)
-        train_loader = torch.utils.data.DataLoader(dataset=train_dataset,
-                                                   batch_size=batch_size,
-                                                   num_workers=4,
-                                                   shuffle=False)
+            root="./data", train=True, transform=transforms.ToTensor(), download=True
+        )
+        train_loader = torch.utils.data.DataLoader(
+            dataset=train_dataset, batch_size=batch_size, num_workers=4, shuffle=False
+        )
         return train_loader
 
     @staticmethod
     def val_dataloader():
         test_dataset = torchvision.datasets.MNIST(
-            root="./data", train=False, transform=transforms.ToTensor())
+            root="./data", train=False, transform=transforms.ToTensor()
+        )
 
-        test_loader = torch.utils.data.DataLoader(dataset=test_dataset,
-                                                  batch_size=batch_size,
-                                                  num_workers=4,
-                                                  shuffle=False)
+        test_loader = torch.utils.data.DataLoader(
+            dataset=test_dataset, batch_size=batch_size, num_workers=4, shuffle=False
+        )
         return test_loader
 
     def validation_step(self, batch, batch_idx):
