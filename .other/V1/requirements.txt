@@ -74,7 +74,7 @@ dask @ file:///tmp/build/80754af9/dask-core_1617390489108/work
 debugpy==1.5.1
 decorator @ file:///tmp/build/80754af9/decorator_1617916966915/work
 defusedxml @ file:///tmp/build/80754af9/defusedxml_1615228127516/work
-Deprecated==1.2.13
+Deprecated==1.2.15
 # Editable install with no version control (detectron2==0.5+cu111)
 -e /media/indika/Sync/anaconda3/lib/python3.8/site-packages
 diff-match-patch @ file:///tmp/build/80754af9/diff-match-patch_1594828741838/work
